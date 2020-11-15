@@ -9,6 +9,8 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using CheckInApp.Models;
+using CheckInApp.ViewModels;
+using WebGrease.Css.Extensions;
 
 namespace CheckInApp.Controllers.api
 {
@@ -17,9 +19,20 @@ namespace CheckInApp.Controllers.api
         private checkinappEntities db = new checkinappEntities();
 
         // GET: api/PlatformInfors
-        public IQueryable<PlatformInfor> GetPlatformInfors()
+        public IHttpActionResult GetPlatformInfors()
         {
-            return db.PlatformInfors;
+            var pts = new List<PlatformViewModel>();
+            var data = db.PlatformInfors.ToList();
+            foreach (var d in data)
+            {
+                pts.Add(new PlatformViewModel
+                    {
+                        Id = d.ID,
+                        Name = d.Name
+                    }
+                );
+            }
+            return Ok(pts);
         }
 
         // GET: api/PlatformInfors/5

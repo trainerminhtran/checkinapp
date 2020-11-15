@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CheckInApp.Models;
+using CheckInApp.Services;
 using Checkinapp.ViewModels;
 
 namespace CheckInApp.Controllers
@@ -51,15 +52,39 @@ namespace CheckInApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                //db.CourseInfors.Add(courseInfor);
-                //db.SaveChanges();
-                ModelState.AddModelError("message", "File upload success!!");
-                return View(courseInfor);
-            }
-            TempData["Success"]= "Added Successfully!";
-            ModelState.AddModelError("message", "File upload success!!");
+                try
+                {
+                    //insert course
+                    var cou = new CourseInfor();
+                    cou.Name = courseInfor.Name;
+                    cou.PlatformID = courseInfor.platformID;
+                    cou.Datetime = new DatetimeService().CreateEnDateTimeFromVNdate(courseInfor.Datetime);
+                    cou.Status = true;
+                    db.CourseInfors.Add(cou);
+                    db.SaveChanges();
 
-            return View(courseInfor);
+                    var course = new ContentCourseRecord();
+                    foreach (var c in courseInfor.contentIDs)
+                    {
+                        course.ContentID = c;
+                        course.CourseID = cou.ID;
+                        course.Datetime = new DatetimeService().GetDateTimeNow();
+                        db.ContentCourseRecords.Add(course);
+                    }
+
+                    db.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError("message", "File upload failed!!");
+                    return View();
+                }
+                ModelState.AddModelError("message", "File upload sussess!!");
+
+                TempData["Success"] = "Added Successfully!";
+                return View();
+            }
+            return View();
         }
 
         // GET: Course/Edit/5
