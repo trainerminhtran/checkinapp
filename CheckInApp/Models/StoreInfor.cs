@@ -18,6 +18,7 @@ namespace CheckInApp.Models
         public StoreInfor()
         {
             this.UserInfors = new HashSet<UserInfor>();
+            this.EmployeeInfors = new HashSet<EmployeeInfor>();
         }
     
         public int ID { get; set; }
@@ -33,5 +34,7 @@ namespace CheckInApp.Models
         public virtual DistrictInfor DistrictInfor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserInfor> UserInfors { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EmployeeInfor> EmployeeInfors { get; set; }
     }
 }

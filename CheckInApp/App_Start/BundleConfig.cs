@@ -29,21 +29,18 @@ namespace CheckInApp
             //AdminLTE
             bundles.Add(new StyleBundle("~/css").Include(
                 "~/plugins/fontawesome-free/css/all.min.css",
-                "~/dist/css/adminlte.min.css"
+                "~/dist/css/adminlte.min.css",
+                "~/dist/bootoast.min.css"
             ));
 
             bundles.Add(new ScriptBundle("~/js").Include(
                 "~/plugins/jquery/jquery.min.js",
                 "~/plugins/bootstrap/js/bootstrap.bundle.min.js",
                 "~/dist/js/adminlte.min.js",
-                "~/dist/js/demo.js"
+                "~/dist/js/demo.js",
+                "~/dist/bootoast.min.js"
             ));
-            bundles.Add(new ScriptBundle("~/js").Include(
-                "~/plugins/jquery/jquery.min.js",
-                "~/plugins/bootstrap/js/bootstrap.bundle.min.js",
-                "~/dist/js/adminlte.min.js",
-                "~/dist/js/demo.js"
-            ));
+           
         }
     }
 }

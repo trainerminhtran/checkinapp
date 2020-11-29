@@ -6,7 +6,7 @@ using CheckInApp.Models;
 
 namespace Checkinapp.ViewModels
 {
-    public class CourseViewModel
+    public class CreateCourseViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -15,6 +15,11 @@ namespace Checkinapp.ViewModels
         public List<int> contentIDs { get; set; }
     }
 
+    public class PlatformSelectedViewModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
     public class ContentOfCourseViewModel
     {
         public int Id { get; set; }

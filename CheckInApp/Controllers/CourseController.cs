@@ -12,9 +12,12 @@ using Checkinapp.ViewModels;
 
 namespace CheckInApp.Controllers
 {
+    [CustomAuthenticationFilter]
+    [CustomAuthorize("Trainer")]
+
     public class CourseController : Controller
     {
-        private checkinappEntities db = new checkinappEntities();
+        private InternalCheckinappEntities db = new InternalCheckinappEntities();
 
         // GET: Course
         public ActionResult Index()
@@ -40,7 +43,7 @@ namespace CheckInApp.Controllers
         // GET: Course/Create
         public ActionResult Create()
         {
-            return View(new CourseViewModel());
+            return View(new CreateCourseViewModel());
         }
 
         // POST: Course/Create
@@ -48,7 +51,7 @@ namespace CheckInApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CourseViewModel courseInfor)
+        public ActionResult Create(CreateCourseViewModel courseInfor)
         {
             if (ModelState.IsValid)
             {
@@ -76,10 +79,10 @@ namespace CheckInApp.Controllers
                 }
                 catch (Exception e)
                 {
-                    ModelState.AddModelError("message", "File upload failed!!");
+                    ModelState.AddModelError("message", "Tạo khóa học thất bại!!");
                     return View();
                 }
-                ModelState.AddModelError("message", "File upload sussess!!");
+                ModelState.AddModelError("message", "Tạo khóa học thành công!!");
 
                 TempData["Success"] = "Added Successfully!";
                 return View();
@@ -138,7 +141,11 @@ namespace CheckInApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            CourseInfor courseInfor = db.CourseInfors.Find(id);
+            var ccrecord = db.ContentCourseRecords.Where(x => x.CourseID == id);
+            db.ContentCourseRecords.RemoveRange(ccrecord);
+            db.SaveChanges();
+
+            var courseInfor = db.CourseInfors.Find(id);
             db.CourseInfors.Remove(courseInfor);
             db.SaveChanges();
             return RedirectToAction("Index");

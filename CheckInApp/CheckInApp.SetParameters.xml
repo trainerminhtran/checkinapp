@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <setParameter name="IIS Web Application Name" value="CheckInApp" />
+  <setParameter name="checkinappEntities-Web.config Connection String" value="metadata=res://*/Models.DBModel.csdl|res://*/Models.DBModel.ssdl|res://*/Models.DBModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=checkinapp.database.windows.net;initial catalog=checkinapp;persist security info=True;user id=checkinapp;password=SavinaNo1;MultipleActiveResultSets=True;App=EntityFramework&quot;" />
+  <setParameter name="InternalCheckinappEntities-Web.config Connection String" value="metadata=res://*/Models.InternalDBModel.csdl|res://*/Models.InternalDBModel.ssdl|res://*/Models.InternalDBModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=.;initial catalog=checkinapp;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework&quot;" />
+</parameters>

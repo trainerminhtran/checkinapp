@@ -1,0 +1,233 @@
+﻿@model CheckInApp.ViewModels.UserViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Log in</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+
+    <!-- Select2 -->
+    <link rel="stylesheet" href="../../plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="../../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="../../plugins/Semantic-UI-CSS-master/semantic.min.css">
+    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <link href="../../dist/bootoast.min.css" rel="stylesheet" type="text/css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition login-page">
+
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="#"><b>Samsung</b>DA Training</a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Nhập thông tin cá nhân để bắt đầu</p>
+
+                @using (Html.BeginForm(actionName: "CreateUser", controllerName: "User", method: FormMethod.Post, htmlAttributes: new { enctype = "multipart/form-data", @id = "formID" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <label>Họ và tên:</label>
+                        <input type="text" name="Name" class="form-control " required />
+                    </div>
+
+                    <label>Mã nhân viên:</label>
+                    <div class=" ui search">
+
+                        <div class="ui left icon input">
+                            <input class="prompt" type="text" name="MNV"placeholder="Nhập MNV">
+                            <i class="search icon"></i>
+                        </div>
+                    </div>
+
+
+                    <label></label>
+
+                    <div class="form-group">
+                        <label>vai trò:</label>
+                        <select id="ddlposition" class="form-control select2" name="PositionId" required style="width: 100%;">
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tỉnh thành:</label>
+                        <select id="ddlprovince" class="form-control select2" name="ProvinceId" required style="width: 100%;" onchange="GetVenues()">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Cửa hàng:</label>
+                        <select id="ddlstore" class="form-control select2" name="StoreId" required style="width: 100%;">
+                        </select>
+                    </div>
+                    <input type="hidden" name="Tel" value="@Model.UserTel"/>
+                    <div class="social-auth-links text-center mb-3">
+                        <button type="submit" class="btn btn-block btn-primary">
+                            Tiếp tục
+                        </button>
+                    </div>
+                    <!-- /.social-auth-links -->
+                }
+            </div>
+            <!-- /.login-card-body -->
+        </div>
+    </div>
+    <!-- /.login-box -->
+    <!-- DataTables -->
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../../dist/js/adminlte.min.js"></script>
+    <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <!-- Select2 -->
+    <script src="../../plugins/select2/js/select2.full.min.js"></script>
+    <!-- Bootstrap Switch -->
+    <script src="../../plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+    <script src="../../plugins/Semantic-UI-CSS-master/semantic.min.js"></script>
+    <!-- InputMask -->
+    <script src="../../plugins/moment/moment.min.js"></script>
+    <script src="../../plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+<script>
+
+    
+    function GetPostitions() {
+        var markup = "";
+        var url = "";
+        url = "/api/userinfor/GetAllPosition/";
+        $.ajax({
+            url: url,
+            cache: false,
+            success: function (data) {
+                console.log(data);
+                for (var x = 0; x < data.length; x++) {
+                    markup += "<option value=" + data[x].Id + ">" + data[x].Name + "</option>";
+                }
+                $("#ddlposition").html(markup).show();
+            },
+            error: function (response) {
+                bootoast.toast({
+                    message: "Đã có lỗi sảy ra hoặc không tìm thấy thông tin.",
+                    type: 'danger'
+                });
+            }
+        });
+    }
+    function GetVenues() {
+        var markup = "";
+        var url = "";
+        var value = $('#ddlisstore').val();
+        url = "/api/storeinfor/GetAllStore/";
+        var provinceID = $('#ddlprovince').val();
+        $.ajax({
+            url: url,
+            cache: false,
+            data: { "provinceId": provinceID },
+            success: function (data) {
+                for (var x = 0; x < data.length; x++) {
+                    markup += "<option value=" + data[x].Id + ">" + data[x].Name + "</option>";
+                }
+                $("#ddlstore").html(markup).show();
+            },
+            error: function (response) {
+                bootoast.toast({
+                    message: "Đã có lỗi sảy ra hoặc không tìm thấy thông tin.",
+                    type: 'danger'
+                });
+            }
+        });
+    }
+    function GetProvinces() {
+
+        var url = "/api/storeinfor/GetAllProvince/";
+        var markup = "";
+
+        $.ajax({
+            url: url,
+            cache: false,
+            success: function (data) {
+                for (var x = 0; x < data.length; x++) {
+                    markup += "<option value=" + data[x].Id + ">" + data[x].Name + "</option>";
+                }
+                $("#ddlprovince").html(markup).show();
+            },
+            error: function (response) {
+                bootoast.toast({
+                    message: response,
+                    type: 'danger'
+                });
+            }
+        });
+    }
+    $(function () {
+        //Initialize Select2 Elements
+        $('#ddlprovince').select2({ placeholder: 'Chọn một tỉnh/thành' });
+        $('#ddlstore').select2({ placeholder: 'Chọn một store' });
+        $('#ddlposition').select2({ placeholder: 'Chọn một vai trò' });
+
+
+        GetProvinces();
+        //Money Euro
+        GetPostitions();
+
+
+        $('.ui.search')
+            .search({
+                type: 'category',
+                minCharacters: 4,
+                apiSettings: {
+                    onResponse: function (githubResponse) {
+                        var
+                            response = {
+                                results: {}
+                            }
+                            ;
+                        // translate GitHub API response to work with search
+                        $.each(githubResponse, function (index, item) {
+                            var
+                                MNV = item.Name || 'Unknown',
+                                maxResults = 8
+                                ;
+                            if (index >= maxResults) {
+                                return false;
+                            }
+                            // create new language category
+                            if (response.results[MNV] === undefined) {
+                                response.results[MNV] = {
+                                    name: MNV,
+                                    results: []
+                                };
+                            }
+                            // add result to category
+                            response.results[MNV].results.push({
+                                title: item.MNV,
+                                description: item.StoreName
+                            });
+                        });
+                        return response;
+                    },
+                    url: '/api/userinfor/GetAllEmployees/{query}'
+                }
+            })
+
+    });
+</script>
+</body>
+</html>

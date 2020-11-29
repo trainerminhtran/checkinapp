@@ -14,9 +14,9 @@ namespace CheckInApp.Controllers
 {
     public class CourseInforController : ApiController
     {
-        private checkinappEntities _db = new checkinappEntities();
+        private InternalCheckinappEntities _db = new InternalCheckinappEntities();
 
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         //Get Model by CatID
         public IHttpActionResult GetModelByCatId(int catID)
         {
@@ -41,7 +41,7 @@ namespace CheckInApp.Controllers
             return Ok(listModel);
         }
 
-        [System.Web.Http.HttpGet]
+        [HttpGet]
         public IHttpActionResult GetCatId()
         {
             List<CatInfor> catInfors = _db.CatInfors.ToList();
@@ -62,8 +62,19 @@ namespace CheckInApp.Controllers
 
             return Ok(listCat);
         }
+        
 
-        [System.Web.Http.HttpGet]
+        [HttpGet]
+        public IHttpActionResult GetCourses()
+        {
+           var cou = _db.CourseInfors.Select(x=> new {Id = x.ID, Name = x.Name}).ToList();
+            if (cou.Count == 0)
+            {
+                return BadRequest();
+            }
+            return Ok(cou);
+        }
+        [HttpGet]
         public IHttpActionResult GetAllContent()
         {
             var allcontent = _db.ContentInfors.Include(x => x.ContentModelRecords.Select(i => i.ModelInfor)).ToList();
@@ -103,23 +114,73 @@ namespace CheckInApp.Controllers
 
         [HttpPost]
         [ActionName("content")]
-        public bool UpdateStatus([FromBody] UpdateContentStatus ucs)
+        public bool UpdateContentStatus([FromBody] UpdateStatus ucs)
         {
             try
             {
                 var content = _db.ContentInfors.Where(x => x.ID == ucs.id).FirstOrDefault();
                 content.Status = ucs.sts;
                 _db.SaveChanges();
-                //return new List<ContentInfor>();
                 return true;
             }
             catch (Exception e)
             {
                 return false;
-                //return new List<ContentInfor>();
             }
 
         }
+        [HttpPost]
+        [ActionName("course")]
+        public bool UpdateCourseStatus([FromBody] UpdateStatus ucs)
+        {
+            try
+            {
+                var content = _db.CourseInfors.Where(x => x.ID == ucs.id).FirstOrDefault();
+                content.Status = ucs.sts;
+                _db.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
+        }
+        
+        [HttpPost]
+        public bool VenueStatus([FromBody] UpdateStatus ucs)
+        {
+            try
+            {
+                var content = _db.VenueInfors.Where(x => x.ID == ucs.id).FirstOrDefault();
+                content.Status = ucs.sts;
+                _db.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
+        }
+        
+        [HttpPost]
+        public bool RoomStatus([FromBody] UpdateStatus ucs)
+        {
+            try
+            {
+                var room = _db.RoomInfors.Where(x => x.ID == ucs.id).FirstOrDefault();
+                room.Status = ucs.sts;
+                _db.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
+        }
+
     }
 }
 

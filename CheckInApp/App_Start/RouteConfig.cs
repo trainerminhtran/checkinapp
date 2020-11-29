@@ -16,8 +16,21 @@ namespace CheckInApp
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Room", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "Content",
+                url: "content",
+                defaults: new { controller = "Content", action = "Index"}
+            );
+
+            routes.MapRoute(
+                name: "Precheckin",
+                url: "usercheckin/precheckin/{id}",
+                defaults:new {id = UrlParameter.Optional}
+            );
+
         }
     }
 }

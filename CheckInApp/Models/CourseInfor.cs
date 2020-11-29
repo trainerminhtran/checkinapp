@@ -20,23 +20,20 @@ namespace CheckInApp.Models
             this.ContentCourseRecords = new HashSet<ContentCourseRecord>();
             this.CourseTestRecords = new HashSet<CourseTestRecord>();
             this.GiftCourseRecords = new HashSet<GiftCourseRecord>();
-            this.RoomInfors = new HashSet<RoomInfor>();
         }
     
         public int ID { get; set; }
         public string Name { get; set; }
+        public int PlatformID { get; set; }
         public System.DateTime Datetime { get; set; }
         public Nullable<bool> Status { get; set; }
-        public int PlatformID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ContentCourseRecord> ContentCourseRecords { get; set; }
+        public virtual PlatformInfor PlatformInfor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CourseTestRecord> CourseTestRecords { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GiftCourseRecord> GiftCourseRecords { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RoomInfor> RoomInfors { get; set; }
-        public virtual PlatformInfor PlatformInfor { get; set; }
     }
 }

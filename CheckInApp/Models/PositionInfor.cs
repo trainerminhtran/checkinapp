@@ -18,6 +18,7 @@ namespace CheckInApp.Models
         public PositionInfor()
         {
             this.UserInfors = new HashSet<UserInfor>();
+            this.TrainerInfors = new HashSet<TrainerInfor>();
         }
     
         public int ID { get; set; }
@@ -25,5 +26,7 @@ namespace CheckInApp.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserInfor> UserInfors { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TrainerInfor> TrainerInfors { get; set; }
     }
 }

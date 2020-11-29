@@ -7,6 +7,18 @@ namespace Checkinapp.ViewModels
 {
     public class Config
     {
-        public static string ContentFilePath { get { return ContentFilePath; } set { ContentFilePath = "/UploadedFiles/"; } }
+        private string uploadPath = string.Empty;
+        private string roomUrl = string.Empty;
+
+        public Config()
+        {
+            uploadPath = "/UploadedFiles/";
+            roomUrl = "/room/";
+        }
+
+        public string getUploadPath()
+        {
+            return uploadPath;
+        }
     }
 }

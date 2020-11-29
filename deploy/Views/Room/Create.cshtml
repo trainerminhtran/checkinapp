@@ -1,0 +1,222 @@
+﻿@model CheckInApp.ViewModels.RoomCreateViewModel
+@{
+    ViewBag.Title = "Thêm lớp học";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Styles{
+    <link rel="stylesheet" href="../../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="../../plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="../../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <!-- Bootstrap4 Duallistbox -->
+    <link rel="stylesheet" href="../../plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+    <!-- daterange picker -->
+}
+<div class="container-fluid">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-6">
+            <!-- general form elements -->
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Thêm Venue</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                @using (Html.BeginForm("Create", "Room", FormMethod.Post, new { enctype = "multipart/form-data", @id = "formID" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="card-body">
+                        @if (TempData["Success"] != null)
+                        {
+                            @Html.ValidationSummary(false, "", new { @class = "text-success" })
+
+                        }
+                        else
+                        {
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+                        }
+                        <div class="form-group">
+                            <label>Name:</label>
+                            <input type="text" name="Name" class="form-control " required />
+                        </div>
+                        <div class="form-group">
+                            <label>Ngày bắt đầu:</label>
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                </div>
+                                <input type="text" class="form-control" name="Datetime" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask required>
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+                        <div class="form-group">
+                            <label>Trainers:</label>
+                            <select id="ddltrainers" class="form-control select2" name="TrainerID" multiple required style="width: 100%;">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Thuộc khóa học:</label>
+                            <select id="ddlcourse" class="form-control select2" name="CourseID" required style="width: 100%;">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Training tại tỉnh:</label>
+                            <select id="ddlprovince" class="form-control select2" name="ProvinceID" onchange="javascript:GetVenues()" required style="width: 100%;">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Địa điểm training ở Hội trường/Store:</label>
+                            <select id="ddlisstore" class="form-control select2" name="IsStore" required style="width: 100%;" onchange="javascript:GetVenues()">
+                                <option value="0">Hội trường</option>
+                                <option value="1">Store</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Training tại tỉnh:</label>
+                            <select id="ddlvenue" class="form-control select2" name="VenueID" required style="width: 100%;">
+                            </select>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                }
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+</div>
+@section Scripts{
+
+
+    <!-- Select2 -->
+    <script src="../../plugins/select2/js/select2.full.min.js"></script>
+    <!-- Bootstrap4 Duallistbox -->
+    <script src="../../plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+    <!-- InputMask -->
+    <script src="../../plugins/moment/moment.min.js"></script>
+    <script src="../../plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+    <!-- date-range-picker -->
+    <script>
+        $(function () {
+            //Initialize Select2 Elements
+            $('#ddlprovince').select2({ placeholder: 'Chọn một tỉnh/thành' });
+            $('#ddlvenue').select2({ placeholder: 'Chọn một địa điểm' });
+            $('#ddlisstore').select2({ placeholder: 'Nơi train có phải Store hay Hội trường' });
+            $('#ddltrainers').select2({ placeholder: 'Chọn một/nhiều trainer' });
+            $('#ddlcourse').select2({ placeholder: 'Chọn khóa học' });
+
+
+            //Money Euro
+            $('[data-mask]').inputmask();
+            GetProvinces();
+            GetVenues();
+            GetTrainers();
+            GetCourse();
+        })
+    </script>
+    <script>
+        function GetVenues() {
+            var markup = "";
+            var url = "";
+            var value = $('#ddlisstore').val();
+            if (value == 0) {
+                url = "/api/storeinfor/GetAllVenue/";
+            } else {
+                url = "/api/storeinfor/GetAllStore/";
+            }
+            var provinceID = $('#ddlprovince').val();
+            $.ajax({
+                url: url,
+                cache: false,
+                data: { "provinceId": provinceID },
+                success: function (data) {
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Id + ">" + data[x].Name + "</option>";
+                    }
+                    $("#ddlvenue").html(markup).show();
+                },
+                error: function (response) {
+                    bootoast.toast({
+                        message: "Đã có lỗi sảy ra hoặc không tìm thấy thông tin.",
+                        type: 'danger'
+                    });
+                }
+            });
+        }
+
+        function GetProvinces() {
+
+            var url = "/api/storeinfor/GetAllProvince/";
+            var markup = "";
+
+            $.ajax({
+                url: url,
+                cache: false,
+                success: function (data) {
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Id + ">" + data[x].Name + "</option>";
+                    }
+                    $("#ddlprovince").html(markup).show();
+                },
+                error: function (response) {
+                    bootoast.toast({
+                        message: response,
+                        type: 'danger'
+                    });
+                }
+            });
+        }
+
+        function GetTrainers() {
+
+            var url = "/api/userinfor/GetTrainers/";
+            var markup = "";
+
+            $.ajax({
+                url: url,
+                cache: false,
+                success: function (data) {
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Id + ">" + data[x].Name + "</option>";
+                    }
+                    $("#ddltrainers").html(markup).show();
+                },
+                error: function (response) {
+                    bootoast.toast({
+                        message: response,
+                        type: 'danger'
+                    });
+                }
+            });
+        }
+
+        function GetCourse() {
+
+            var url = "/api/courseinfor/GetCourses/";
+            var markup = "";
+
+            $.ajax({
+                url: url,
+                cache: false,
+                success: function (data) {
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Id + ">" + data[x].Name + "</option>";
+                    }
+                    $("#ddlcourse").html(markup).show();
+                },
+                error: function (response) {
+                    bootoast.toast({
+                        message: response,
+                        type: 'danger'
+                    });
+                }
+            });
+        }
+    </script>
+}

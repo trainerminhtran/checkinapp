@@ -36,7 +36,7 @@ namespace Checkinapp.ViewModels
         }
     }
 
-    public class UpdateContentStatus
+    public class UpdateStatus
     {
         public int id { get; set; }
         public bool sts { get; set; }

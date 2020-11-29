@@ -1,0 +1,166 @@
+﻿@model CheckInApp.ViewModels.UserCheckinViewModel
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Log in</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link href="../../plugins/signature-pad-master/assets/jquery.signaturepad.css" rel="stylesheet">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <link href="../../dist/bootoast.min.css" rel="stylesheet" type="text/css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition login-page">
+    <div class="login-logo">
+        <a href="#"><b>Samsung</b>DA Training</a>
+    </div>
+    <!-- /.login-logo -->
+    <!-- Profile Image -->
+    <div class="card card-primary card-outline col-lg-5 col-md-7">
+        <div class="card-body box-profile">
+
+            <input type="hidden" value="@Model.message" id="message" />
+            <h3 class="profile-username text-center">@Model.FullName</h3>
+
+            <p class="text-muted text-center">@Model.PositionName</p>
+
+            <ul class="list-group list-group-unbordered mb-3">
+                <li class="list-group-item">
+                    <b>Tel</b> <a class="float-right">@Model.UserTel</a>
+                </li>
+                <li class="list-group-item">
+                    <b>Khóa học</b> <a class="float-right" style="width: 70%; text-align: right;">@Model.CourseName</a>
+                </li>
+                <li class="list-group-item">
+                    <b>Trainer</b> <a class="float-right" style="width: 70%; text-align: right;">@Model.TrainerName</a>
+                </li>
+
+                <li class="list-group-item">
+                    <b>Tại</b> <a class="float-right" style="width: 70%; text-align: right;">@Model.Venue</a>
+                </li>
+
+                <li class="list-group-item">
+
+                    @using (Html.BeginForm(actionName: "Index", controllerName: "UserCheckin", method: FormMethod.Post, htmlAttributes: new { enctype = "multipart/form-data", @id = "formID" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="UserId" value="@Model.Id" class="output">
+                        <input type="hidden" name="RoomId" value="@Model.RoomId" class="output">
+                        <div class="form-group" id="smoothed">
+
+                            <ul class="sigNav">
+                                <li class="drawIt"><a style="background-color: #58a9ff;" href="#draw-it">Điểm danh:</a></li>
+                                <li class="clearButton"><a href="#clear">Clear</a></li>
+                            </ul>
+                            <div class="sig sigWrapper" style="height: auto; display: block;">
+                                <div class="typed"></div>
+                                <canvas id="canvas" class="pad" width="100" height="150px"></canvas>
+                                <input type="hidden" name="Signature" id="canvassign" class="">
+                                <img src="" id="tempImg" />
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+
+                        <div class="social-auth-links text-center mb-3">
+
+                            <input id="submit_button" class="btn btn-block btn-primary" type="button" value="Ký tên" />
+                        </div>
+                        <!-- /.social-auth-links -->
+                    }
+                </li>
+            </ul>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+    <!-- /.login-box -->
+
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+    <script src="../../plugins/signature-pad-master/numeric-1.2.6.min.js"></script>
+    <script src="../../plugins/signature-pad-master/bezier.js"></script>
+    <script src="../../plugins/signature-pad-master/json2.min.js"></script>
+    <script src="../../plugins/signature-pad-master/jquery.signaturepad.js"></script>
+    <script src="../../dist/bootoast.min.js"></script>
+    <script>
+        $(function () {
+            const api = $('#smoothed').signaturePad({
+                drawOnly: true,
+                drawBezierCurves: true,
+                lineTop: 200
+            });
+            $("#submit_button").click(function () {
+                if (api.validateForm()) {
+
+                    let image = document.getElementById("canvas").toDataURL("image/png");
+                    //$('#tempImg').attr('src', image);
+
+                    image = image.replace('data:image/png;base64,', '');
+                    $('#canvassign').val(image);
+                    $('form#formID').submit();
+
+                }
+                return false;
+            });
+
+            const mes = $('#message').val();
+            if (mes.length > 0) {
+                if (mes.indexOf("công") != -1) {
+                    bootoast.toast({
+                        message: mes,
+                        type: 'success'
+                    });
+                    $("#submit_button").prop("disabled", true);
+                } else {
+                    bootoast.toast({
+                        message: mes,
+                        type: 'danger'
+                    });
+                }
+            }
+        });
+
+
+
+        (function () {
+            var canvas = document.getElementById('canvas'),
+                context = canvas.getContext('2d');
+
+            // resize the canvas to fill browser window dynamically
+            window.addEventListener('resize', resizeCanvas, false);
+
+            function resizeCanvas() {
+                var winwidth = window.innerWidth;
+                if (winwidth >= 650) {
+                    canvas.width = window.innerWidth * 0.35;
+                } else {
+                    canvas.width = window.innerWidth * 0.8;
+                }
+                /**
+                 * Your drawings need to be inside this function otherwise they will be reset when
+                 * you resize the browser window and the canvas goes will be cleared.
+                 */
+                drawStuff();
+            }
+            resizeCanvas();
+
+            function drawStuff() {
+                // do your drawing stuff here
+            }
+        })();
+    </script>
+</body>
+</html>

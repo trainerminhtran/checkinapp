@@ -1,0 +1,138 @@
+﻿@model CheckInApp.ViewModels.RoomToPrintViewModel
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Danh sách ký tên</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap 4 -->
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body>
+<div class="wrapper">
+    <!-- Main content -->
+    <section class="invoice">
+        <!-- title row -->
+        <div class="row">
+            <div class="col-12">
+                <h2 class="page-header">
+                    <div class="page-header" style="background: #808080; padding: 30px 0px 40px 0;">
+                        <a href="#" style="background: #808080;"><b>Samsung</b>DA Training</a>
+                    </div>
+
+                    <h2 class="login-box-msg ">@Model.CourseName - @Model.RoomName</h2>
+                </h2>
+            </div>
+            <!-- /.col -->
+            <!-- info row -->
+            <div class="row invoice-info">
+                <div class="col-sm-4 invoice-col">
+                    <strong>Trainer</strong>
+                    <address>
+                        @Model.TrainerName
+                    </address>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4 invoice-col">
+                    <strong>
+                        Venue
+                    </strong>
+                    <address>
+                        @Model.VenueName
+                    </address>
+                </div>
+                <div class="col-sm-4 invoice-col">
+                    <strong> Date</strong>
+                    <address>
+                        @Model.DatetimeEnString
+                    </address>
+                </div>
+            </div>
+
+            <!-- Table row -->
+            <div class="row">
+                <div class="col-12 table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Attendences.FirstOrDefault().MNV)
+                                </th>
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Attendences.FirstOrDefault().Name)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Attendences.FirstOrDefault().PositionName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Attendences.FirstOrDefault().Tel)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Attendences.FirstOrDefault().StoreName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Attendences.FirstOrDefault().Signature)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Attendences.FirstOrDefault().Signature)
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Attendences)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.MNV)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PositionName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Tel)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.StoreName)
+                                    </td>
+                                    <td>
+                                        <img src="@item.Signature" width="80" alt="" />
+                                    </td>
+                                    <td>
+                                        <img src="@item.Signature" width="80" alt="" />
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+
+        </div>
+       
+    </section>
+</div>
+<!-- ./wrapper -->
+
+<script type="text/javascript"> 
+    window.addEventListener("load", window.print());
+</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+﻿@model CheckInApp.ViewModels.PreCheckinViewModel
+@{
+    ViewBag.Title = "PreCheckin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>PreCheckin</h2>
+
+<img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.QRCode)" alt="QRcode"/>
+<h2>Trainer: @Model.TrainerName</h2>

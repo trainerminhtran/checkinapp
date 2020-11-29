@@ -1,0 +1,46 @@
+﻿@model CheckInApp.Models.TrainerInfor
+
+@{
+    ViewBag.Title = "Xóa Trainer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h3>Bạn có muốn xóa khóa học này không?</h3>
+<div>
+    @Html.ValidationSummary(false, "", new {@class = "text-danger"})
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Fullname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fullname)
+        </dd>   
+        <dt>
+            @Html.DisplayNameFor(model => model.Tel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PositionInfor.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PositionInfor.Name)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default"/> |
+            @Html.ActionLink("Back to List", "Index","Course")
+        </div>
+    }
+</div>

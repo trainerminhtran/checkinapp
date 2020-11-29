@@ -1,0 +1,86 @@
+﻿@{
+    Layout = null;
+}
+@model CheckInApp.ViewModels.UserViewModel
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Re-Check</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <link href="../../dist/bootoast.min.css" rel="stylesheet" type="text/css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition login-page">
+
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="#"><b>Samsung</b>DA Training</a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="card card-solid">
+            <div class="card-body pb-0">
+                <div class="row d-flex align-items-stretch">
+                    <div class="col-12  d-flex align-items-stretch">
+                        <div class="card bg-light">
+                            <div class="card-header text-muted border-bottom-0">
+                                Thông tin tóm tắt
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="row">
+                                    <div class="">
+                                        <h2 class="lead"><b>@Model.FullName</b></h2>
+                                        <p class="text-muted text-sm"><b>Bạn là: </b> @Model.PositionName / @Model.StoreName </p>
+                                        <ul class="fa-ul text-muted">
+                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Address: @Model.StoreAddress</li>
+                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: @Model.UserTel</li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="text-right">
+                                    <input type="hidden" value="@ViewBag.ReturnUrl" name="returnUrl" />
+                                    @if (ViewBag.ReturnUrl != null)
+                                    {
+                                        <a href="/user/create?returnUrl=@HttpUtility.UrlEncode(ViewBag.ReturnUrl)" class="btn btn-sm btn-warning">
+                                            <i class=""></i> Không phải tôi
+                                        </a>
+                                        <a href="@HttpUtility.UrlDecode(ViewBag.ReturnUrl)" class="btn btn-sm btn-primary">
+                                            <i class="fas fa-check-double"></i> Đây là tôi
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="/user/create" class="btn btn-sm btn-warning">
+                                            <i class=""></i> Không phải tôi
+                                        </a>
+                                        <a href="/room/index" class="btn btn-sm btn-primary">
+                                            <i class="fas fa-check-double"></i> Đây là tôi
+                                        </a>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

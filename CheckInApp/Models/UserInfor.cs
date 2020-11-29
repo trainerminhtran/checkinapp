@@ -30,6 +30,7 @@ namespace CheckInApp.Models
         public string Password { get; set; }
         public bool Status { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
+        public string MNV { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CheckinInfor> CheckinInfors { get; set; }

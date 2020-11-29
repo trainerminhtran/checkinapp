@@ -19,6 +19,7 @@ namespace CheckInApp.Models
         {
             this.DistrictInfors = new HashSet<DistrictInfor>();
             this.VenueInfors = new HashSet<VenueInfor>();
+            this.TrainerInfors = new HashSet<TrainerInfor>();
         }
     
         public int ID { get; set; }
@@ -33,5 +34,7 @@ namespace CheckInApp.Models
         public virtual RegionInfor RegionInfor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VenueInfor> VenueInfors { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TrainerInfor> TrainerInfors { get; set; }
     }
 }

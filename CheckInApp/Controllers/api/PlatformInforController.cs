@@ -9,24 +9,23 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using CheckInApp.Models;
-using CheckInApp.ViewModels;
-using WebGrease.Css.Extensions;
+using Checkinapp.ViewModels;
 
 namespace CheckInApp.Controllers.api
 {
     public class PlatformInforController : ApiController
     {
-        private checkinappEntities db = new checkinappEntities();
+        private InternalCheckinappEntities db = new InternalCheckinappEntities();
 
         // GET: api/PlatformInfors
         public IHttpActionResult GetPlatformInfors()
         {
-            var pts = new List<PlatformViewModel>();
+            var pts = new List<PlatformSelectedViewModel>();
             var data = db.PlatformInfors.ToList();
             foreach (var d in data)
             {
-                pts.Add(new PlatformViewModel
-                    {
+                pts.Add(new PlatformSelectedViewModel
+                {
                         Id = d.ID,
                         Name = d.Name
                     }
