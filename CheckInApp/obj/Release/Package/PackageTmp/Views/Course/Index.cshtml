@@ -1,0 +1,137 @@
+﻿@model IEnumerable<CheckInApp.Models.CourseInfor>
+
+@{
+    ViewBag.Title = "Danh sách khóa học";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Styles
+{
+    <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link href="../../dist/bootoast.min.css" rel="stylesheet" type="text/css">
+
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Datetime) 
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Datetime)
+                </td>
+                <td>
+                    @{
+                        var sts = item.Status.GetValueOrDefault(false);
+                        if (sts)
+                        {
+                            <input type="checkbox" name="my-checkbox" checked data-bootstrap-switch data-off-color="danger" contentid="@item.ID" data-on-color="success">
+                        }
+                        else
+                        {
+                            <input type="checkbox" name="my-checkbox" data-bootstrap-switch data-off-color="danger" data-on-color="success" contentid="@item.ID">
+                        }
+                    }
+                </td>
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |*@
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts{
+    <!-- DataTables -->
+    <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <!-- Bootstrap Switch -->
+    <script src="../../plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+    <!-- InputMask -->
+    <script src="../../plugins/moment/moment.min.js"></script>
+    <script src="../../plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+    <script>
+
+
+        $(function() {
+                //Money Euro
+                $("#lbDatetime").inputmask('dd/MM/yyyy');
+
+            $('.table').DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+            $("input[data-bootstrap-switch]").each(function() {
+                $(this).bootstrapSwitch('state', $(this).prop('checked'));
+            });
+
+            $('input[data-bootstrap-switch]').on('switchChange.bootstrapSwitch',
+                function(e, data) {
+                    if (confirm('Bạn có muốn thay đổi trạng thái khóa học không?')) {
+                        var id = $(this).attr("contentid");
+                        $(this).bootstrapSwitch('state', !data, true);
+                        var $obj = $(this);
+                        $.ajax({
+                            type: "POST",
+                            cache: false,
+                            dataType: "json",
+                            context: this,
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify({ "id": id, "sts": data }),
+                            url: "/api/courseinfor/course",
+                            success: function(response) {
+                                if (response) {
+                                    bootoast.toast({
+                                        message: 'Cập nhật thành công',
+                                        type: 'success'
+                                    });
+                                    $obj.bootstrapSwitch('state', data, true);
+                                } else {
+                                    bootoast.toast({
+                                        message: 'Cập nhật thất bại',
+                                        type: 'danger'
+                                    });
+                                }
+                            },
+                            error: function(response) {
+                                bootoast.toast({
+                                    message: response,
+                                    type: 'danger'
+                                });
+                            }
+                        });
+                    } else {
+                        $(this).bootstrapSwitch('state', !data, true);
+                    }
+                });
+        });
+    </script>
+}

@@ -1,0 +1,140 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Log in</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <link href="../../dist/bootoast.min.css" rel="stylesheet" type="text/css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition login-page">
+
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="#"><b>Samsung</b>DA Training</a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Nhập thông tin cá nhân để bắt đầu</p>
+
+                @using (Html.BeginForm(actionName: "InputTel", controllerName: "User", method: FormMethod.Post, htmlAttributes: new { enctype = "multipart/form-data", @id = "formID" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-group">
+                        <label>Số điện thoại của bạn</label>
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                            </div>
+                            <input type="hidden" value="@ViewBag.ReturnUrl" name="returnUrl"/>
+                            <input type="text" class="form-control" name="UserTel" data-inputmask='"mask": "(999) 999-9999"' data-mask>
+                        </div>
+                        <!-- /.input group -->
+                    </div>
+
+                    <div class="social-auth-links text-center mb-3">
+                        <button type="submit" class="btn btn-block btn-primary">
+                            Tiếp tục
+                        </button>
+                    </div>
+                    <!-- /.social-auth-links -->
+                }
+            </div>
+            <!-- /.login-card-body -->
+        </div>
+    </div>
+    <!-- /.login-box -->
+    <!-- DataTables -->
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../../dist/js/adminlte.min.js"></script>
+    <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <!-- Bootstrap Switch -->
+    <script src="../../plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+    <!-- InputMask -->
+    <script src="../../plugins/moment/moment.min.js"></script>
+    <script src="../../plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+    <script>
+
+
+        $(function () {
+            //Money Euro
+            $("#lbDatetime").inputmask('dd/MM/yyyy');
+            $('[data-mask]').inputmask();
+            $('.table').DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+            $("input[data-bootstrap-switch]").each(function () {
+                $(this).bootstrapSwitch('state', $(this).prop('checked'));
+            });
+
+            $('input[data-bootstrap-switch]').on('switchChange.bootstrapSwitch',
+                function (e, data) {
+                    if (confirm('Bạn có muốn thay đổi trạng thái Venue không?')) {
+                        var id = $(this).attr("contentid");
+                        $(this).bootstrapSwitch('state', !data, true);
+                        var $obj = $(this);
+                        $.ajax({
+                            type: "POST",
+                            cache: false,
+                            dataType: "json",
+                            context: this,
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify({ "id": id, "sts": data }),
+                            url: "/api/courseinfor/VenueStatus",
+                            success: function (response) {
+                                if (response) {
+                                    bootoast.toast({
+                                        message: 'Cập nhật thành công',
+                                        type: 'success'
+                                    });
+                                    $obj.bootstrapSwitch('state', data, true);
+                                } else {
+                                    bootoast.toast({
+                                        message: 'Cập nhật thất bại',
+                                        type: 'danger'
+                                    });
+                                }
+                            },
+                            error: function (response) {
+                                bootoast.toast({
+                                    message: response,
+                                    type: 'danger'
+                                });
+                            }
+                        });
+                    } else {
+                        $(this).bootstrapSwitch('state', !data, true);
+                    }
+                });
+        });
+    </script>
+</body>
+</html>

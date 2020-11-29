@@ -1,0 +1,1100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="InternalCheckinappModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AccountInfor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Fullname" Type="nvarchar(max)" />
+    <Property Name="Shortname" Type="nvarchar(max)" />
+    <Property Name="ChannelID" Type="int" Nullable="false" />
+    <Property Name="Status" Type="bit" />
+  </EntityType>
+  <EntityType Name="AnswerInfor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CheckinInforID" Type="bigint" Nullable="false" />
+    <Property Name="Score" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Datetime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="AnswerRecord">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AnswerID" Type="int" Nullable="false" />
+    <Property Name="QuesionID" Type="int" Nullable="false" />
+    <Property Name="AnswerOption" Type="char" MaxLength="10" />
+    <Property Name="Datetime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="AreaInfor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NameVN" Type="nvarchar(max)" />
+    <Property Name="NameEN" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="CatInfor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Status" Type="bit" />
+  </EntityType>
+  <EntityType Name="ChannelInfor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="CheckinImageRecord">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CheckinID" Type="bigint" Nullable="false" />
+    <Property Name="ImageID" Type="bigint" />
+  </EntityType>
+  <EntityType Name="CheckinInfor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="RoomID" Type="int" Nullable="false" />
+    <Property Name="Signature" Type="image" />
+    <Property Name="IsMotivationGift" Type="bit" />
+    <Property Name="IsMotivationActive" Type="bit" />
+    <Property Name="IsDoorGift" Type="bit" />
+    <Property Name="IsRecheckAnswer" Type="bit" />
+    <Property Name="Datetime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="CityRuralInfor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="ContentCourseRecord">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CourseID" Type="int" />
+    <Property Name="ContentID" Type="int" />
+    <Property Name="Datetime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ContentInfor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" />
+    <Property Name="FileUrl" Type="nvarchar(max)" />
+    <Property Name="Datetime" Type="datetime" />
+    <Property Name="Status" Type="bit" />
+  </EntityType>
+  <EntityType Name="ContentModelRecord">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ContentID" Type="int" />
+    <Property Name="ModelID" Type="int" />
+  </EntityType>
+  <EntityType Name="CourseInfor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PlatformID" Type="int" Nullable="false" />
+    <Property Name="Datetime" Type="datetime" Nullable="false" />
+    <Property Name="Status" Type="bit" />
+  </EntityType>
+  <EntityType Name="CourseTestRecord">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TestID" Type="int" Nullable="false" />
+    <Property Name="CourseID" Type="int" Nullable="false" />
+    <Property Name="Status" Type="bit" />
+  </EntityType>
+  <EntityType Name="DistrictInfor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ProvinceID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EmployeeInfor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MNV" Type="nchar" MaxLength="20" />
+    <Property Name="Fullname" Type="nvarchar(max)" />
+    <Property Name="StoreID" Type="int" />
+  </EntityType>
+  <EntityType Name="GiftCourseRecord">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CourseID" Type="int" />
+    <Property Name="GiftInforID" Type="int" />
+    <Property Name="GiftTypeID" Type="int" />
+    <Property Name="Datetime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="GiftInfor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ImageID" Type="bigint" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Amount" Type="money" />
+    <Property Name="Datetime" Type="datetime" />
+    <Property Name="Status" Type="bit" />
+  </EntityType>
+  <EntityType Name="GiftType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="ImageInfor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UrlThumbnail" Type="nvarchar(max)" />
+    <Property Name="UrlFullsize" Type="nvarchar(max)" />
+    <Property Name="Datetime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="LevelInfor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="LoginInfor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="Token" Type="nvarchar(max)" />
+    <Property Name="Timestamp" Type="timestamp" StoreGeneratedPattern="Computed" />
+    <Property Name="Status" Type="bit" />
+  </EntityType>
+  <EntityType Name="ModelInfor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CatID" Type="int" Nullable="false" />
+    <Property Name="Modelcode" Type="nvarchar(max)" />
+    <Property Name="Status" Type="bit" />
+  </EntityType>
+  <EntityType Name="PermissionInfor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="250" />
+    <Property Name="Status" Type="bit" />
+  </EntityType>
+  <EntityType Name="PlatformInfor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Description" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="PositionInfor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="ProvinceInfor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NameVN" Type="nvarchar(max)" />
+    <Property Name="NameEN" Type="nvarchar(max)" />
+    <Property Name="RegionID" Type="int" Nullable="false" />
+    <Property Name="CityRuralID" Type="int" />
+  </EntityType>
+  <EntityType Name="QuestionInfor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CatID" Type="int" Nullable="false" />
+    <Property Name="LevelID" Type="int" Nullable="false" />
+    <Property Name="QuestionContent" Type="nvarchar(max)" />
+    <Property Name="TrueChoose" Type="nchar" MaxLength="10" />
+    <Property Name="Choose1" Type="nvarchar(max)" />
+    <Property Name="Choose2" Type="nvarchar(max)" />
+    <Property Name="Choose3" Type="nvarchar(max)" />
+    <Property Name="Choose4" Type="nvarchar(max)" />
+    <Property Name="Datetime" Type="datetime" />
+    <Property Name="Status" Type="bit" />
+  </EntityType>
+  <EntityType Name="RegionInfor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AreaID" Type="int" Nullable="false" />
+    <Property Name="NameVN" Type="nvarchar(max)" />
+    <Property Name="NameEN" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="RoomInfor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CourseID" Type="int" Nullable="false" />
+    <Property Name="TrainerID" Type="int" Nullable="false" />
+    <Property Name="VenueID" Type="int" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="RoomUrl" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="QRCodeImage" Type="image" Nullable="false" />
+    <Property Name="RoomFee" Type="money" />
+    <Property Name="TeabreakFee" Type="money" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="NoDaysGetGift" Type="int" />
+    <Property Name="Datetime" Type="datetime" Nullable="false" />
+    <Property Name="IsStore" Type="int" />
+    <Property Name="Guid" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="StoreInfor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AccountID" Type="int" Nullable="false" />
+    <Property Name="DistrictID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" />
+    <Property Name="Address" Type="nvarchar(max)" />
+    <Property Name="MCScode" Type="nvarchar" MaxLength="50" />
+    <Property Name="DealeCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="Status" Type="bit" />
+  </EntityType>
+  <EntityType Name="TestInfor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" />
+    <Property Name="Score" Type="int" />
+    <Property Name="datetime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="TestQuestionRecord">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TestID" Type="int" Nullable="false" />
+    <Property Name="QuestionID" Type="int" Nullable="false" />
+    <Property Name="Status" Type="bit" />
+  </EntityType>
+  <EntityType Name="TrainerInfor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProvinceID" Type="int" Nullable="false" />
+    <Property Name="PositionID" Type="int" Nullable="false" />
+    <Property Name="Fullname" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Tel" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Status" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TrainerRoomRecord">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoomID" Type="int" Nullable="false" />
+    <Property Name="TrainerID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserInfor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StoreID" Type="int" Nullable="false" />
+    <Property Name="PositionID" Type="int" Nullable="false" />
+    <Property Name="Fullname" Type="nvarchar" MaxLength="100" />
+    <Property Name="Tel" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="500" />
+    <Property Name="Status" Type="bit" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="MNV" Type="nchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="UserPermissionRecord">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="PermissionID" Type="int" Nullable="false" />
+    <Property Name="Datetime" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VenueInfor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProvinceID" Type="int" />
+    <Property Name="Name" Type="nvarchar(max)" />
+    <Property Name="Address" Type="nvarchar(max)" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="ContactName" Type="nvarchar" MaxLength="50" />
+    <Property Name="ContactTel" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_AccountInfor_ChannelInfor">
+    <End Role="ChannelInfor" Type="Self.ChannelInfor" Multiplicity="1" />
+    <End Role="AccountInfor" Type="Self.AccountInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ChannelInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AccountInfor">
+        <PropertyRef Name="ChannelID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AnswerInfor_CheckinInfor">
+    <End Role="CheckinInfor" Type="Self.CheckinInfor" Multiplicity="1" />
+    <End Role="AnswerInfor" Type="Self.AnswerInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CheckinInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AnswerInfor">
+        <PropertyRef Name="CheckinInforID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AnswerRecord_AnswerInfor">
+    <End Role="AnswerInfor" Type="Self.AnswerInfor" Multiplicity="1" />
+    <End Role="AnswerRecord" Type="Self.AnswerRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AnswerInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AnswerRecord">
+        <PropertyRef Name="AnswerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AnswerRecord_QuestionInfor">
+    <End Role="QuestionInfor" Type="Self.QuestionInfor" Multiplicity="1" />
+    <End Role="AnswerRecord" Type="Self.AnswerRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QuestionInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="AnswerRecord">
+        <PropertyRef Name="QuesionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CheckinImageRecord_CheckinInfor">
+    <End Role="CheckinInfor" Type="Self.CheckinInfor" Multiplicity="1" />
+    <End Role="CheckinImageRecord" Type="Self.CheckinImageRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CheckinInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CheckinImageRecord">
+        <PropertyRef Name="CheckinID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CheckinImageRecord_ImageInfor">
+    <End Role="ImageInfor" Type="Self.ImageInfor" Multiplicity="0..1" />
+    <End Role="CheckinImageRecord" Type="Self.CheckinImageRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ImageInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CheckinImageRecord">
+        <PropertyRef Name="ImageID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CheckinInfor_RoomInfor">
+    <End Role="RoomInfor" Type="Self.RoomInfor" Multiplicity="1" />
+    <End Role="CheckinInfor" Type="Self.CheckinInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RoomInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CheckinInfor">
+        <PropertyRef Name="RoomID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CheckinInfor_UserInfor">
+    <End Role="UserInfor" Type="Self.UserInfor" Multiplicity="1" />
+    <End Role="CheckinInfor" Type="Self.CheckinInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CheckinInfor">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ContentCourseRecord_ContentInfor">
+    <End Role="ContentInfor" Type="Self.ContentInfor" Multiplicity="0..1" />
+    <End Role="ContentCourseRecord" Type="Self.ContentCourseRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ContentInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ContentCourseRecord">
+        <PropertyRef Name="ContentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ContentCourseRecord_CourseInfor">
+    <End Role="CourseInfor" Type="Self.CourseInfor" Multiplicity="0..1" />
+    <End Role="ContentCourseRecord" Type="Self.ContentCourseRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CourseInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ContentCourseRecord">
+        <PropertyRef Name="CourseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ContentModelRecord_ContentInfor">
+    <End Role="ContentInfor" Type="Self.ContentInfor" Multiplicity="0..1" />
+    <End Role="ContentModelRecord" Type="Self.ContentModelRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ContentInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ContentModelRecord">
+        <PropertyRef Name="ContentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ContentModelRecord_ModelInfor">
+    <End Role="ModelInfor" Type="Self.ModelInfor" Multiplicity="0..1" />
+    <End Role="ContentModelRecord" Type="Self.ContentModelRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ModelInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ContentModelRecord">
+        <PropertyRef Name="ModelID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CourseInfor_PlatformInfor">
+    <End Role="PlatformInfor" Type="Self.PlatformInfor" Multiplicity="1" />
+    <End Role="CourseInfor" Type="Self.CourseInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PlatformInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CourseInfor">
+        <PropertyRef Name="PlatformID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CourseTestRecord_CourseInfor">
+    <End Role="CourseInfor" Type="Self.CourseInfor" Multiplicity="1" />
+    <End Role="CourseTestRecord" Type="Self.CourseTestRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CourseInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CourseTestRecord">
+        <PropertyRef Name="CourseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CourseTestRecord_TestInfor">
+    <End Role="TestInfor" Type="Self.TestInfor" Multiplicity="1" />
+    <End Role="CourseTestRecord" Type="Self.CourseTestRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CourseTestRecord">
+        <PropertyRef Name="TestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DistrictInfor_ProvinceInfor">
+    <End Role="ProvinceInfor" Type="Self.ProvinceInfor" Multiplicity="1" />
+    <End Role="DistrictInfor" Type="Self.DistrictInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProvinceInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DistrictInfor">
+        <PropertyRef Name="ProvinceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeInfor_StoreInfor">
+    <End Role="StoreInfor" Type="Self.StoreInfor" Multiplicity="0..1" />
+    <End Role="EmployeeInfor" Type="Self.EmployeeInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StoreInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="EmployeeInfor">
+        <PropertyRef Name="StoreID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GiftCourseRecord_CourseInfor">
+    <End Role="CourseInfor" Type="Self.CourseInfor" Multiplicity="0..1" />
+    <End Role="GiftCourseRecord" Type="Self.GiftCourseRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CourseInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="GiftCourseRecord">
+        <PropertyRef Name="CourseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GiftCourseRecord_GiftInfor">
+    <End Role="GiftInfor" Type="Self.GiftInfor" Multiplicity="0..1" />
+    <End Role="GiftCourseRecord" Type="Self.GiftCourseRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GiftInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="GiftCourseRecord">
+        <PropertyRef Name="GiftInforID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GiftCourseRecord_GiftType">
+    <End Role="GiftType" Type="Self.GiftType" Multiplicity="0..1" />
+    <End Role="GiftCourseRecord" Type="Self.GiftCourseRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GiftType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="GiftCourseRecord">
+        <PropertyRef Name="GiftTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GiftInfor_ImageInfor">
+    <End Role="ImageInfor" Type="Self.ImageInfor" Multiplicity="1" />
+    <End Role="GiftInfor" Type="Self.GiftInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ImageInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="GiftInfor">
+        <PropertyRef Name="ImageID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LoginInfor_UserInfor">
+    <End Role="UserInfor" Type="Self.UserInfor" Multiplicity="1" />
+    <End Role="LoginInfor" Type="Self.LoginInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="LoginInfor">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ModelInfor_CatInfor">
+    <End Role="CatInfor" Type="Self.CatInfor" Multiplicity="1" />
+    <End Role="ModelInfor" Type="Self.ModelInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CatInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ModelInfor">
+        <PropertyRef Name="CatID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProvinceInfor_CityRuralInfor">
+    <End Role="CityRuralInfor" Type="Self.CityRuralInfor" Multiplicity="0..1" />
+    <End Role="ProvinceInfor" Type="Self.ProvinceInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CityRuralInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProvinceInfor">
+        <PropertyRef Name="CityRuralID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProvinceInfor_RegionInfor">
+    <End Role="RegionInfor" Type="Self.RegionInfor" Multiplicity="1" />
+    <End Role="ProvinceInfor" Type="Self.ProvinceInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RegionInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ProvinceInfor">
+        <PropertyRef Name="RegionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QuestionInfor_CatInfor">
+    <End Role="CatInfor" Type="Self.CatInfor" Multiplicity="1" />
+    <End Role="QuestionInfor" Type="Self.QuestionInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CatInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="QuestionInfor">
+        <PropertyRef Name="CatID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QuestionInfor_LevelInfor">
+    <End Role="LevelInfor" Type="Self.LevelInfor" Multiplicity="1" />
+    <End Role="QuestionInfor" Type="Self.QuestionInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LevelInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="QuestionInfor">
+        <PropertyRef Name="LevelID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RegionInfor_AreaInfor">
+    <End Role="AreaInfor" Type="Self.AreaInfor" Multiplicity="1" />
+    <End Role="RegionInfor" Type="Self.RegionInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AreaInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RegionInfor">
+        <PropertyRef Name="AreaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoomInfor_TrainerInfor">
+    <End Role="TrainerInfor" Type="Self.TrainerInfor" Multiplicity="1" />
+    <End Role="RoomInfor" Type="Self.RoomInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TrainerInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RoomInfor">
+        <PropertyRef Name="TrainerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoomInfor_VenueInfor">
+    <End Role="VenueInfor" Type="Self.VenueInfor" Multiplicity="0..1" />
+    <End Role="RoomInfor" Type="Self.RoomInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VenueInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RoomInfor">
+        <PropertyRef Name="VenueID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StoreInfor_AccountInfor">
+    <End Role="AccountInfor" Type="Self.AccountInfor" Multiplicity="1" />
+    <End Role="StoreInfor" Type="Self.StoreInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AccountInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="StoreInfor">
+        <PropertyRef Name="AccountID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StoreInfor_DistrictInfor">
+    <End Role="DistrictInfor" Type="Self.DistrictInfor" Multiplicity="1" />
+    <End Role="StoreInfor" Type="Self.StoreInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DistrictInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="StoreInfor">
+        <PropertyRef Name="DistrictID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TestQuestionRecord_QuestionInfor">
+    <End Role="QuestionInfor" Type="Self.QuestionInfor" Multiplicity="1" />
+    <End Role="TestQuestionRecord" Type="Self.TestQuestionRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QuestionInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TestQuestionRecord">
+        <PropertyRef Name="QuestionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TestQuestionRecord_TestInfor">
+    <End Role="TestInfor" Type="Self.TestInfor" Multiplicity="1" />
+    <End Role="TestQuestionRecord" Type="Self.TestQuestionRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TestQuestionRecord">
+        <PropertyRef Name="TestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TrainerInfor_PositionInfor">
+    <End Role="PositionInfor" Type="Self.PositionInfor" Multiplicity="1" />
+    <End Role="TrainerInfor" Type="Self.TrainerInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PositionInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TrainerInfor">
+        <PropertyRef Name="PositionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TrainerInfor_ProvinceInfor">
+    <End Role="ProvinceInfor" Type="Self.ProvinceInfor" Multiplicity="1" />
+    <End Role="TrainerInfor" Type="Self.TrainerInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProvinceInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TrainerInfor">
+        <PropertyRef Name="ProvinceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TrainerRoomRecord_RoomInfor">
+    <End Role="RoomInfor" Type="Self.RoomInfor" Multiplicity="1" />
+    <End Role="TrainerRoomRecord" Type="Self.TrainerRoomRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RoomInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TrainerRoomRecord">
+        <PropertyRef Name="RoomID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TrainerRoomRecord_TrainerInfor">
+    <End Role="TrainerInfor" Type="Self.TrainerInfor" Multiplicity="1" />
+    <End Role="TrainerRoomRecord" Type="Self.TrainerRoomRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TrainerInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TrainerRoomRecord">
+        <PropertyRef Name="TrainerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserInfor_PositionInfor">
+    <End Role="PositionInfor" Type="Self.PositionInfor" Multiplicity="1" />
+    <End Role="UserInfor" Type="Self.UserInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PositionInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserInfor">
+        <PropertyRef Name="PositionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserInfor_StoreInfor">
+    <End Role="StoreInfor" Type="Self.StoreInfor" Multiplicity="1" />
+    <End Role="UserInfor" Type="Self.UserInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StoreInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserInfor">
+        <PropertyRef Name="StoreID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserPermissionRecord_PermissionInfor">
+    <End Role="PermissionInfor" Type="Self.PermissionInfor" Multiplicity="1" />
+    <End Role="UserPermissionRecord" Type="Self.UserPermissionRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PermissionInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserPermissionRecord">
+        <PropertyRef Name="PermissionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserPermissionRecord_UserInfor">
+    <End Role="UserInfor" Type="Self.UserInfor" Multiplicity="1" />
+    <End Role="UserPermissionRecord" Type="Self.UserPermissionRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserPermissionRecord">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VenueInfor_ProvinceInfor">
+    <End Role="ProvinceInfor" Type="Self.ProvinceInfor" Multiplicity="0..1" />
+    <End Role="VenueInfor" Type="Self.VenueInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProvinceInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="VenueInfor">
+        <PropertyRef Name="ProvinceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="InternalCheckinappModelStoreContainer">
+    <EntitySet Name="AccountInfor" EntityType="Self.AccountInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AnswerInfor" EntityType="Self.AnswerInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AnswerRecord" EntityType="Self.AnswerRecord" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AreaInfor" EntityType="Self.AreaInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CatInfor" EntityType="Self.CatInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ChannelInfor" EntityType="Self.ChannelInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CheckinImageRecord" EntityType="Self.CheckinImageRecord" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CheckinInfor" EntityType="Self.CheckinInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CityRuralInfor" EntityType="Self.CityRuralInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ContentCourseRecord" EntityType="Self.ContentCourseRecord" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ContentInfor" EntityType="Self.ContentInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ContentModelRecord" EntityType="Self.ContentModelRecord" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CourseInfor" EntityType="Self.CourseInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CourseTestRecord" EntityType="Self.CourseTestRecord" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DistrictInfor" EntityType="Self.DistrictInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmployeeInfor" EntityType="Self.EmployeeInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GiftCourseRecord" EntityType="Self.GiftCourseRecord" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GiftInfor" EntityType="Self.GiftInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GiftType" EntityType="Self.GiftType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ImageInfor" EntityType="Self.ImageInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LevelInfor" EntityType="Self.LevelInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LoginInfor" EntityType="Self.LoginInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ModelInfor" EntityType="Self.ModelInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PermissionInfor" EntityType="Self.PermissionInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PlatformInfor" EntityType="Self.PlatformInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PositionInfor" EntityType="Self.PositionInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProvinceInfor" EntityType="Self.ProvinceInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="QuestionInfor" EntityType="Self.QuestionInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RegionInfor" EntityType="Self.RegionInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RoomInfor" EntityType="Self.RoomInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StoreInfor" EntityType="Self.StoreInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TestInfor" EntityType="Self.TestInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TestQuestionRecord" EntityType="Self.TestQuestionRecord" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TrainerInfor" EntityType="Self.TrainerInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TrainerRoomRecord" EntityType="Self.TrainerRoomRecord" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserInfor" EntityType="Self.UserInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserPermissionRecord" EntityType="Self.UserPermissionRecord" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="VenueInfor" EntityType="Self.VenueInfor" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_AccountInfor_ChannelInfor" Association="Self.FK_AccountInfor_ChannelInfor">
+      <End Role="ChannelInfor" EntitySet="ChannelInfor" />
+      <End Role="AccountInfor" EntitySet="AccountInfor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AnswerInfor_CheckinInfor" Association="Self.FK_AnswerInfor_CheckinInfor">
+      <End Role="CheckinInfor" EntitySet="CheckinInfor" />
+      <End Role="AnswerInfor" EntitySet="AnswerInfor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AnswerRecord_AnswerInfor" Association="Self.FK_AnswerRecord_AnswerInfor">
+      <End Role="AnswerInfor" EntitySet="AnswerInfor" />
+      <End Role="AnswerRecord" EntitySet="AnswerRecord" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AnswerRecord_QuestionInfor" Association="Self.FK_AnswerRecord_QuestionInfor">
+      <End Role="QuestionInfor" EntitySet="QuestionInfor" />
+      <End Role="AnswerRecord" EntitySet="AnswerRecord" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CheckinImageRecord_CheckinInfor" Association="Self.FK_CheckinImageRecord_CheckinInfor">
+      <End Role="CheckinInfor" EntitySet="CheckinInfor" />
+      <End Role="CheckinImageRecord" EntitySet="CheckinImageRecord" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CheckinImageRecord_ImageInfor" Association="Self.FK_CheckinImageRecord_ImageInfor">
+      <End Role="ImageInfor" EntitySet="ImageInfor" />
+      <End Role="CheckinImageRecord" EntitySet="CheckinImageRecord" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CheckinInfor_RoomInfor" Association="Self.FK_CheckinInfor_RoomInfor">
+      <End Role="RoomInfor" EntitySet="RoomInfor" />
+      <End Role="CheckinInfor" EntitySet="CheckinInfor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CheckinInfor_UserInfor" Association="Self.FK_CheckinInfor_UserInfor">
+      <End Role="UserInfor" EntitySet="UserInfor" />
+      <End Role="CheckinInfor" EntitySet="CheckinInfor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ContentCourseRecord_ContentInfor" Association="Self.FK_ContentCourseRecord_ContentInfor">
+      <End Role="ContentInfor" EntitySet="ContentInfor" />
+      <End Role="ContentCourseRecord" EntitySet="ContentCourseRecord" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ContentCourseRecord_CourseInfor" Association="Self.FK_ContentCourseRecord_CourseInfor">
+      <End Role="CourseInfor" EntitySet="CourseInfor" />
+      <End Role="ContentCourseRecord" EntitySet="ContentCourseRecord" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ContentModelRecord_ContentInfor" Association="Self.FK_ContentModelRecord_ContentInfor">
+      <End Role="ContentInfor" EntitySet="ContentInfor" />
+      <End Role="ContentModelRecord" EntitySet="ContentModelRecord" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ContentModelRecord_ModelInfor" Association="Self.FK_ContentModelRecord_ModelInfor">
+      <End Role="ModelInfor" EntitySet="ModelInfor" />
+      <End Role="ContentModelRecord" EntitySet="ContentModelRecord" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CourseInfor_PlatformInfor" Association="Self.FK_CourseInfor_PlatformInfor">
+      <End Role="PlatformInfor" EntitySet="PlatformInfor" />
+      <End Role="CourseInfor" EntitySet="CourseInfor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CourseTestRecord_CourseInfor" Association="Self.FK_CourseTestRecord_CourseInfor">
+      <End Role="CourseInfor" EntitySet="CourseInfor" />
+      <End Role="CourseTestRecord" EntitySet="CourseTestRecord" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CourseTestRecord_TestInfor" Association="Self.FK_CourseTestRecord_TestInfor">
+      <End Role="TestInfor" EntitySet="TestInfor" />
+      <End Role="CourseTestRecord" EntitySet="CourseTestRecord" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DistrictInfor_ProvinceInfor" Association="Self.FK_DistrictInfor_ProvinceInfor">
+      <End Role="ProvinceInfor" EntitySet="ProvinceInfor" />
+      <End Role="DistrictInfor" EntitySet="DistrictInfor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeInfor_StoreInfor" Association="Self.FK_EmployeeInfor_StoreInfor">
+      <End Role="StoreInfor" EntitySet="StoreInfor" />
+      <End Role="EmployeeInfor" EntitySet="EmployeeInfor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GiftCourseRecord_CourseInfor" Association="Self.FK_GiftCourseRecord_CourseInfor">
+      <End Role="CourseInfor" EntitySet="CourseInfor" />
+      <End Role="GiftCourseRecord" EntitySet="GiftCourseRecord" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GiftCourseRecord_GiftInfor" Association="Self.FK_GiftCourseRecord_GiftInfor">
+      <End Role="GiftInfor" EntitySet="GiftInfor" />
+      <End Role="GiftCourseRecord" EntitySet="GiftCourseRecord" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GiftCourseRecord_GiftType" Association="Self.FK_GiftCourseRecord_GiftType">
+      <End Role="GiftType" EntitySet="GiftType" />
+      <End Role="GiftCourseRecord" EntitySet="GiftCourseRecord" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GiftInfor_ImageInfor" Association="Self.FK_GiftInfor_ImageInfor">
+      <End Role="ImageInfor" EntitySet="ImageInfor" />
+      <End Role="GiftInfor" EntitySet="GiftInfor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LoginInfor_UserInfor" Association="Self.FK_LoginInfor_UserInfor">
+      <End Role="UserInfor" EntitySet="UserInfor" />
+      <End Role="LoginInfor" EntitySet="LoginInfor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ModelInfor_CatInfor" Association="Self.FK_ModelInfor_CatInfor">
+      <End Role="CatInfor" EntitySet="CatInfor" />
+      <End Role="ModelInfor" EntitySet="ModelInfor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProvinceInfor_CityRuralInfor" Association="Self.FK_ProvinceInfor_CityRuralInfor">
+      <End Role="CityRuralInfor" EntitySet="CityRuralInfor" />
+      <End Role="ProvinceInfor" EntitySet="ProvinceInfor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProvinceInfor_RegionInfor" Association="Self.FK_ProvinceInfor_RegionInfor">
+      <End Role="RegionInfor" EntitySet="RegionInfor" />
+      <End Role="ProvinceInfor" EntitySet="ProvinceInfor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QuestionInfor_CatInfor" Association="Self.FK_QuestionInfor_CatInfor">
+      <End Role="CatInfor" EntitySet="CatInfor" />
+      <End Role="QuestionInfor" EntitySet="QuestionInfor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QuestionInfor_LevelInfor" Association="Self.FK_QuestionInfor_LevelInfor">
+      <End Role="LevelInfor" EntitySet="LevelInfor" />
+      <End Role="QuestionInfor" EntitySet="QuestionInfor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RegionInfor_AreaInfor" Association="Self.FK_RegionInfor_AreaInfor">
+      <End Role="AreaInfor" EntitySet="AreaInfor" />
+      <End Role="RegionInfor" EntitySet="RegionInfor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoomInfor_TrainerInfor" Association="Self.FK_RoomInfor_TrainerInfor">
+      <End Role="TrainerInfor" EntitySet="TrainerInfor" />
+      <End Role="RoomInfor" EntitySet="RoomInfor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoomInfor_VenueInfor" Association="Self.FK_RoomInfor_VenueInfor">
+      <End Role="VenueInfor" EntitySet="VenueInfor" />
+      <End Role="RoomInfor" EntitySet="RoomInfor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StoreInfor_AccountInfor" Association="Self.FK_StoreInfor_AccountInfor">
+      <End Role="AccountInfor" EntitySet="AccountInfor" />
+      <End Role="StoreInfor" EntitySet="StoreInfor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StoreInfor_DistrictInfor" Association="Self.FK_StoreInfor_DistrictInfor">
+      <End Role="DistrictInfor" EntitySet="DistrictInfor" />
+      <End Role="StoreInfor" EntitySet="StoreInfor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TestQuestionRecord_QuestionInfor" Association="Self.FK_TestQuestionRecord_QuestionInfor">
+      <End Role="QuestionInfor" EntitySet="QuestionInfor" />
+      <End Role="TestQuestionRecord" EntitySet="TestQuestionRecord" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TestQuestionRecord_TestInfor" Association="Self.FK_TestQuestionRecord_TestInfor">
+      <End Role="TestInfor" EntitySet="TestInfor" />
+      <End Role="TestQuestionRecord" EntitySet="TestQuestionRecord" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TrainerInfor_PositionInfor" Association="Self.FK_TrainerInfor_PositionInfor">
+      <End Role="PositionInfor" EntitySet="PositionInfor" />
+      <End Role="TrainerInfor" EntitySet="TrainerInfor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TrainerInfor_ProvinceInfor" Association="Self.FK_TrainerInfor_ProvinceInfor">
+      <End Role="ProvinceInfor" EntitySet="ProvinceInfor" />
+      <End Role="TrainerInfor" EntitySet="TrainerInfor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TrainerRoomRecord_RoomInfor" Association="Self.FK_TrainerRoomRecord_RoomInfor">
+      <End Role="RoomInfor" EntitySet="RoomInfor" />
+      <End Role="TrainerRoomRecord" EntitySet="TrainerRoomRecord" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TrainerRoomRecord_TrainerInfor" Association="Self.FK_TrainerRoomRecord_TrainerInfor">
+      <End Role="TrainerInfor" EntitySet="TrainerInfor" />
+      <End Role="TrainerRoomRecord" EntitySet="TrainerRoomRecord" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserInfor_PositionInfor" Association="Self.FK_UserInfor_PositionInfor">
+      <End Role="PositionInfor" EntitySet="PositionInfor" />
+      <End Role="UserInfor" EntitySet="UserInfor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserInfor_StoreInfor" Association="Self.FK_UserInfor_StoreInfor">
+      <End Role="StoreInfor" EntitySet="StoreInfor" />
+      <End Role="UserInfor" EntitySet="UserInfor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserPermissionRecord_PermissionInfor" Association="Self.FK_UserPermissionRecord_PermissionInfor">
+      <End Role="PermissionInfor" EntitySet="PermissionInfor" />
+      <End Role="UserPermissionRecord" EntitySet="UserPermissionRecord" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserPermissionRecord_UserInfor" Association="Self.FK_UserPermissionRecord_UserInfor">
+      <End Role="UserInfor" EntitySet="UserInfor" />
+      <End Role="UserPermissionRecord" EntitySet="UserPermissionRecord" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VenueInfor_ProvinceInfor" Association="Self.FK_VenueInfor_ProvinceInfor">
+      <End Role="ProvinceInfor" EntitySet="ProvinceInfor" />
+      <End Role="VenueInfor" EntitySet="VenueInfor" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
