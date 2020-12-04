@@ -15,7 +15,7 @@ namespace CheckInApp.Controllers.api
 
         [HttpGet]
         public IHttpActionResult GetAllPosition()
-        {
+        { 
             var pos = _db.PositionInfors.Select(x=> new {Id = x.ID, Name = x.Name}).ToList();
             if (pos.Count == 0)
             {

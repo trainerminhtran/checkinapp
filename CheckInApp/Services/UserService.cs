@@ -8,7 +8,23 @@ namespace CheckInApp.Services
 {
     public class UserService
     {
+        public ReturnUrlModel ReturnUrlModelService(string url)
+        {
+            var res = new ReturnUrlModel();
+            try
+            {
+                var strAr = url.Split('/');
+                res.Controller = strAr[1];
+                res.Action = strAr[2];
+                res.Guid = strAr.Length > 3 ? strAr[3] : "";
+                return res;
 
+            }
+            catch (Exception e)
+            {
+                return res;
+            }
+        }
     }
 
 }

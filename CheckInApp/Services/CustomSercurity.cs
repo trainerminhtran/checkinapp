@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -63,18 +64,28 @@ namespace CheckInApp.Services
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             const bool authorize = false;
-            var userTel = Convert.ToString(httpContext.Session["UserTel"]);
+            var userTel = string.Empty;
+            try
+            {
+                userTel=Convert.ToString(httpContext.Session["UserTel"]);
+            }
+            catch (Exception e)
+            {
+                // ignored
+                var ignore = e.Message;
+            }
+
             var trainer = _db.TrainerInfors.FirstOrDefault(x => x.Tel == userTel);
             var learner = _db.UserInfors.FirstOrDefault(x=>x.Tel == userTel);
             var role = string.Empty;
 
-            if (trainer!=null)
-            {
-                role = "Trainer";
-            }
             if (learner != null)
             {
                 role = "Learner";
+            }
+            if (trainer != null)
+            {
+                role = "Trainer";
             }
 
             if (string.IsNullOrEmpty(userTel) || (!(trainer != null | learner != null))) return authorize;
@@ -87,7 +98,7 @@ namespace CheckInApp.Services
                 new RouteValueDictionary
                 {
                     { "controller", "User" },
-                    { "action", "UnAuthorized" },
+                    { "action", "Login" },
                     {"returnUrl" , filterContext.HttpContext.Request.Url.GetComponents(UriComponents.PathAndQuery, UriFormat.SafeUnescaped)}
                 });
         }

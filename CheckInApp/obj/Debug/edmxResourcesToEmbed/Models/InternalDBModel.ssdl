@@ -717,18 +717,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_RoomInfor_VenueInfor">
-    <End Role="VenueInfor" Type="Self.VenueInfor" Multiplicity="0..1" />
-    <End Role="RoomInfor" Type="Self.RoomInfor" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="VenueInfor">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="RoomInfor">
-        <PropertyRef Name="VenueID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_StoreInfor_AccountInfor">
     <End Role="AccountInfor" Type="Self.AccountInfor" Multiplicity="1" />
     <End Role="StoreInfor" Type="Self.StoreInfor" Multiplicity="*" />
@@ -1038,10 +1026,6 @@
     </AssociationSet>
     <AssociationSet Name="FK_RoomInfor_TrainerInfor" Association="Self.FK_RoomInfor_TrainerInfor">
       <End Role="TrainerInfor" EntitySet="TrainerInfor" />
-      <End Role="RoomInfor" EntitySet="RoomInfor" />
-    </AssociationSet>
-    <AssociationSet Name="FK_RoomInfor_VenueInfor" Association="Self.FK_RoomInfor_VenueInfor">
-      <End Role="VenueInfor" EntitySet="VenueInfor" />
       <End Role="RoomInfor" EntitySet="RoomInfor" />
     </AssociationSet>
     <AssociationSet Name="FK_StoreInfor_AccountInfor" Association="Self.FK_StoreInfor_AccountInfor">

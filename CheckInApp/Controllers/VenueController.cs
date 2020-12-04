@@ -6,10 +6,13 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CheckInApp.Models;
+using CheckInApp.Services;
 using CheckInApp.ViewModels;
 
 namespace CheckInApp.Controllers
 {
+    [CustomAuthenticationFilter]
+    [CustomAuthorize("Trainer")]
     public class VenueController : Controller
     {
         private InternalCheckinappEntities db = new InternalCheckinappEntities();

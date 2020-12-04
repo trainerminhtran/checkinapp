@@ -24,6 +24,7 @@ namespace CheckInApp.ViewModels
 
     public class UserCreateViewModel
     {
+        public int Id { get; set; }
         public int StoreId { get; set; }
         public string MNV { get; set; }
         public string Name { get; set; }
@@ -31,5 +32,12 @@ namespace CheckInApp.ViewModels
         public int PositionId { get; set; }
         public string returnUrl { get; set; }
 
+    }
+
+    public class ReturnUrlModel
+    {
+        public string Action { get; set; }
+        public string Controller { get; set; }
+        public string Guid { get; set; }
     }
 }

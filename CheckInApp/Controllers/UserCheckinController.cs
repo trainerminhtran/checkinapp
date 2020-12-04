@@ -16,7 +16,7 @@ namespace CheckInApp.Controllers
         private readonly InternalCheckinappEntities _db = new InternalCheckinappEntities();
         private readonly QRCodeService qr = new QRCodeService();
         // GET: UserCheckin
-        [CustomAuthorize("Learner")]
+        [CustomAuthorize("Learner","Trainer")]
 
         public ActionResult Index(Guid id,string message)
         {
@@ -26,7 +26,7 @@ namespace CheckInApp.Controllers
             }
             var ro = _db.RoomInfors.FirstOrDefault(x => x.Guid == id);
             
-            if (ro == null || u == null)
+            if (ro == null)
             {
                 return null;
             }
@@ -37,7 +37,7 @@ namespace CheckInApp.Controllers
                 return null;
             }
 
-            var venueName = ro.IsStore == 0 ? _db.VenueInfors.FirstOrDefault(x => x.ID == ro.VenueID).Name : _db.StoreInfors.FirstOrDefault(x => x.ID == ro.VenueID).Name;
+            var venueName = ro.IsStore == (int)RoomIsOnsite.Hoitruong ? _db.VenueInfors.FirstOrDefault(x => x.ID == ro.VenueID)?.Name : _db.StoreInfors.FirstOrDefault(x => x.ID == ro.VenueID)?.Name;
             var uvm = new UserCheckinViewModel
             {
                 Id = u.Id,

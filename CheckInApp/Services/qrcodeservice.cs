@@ -18,7 +18,7 @@ namespace CheckInApp.Services
                 appUrl = "/" + appUrl;
             else
             {
-                appUrl += "usercheckin/precheckin/" + st;
+                appUrl += "usercheckin/index/" + st;
             }
 
             var baseUrl = string.Format("{0}://{1}{2}", request.Url.Scheme, request.Url.Authority, appUrl);
@@ -28,13 +28,13 @@ namespace CheckInApp.Services
 
         public string GetRoomPath(Guid id)
         {
-            return "usercheckin/precheckin/" + id;
+            return "/usercheckin/index/" + id;
         }
         public string GetUrlByRoomurl(string roomurl)
         {
             var request = HttpContext.Current.Request;
             var appUrl = HttpRuntime.AppDomainAppVirtualPath;
-            return string.Format("{0}://{1}{2}", request.Url.Scheme, request.Url.Authority, roomurl);
+            return string.Format("{0}://{1}{2}/", request.Url.Scheme, request.Url.Authority, roomurl);
         }
         public string getGuideIDFromRoomUrl(string url)
         {

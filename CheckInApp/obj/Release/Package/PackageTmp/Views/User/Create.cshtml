@@ -40,9 +40,19 @@
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Nhập thông tin cá nhân để bắt đầu</p>
 
-                @using (Html.BeginForm(actionName: "CreateUser", controllerName: "User", method: FormMethod.Post, htmlAttributes: new { enctype = "multipart/form-data", @id = "formID" }))
+                @using (Html.BeginForm(actionName: "Create", controllerName: "User", method: FormMethod.Post, htmlAttributes: new { enctype = "multipart/form-data", @id = "formID" }))
                 {
                     @Html.AntiForgeryToken()
+                    if (TempData["Success"] != null)
+                    {
+                        @Html.ValidationSummary(false, "", new { @class = "text-success" })
+
+                    }
+                    else
+                    {
+                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+                    }
                     <div class="form-group">
                         <label>Họ và tên:</label>
                         <input type="text" name="Name" class="form-control " required />
@@ -77,6 +87,7 @@
                         </select>
                     </div>
                     <input type="hidden" name="Tel" value="@Model.UserTel"/>
+                    <input type="hidden" name="returnUrl" value="@Model.returnUrl"/>
                     <div class="social-auth-links text-center mb-3">
                         <button type="submit" class="btn btn-block btn-primary">
                             Tiếp tục
@@ -116,7 +127,6 @@
             url: url,
             cache: false,
             success: function (data) {
-                console.log(data);
                 for (var x = 0; x < data.length; x++) {
                     markup += "<option value=" + data[x].Id + ">" + data[x].Name + "</option>";
                 }
