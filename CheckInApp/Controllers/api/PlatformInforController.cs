@@ -15,7 +15,7 @@ namespace CheckInApp.Controllers.api
 {
     public class PlatformInforController : ApiController
     {
-        private InternalCheckinappEntities db = new InternalCheckinappEntities();
+        private dbEntities db = new dbEntities();
 
         // GET: api/PlatformInfors
         public IHttpActionResult GetPlatformInfors()

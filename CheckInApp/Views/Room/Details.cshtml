@@ -10,6 +10,14 @@
             <div class="col-12">
                 <div class="callout callout-info">
                     <h5>
+                        @using (Html.BeginForm("RoomExport", "export", FormMethod.Post, new { enctype = "multipart/form-data", @id = "formID" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="RoomId" value="@Model.RoomId"/>
+                            <button class="btn btn-default float-right" type="submit">Export trainer</button>
+                        }
+                    </h5>
+                    <h5>
                         <i class="fas fa-info"></i> Note: <a href="/room/detailprint/@Model.RoomId" target="_blank" class="btn btn-default float-right"><i class="fas fa-print"></i> Print</a>
                     </h5>
 

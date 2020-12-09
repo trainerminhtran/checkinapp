@@ -15,13 +15,13 @@ namespace CheckInApp.Controllers
     [CustomAuthorize("Trainer")]
     public class VenueController : Controller
     {
-        private InternalCheckinappEntities db = new InternalCheckinappEntities();
+        private dbEntities db = new dbEntities();
 
         // GET: VenueInfor
         public ActionResult Index()
         {
 
-            var ti = db.VenueInfors.Include(x=>x.ProvinceInfor).ToList();
+            var ti = db.StoreInfors.Where(x=>x.PlatformID  != (int)RoomEnum.Onsite);
             var tvm = ti.Select(t => new VenueViewModel()
                 {
                     Id = t.ID,
@@ -30,7 +30,7 @@ namespace CheckInApp.Controllers
                     Sts = t.Status.Value,
                     ContactTel = t.ContactTel,
                     ContactName = t.ContactName,
-                    TrainerProvince = new TrainerProvince() { Id = t.ProvinceInfor.ID, Name = t.ProvinceInfor.NameVN },
+                    Province = new TrainerProvince() { Id = t.DistrictInfor.ProvinceID, Name = t.DistrictInfor.ProvinceInfor.NameVN },
                 })
                 .ToList();
             return View(tvm);
@@ -56,14 +56,17 @@ namespace CheckInApp.Controllers
                 try
                 {
                     //insert course
-                    var cou = new VenueInfor();
-                    cou.Name = tcvm.Name;
+                    var cou = new StoreInfor();
+                    cou.PlatformID = tcvm.platformID;
+
+                    cou.Name = ((RoomEnum)tcvm.platformID).ToString() + "-"+ tcvm.Name;
+                    cou.AccountID = 1;
                     cou.Address = tcvm.Address;
                     cou.ContactName = tcvm.ContactName;
                     cou.ContactTel = tcvm.ContactTel;
-                    cou.ProvinceID = tcvm.provinceID;
+                    cou.DistrictID = tcvm.districtID;
                     cou.Status = true;
-                    db.VenueInfors.Add(cou);
+                    db.StoreInfors.Add(cou);
 
                     db.SaveChanges();
 
@@ -87,7 +90,7 @@ namespace CheckInApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var t = db.VenueInfors.Find(id);
+            var t = db.StoreInfors.Find(id);
             if (t == null)
             {
                 return HttpNotFound();
@@ -100,8 +103,8 @@ namespace CheckInApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            var ccrecord = db.VenueInfors.FirstOrDefault(x => x.ID == id);
-            db.VenueInfors.Remove(ccrecord);
+            var ccrecord = db.StoreInfors.FirstOrDefault(x => x.ID == id);
+            db.StoreInfors.Remove(ccrecord);
             db.SaveChanges();
 
             return RedirectToAction("Index");

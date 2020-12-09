@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
+using System.Web.DynamicData;
 using System.Web.Mvc;
 using CheckInApp.Models;
 using CheckInApp.Services;
@@ -15,43 +17,34 @@ namespace CheckInApp.Controllers
 
     public class RoomController : Controller
     {
-        private readonly InternalCheckinappEntities _db = new InternalCheckinappEntities();
+        private readonly dbEntities _db = new dbEntities();
         private readonly QRCodeService _qr = new QRCodeService();
         private readonly DatetimeService _dt = new DatetimeService();
+        private readonly UserService _userService = new UserService();
         // GET: Room
         public ActionResult Index()
         {
             var rvm = new List<RoomViewModel>();
 
-            var room = _db.RoomInfors.ToList();
+            var room = _db.RoomInfors;
 
             foreach (var r in room)
             {
                 var rv = new RoomViewModel
                 {
                     Id = r.ID,
-                    Datetime = _dt.GetDateString(r.Datetime),
+                    Datetime = _dt.GetVNDateString(r.Datetime),
                     Name = r.Name,
                     QRCode = _qr.QRCodeView(_qr.GetQRCode(_qr.GetUrlByRoomurl(r.RoomUrl))),
-                    TrainerName = r.TrainerInfor.Fullname
+                    TrainerName = _userService.GetTrainerString(r.TrainerRoomRecords.Select(x => x.UserInfor.EmployeeInfor.Fullname)),
+                    RoomUrl = _qr.GetUrlByRoomurl(r.RoomUrl)
                 };
-                if (r.IsStore == (int)RoomIsOnsite.Hoitruong)
+
+                var sto = _db.StoreInfors.FirstOrDefault(x => x.ID == r.VenueID);
+                if (sto != null)
                 {
-                    var ve = _db.VenueInfors.FirstOrDefault(x => x.ID == r.VenueID);
-                    if (ve != null)
-                    {
-                        rv.VenueName = ve.Name;
-                        rv.VenueAddress = ve.Address;
-                    }
-                }
-                else
-                {
-                    var sto = _db.StoreInfors.FirstOrDefault(x => x.ID == r.VenueID);
-                    if (sto != null)
-                    {
-                        rv.VenueName = sto.Name;
-                        rv.VenueAddress = sto.Address;
-                    }
+                    rv.VenueName = sto.Name;
+                    rv.VenueAddress = sto.Address;
                 }
 
                 rv.Status = r.Status.GetValueOrDefault();
@@ -64,7 +57,7 @@ namespace CheckInApp.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            return View("create");
+            return View();
         }
 
 
@@ -84,7 +77,6 @@ namespace CheckInApp.Controllers
                 var ro = new RoomInfor
                 {
                     Name = tcvm.Name,
-                    TrainerID = tcvm.TrainerID[0],
                     CourseID = tcvm.CourseID == 0 ? 0 : tcvm.CourseID,
                     VenueID = tcvm.VenueID == 0 ? 0 : tcvm.VenueID,
                     Datetime = new DatetimeService().CreateEnDateTimeFromVNdate(tcvm.Datetime),
@@ -94,12 +86,90 @@ namespace CheckInApp.Controllers
                     QRCodeImage = _qr.GetQRCode(rurl),
                     RoomFee = tcvm.RoomFee ?? 0,
                     TeabreakFee = tcvm.TeabreakFee ?? 0,
-                    IsStore = tcvm.IsStore
                 };
                 _db.RoomInfors.Add(ro);
                 var trr = tcvm.TrainerID.Select(tc => new TrainerRoomRecord { RoomID = ro.ID, TrainerID = tc }).ToList();
 
                 _db.TrainerRoomRecords.AddRange(trr);
+                _db.SaveChanges();
+
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("message", "Tạo lớp thất bại!!" + ex);
+                return View();
+            }
+            ModelState.AddModelError("message", "Tạo lớp thành công!!");
+
+            TempData["Success"] = "Added Successfully!";
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id)
+        {
+            var roomInfors = _db.RoomInfors.Include(x => x.TrainerRoomRecords).FirstOrDefault(x => x.ID == id);
+            if (roomInfors != null)
+            {
+                var checkinroom = _db.CheckinInfors.Where(x => x.RoomID == id);
+                var trainerroomrecord = _db.TrainerRoomRecords.Where(x => x.RoomID == id);
+                _db.CheckinInfors.RemoveRange(checkinroom);
+                _db.TrainerRoomRecords.RemoveRange(trainerroomrecord);
+                _db.RoomInfors.Remove(roomInfors);
+                _db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            var model = _db.RoomInfors.Include(x => x.TrainerRoomRecords).FirstOrDefault(x => x.ID == id);
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, RoomCreateViewModel tcvm)
+        {
+            if (!ModelState.IsValid) return View();
+            try
+            {
+                var guid = Guid.NewGuid();
+                var rurl = _qr.GetBaseUrl(guid.ToString());
+                //insert course
+                var GetRoomById = _db.RoomInfors.FirstOrDefault(x => x.ID == id);
+                if (GetRoomById == null)
+                {
+                    //TODO
+                }
+
+                GetRoomById.Name = tcvm.Name;
+                GetRoomById.CourseID = tcvm.CourseID == 0 ? 0 : tcvm.CourseID;
+                GetRoomById.VenueID = tcvm.VenueID == 0 ? 0 : tcvm.VenueID;
+                GetRoomById.Datetime = new DatetimeService().CreateEnDateTimeFromVNdate(tcvm.Datetime);
+                GetRoomById.Status = false;
+                GetRoomById.Guid = guid;
+                GetRoomById.RoomUrl = _qr.GetRoomPath(guid);
+                GetRoomById.QRCodeImage = _qr.GetQRCode(rurl);
+                GetRoomById.RoomFee = tcvm.RoomFee ?? 0;
+                GetRoomById.TeabreakFee = tcvm.TeabreakFee ?? 0;
+                _db.RoomInfors.AddOrUpdate(GetRoomById);
+
+                var trainers = _db.TrainerRoomRecords.Where(x => x.RoomID == id);
+                var trainersIds = trainers.Select(x => x.ID).ToArray();
+
+                var set = new HashSet<int>(tcvm.TrainerID);
+                bool allThere = trainersIds.All(set.Contains);
+                if (allThere)
+                {
+                    _db.TrainerRoomRecords.RemoveRange(trainers);
+                    var trr = tcvm.TrainerID.Select(tc => new TrainerRoomRecord { RoomID = id, TrainerID = tc }).ToList();
+                    _db.TrainerRoomRecords.AddRange(trr);
+                }
+
                 _db.SaveChanges();
 
             }
@@ -124,44 +194,27 @@ namespace CheckInApp.Controllers
             }
 
             printvm.RoomId = id;
-            var trainerstring = string.Empty;
-            var trainers = _db.TrainerRoomRecords.Where(x => x.RoomID == id).ToList();
-            for (var i = trainers.Count - 1; i >= 0; i--)
-            {
-                if (i > 0)
-                {
-                    trainerstring += " | ";
-                }
-                trainerstring += trainers[i].TrainerInfor.Fullname;
-            }
 
             printvm.RoomName = ro.Name;
-            printvm.TrainerName = trainerstring;
+            printvm.TrainerName = _userService.GetTrainerString(ro.TrainerRoomRecords.Select(x => x.UserInfor.EmployeeInfor.Fullname));
 
             var cour = _db.CourseInfors.FirstOrDefault(x => x.ID == ro.CourseID);
 
             printvm.CourseName = cour.Name;
-            if (ro.IsStore == 0 | ro.IsStore == null)
-            {
-                var ve = _db.VenueInfors.FirstOrDefault(x => x.ID == ro.VenueID);
-                printvm.VenueName = ve.Name;
-            }
-            else if (ro.IsStore == 1)
-            {
-                var ve = _db.StoreInfors.FirstOrDefault(x => x.ID == ro.VenueID);
-                printvm.VenueName = ve.Name;
-            }
+
+            var ve = _db.StoreInfors.FirstOrDefault(x => x.ID == ro.VenueID);
+            printvm.VenueName = ve.Name;
 
             printvm.DatetimeEnString = new DatetimeService().GetEnDateString(ro.Datetime);
             var ck = _db.CheckinInfors.Where(x => x.RoomID == id).ToList();
             var atts = ck.Select(x => new Attendence
             {
-                Name = x.UserInfor.Fullname,
+                Name = x.UserInfor.EmployeeInfor.Fullname,
                 Id = x.UserInfor.ID,
                 PositionName = x.UserInfor.PositionInfor.Name,
                 Signature = _qr.QRCodeView(x.Signature),
-                StoreName = x.UserInfor.StoreInfor.Name,
-                MNV = x.UserInfor.MNV,
+                StoreName = x.UserInfor.EmployeeInfor.StoreInfor.Name,
+                MNV = x.UserInfor.EmployeeInfor.MNV,
                 Tel = x.UserInfor.Tel
             })
                 .ToList();
@@ -180,44 +233,26 @@ namespace CheckInApp.Controllers
                 return null;
             }
 
-            var trainerstring = string.Empty;
-            var trainers = _db.TrainerRoomRecords.Where(x => x.RoomID == id).ToList();
-            for (var i = trainers.Count - 1; i >= 0; i--)
-            {
-                if (i > 0)
-                {
-                    trainerstring += " | ";
-                }
-                trainerstring += trainers[i].TrainerInfor.Fullname;
-            }
 
             printvm.RoomName = ro.Name;
-            printvm.TrainerName = trainerstring;
+            printvm.TrainerName = _userService.GetTrainerString(ro.TrainerRoomRecords.Select(x => x.UserInfor.EmployeeInfor.Fullname));
 
             var cour = _db.CourseInfors.FirstOrDefault(x => x.ID == ro.CourseID);
 
             printvm.CourseName = cour.Name;
-            if (ro.IsStore == 0 | ro.IsStore == null)
-            {
-                var ve = _db.VenueInfors.FirstOrDefault(x => x.ID == ro.VenueID);
-                printvm.VenueName = ve.Name;
-            }
-            else if (ro.IsStore == 1)
-            {
-                var ve = _db.StoreInfors.FirstOrDefault(x => x.ID == ro.VenueID);
-                printvm.VenueName = ve.Name;
-            }
+
+            printvm.VenueName = ro.StoreInfor.Name;
 
             printvm.DatetimeEnString = new DatetimeService().GetEnDateString(ro.Datetime);
             var ck = _db.CheckinInfors.Where(x => x.RoomID == id).ToList();
             var atts = ck.Select(x => new Attendence
             {
-                Name = x.UserInfor.Fullname,
+                Name = x.UserInfor.EmployeeInfor.Fullname,
                 Id = x.UserInfor.ID,
                 PositionName = x.UserInfor.PositionInfor.Name,
                 Signature = _qr.QRCodeView(x.Signature),
-                StoreName = x.UserInfor.StoreInfor.Name,
-                MNV = x.UserInfor.MNV,
+                StoreName = x.RoomInfor.StoreInfor.Name,
+                MNV = x.UserInfor.EmployeeInfor.MNV,
                 Tel = x.UserInfor.Tel
             })
                 .ToList();

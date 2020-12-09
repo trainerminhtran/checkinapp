@@ -19,26 +19,27 @@ namespace CheckInApp.Models
         {
             this.CheckinInfors = new HashSet<CheckinInfor>();
             this.LoginInfors = new HashSet<LoginInfor>();
-            this.UserPermissionRecords = new HashSet<UserPermissionRecord>();
+            this.TrainerRoomRecords = new HashSet<TrainerRoomRecord>();
         }
     
         public int ID { get; set; }
-        public int StoreID { get; set; }
         public int PositionID { get; set; }
-        public string Fullname { get; set; }
         public string Tel { get; set; }
         public string Password { get; set; }
         public bool Status { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
-        public string MNV { get; set; }
+        public int EmployeeID { get; set; }
+        public Nullable<int> PermissionID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CheckinInfor> CheckinInfors { get; set; }
+        public virtual EmployeeInfor EmployeeInfor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LoginInfor> LoginInfors { get; set; }
+        public virtual PermissionInfor PermissionInfor { get; set; }
         public virtual PositionInfor PositionInfor { get; set; }
-        public virtual StoreInfor StoreInfor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserPermissionRecord> UserPermissionRecords { get; set; }
+        public virtual ICollection<TrainerRoomRecord> TrainerRoomRecords { get; set; }
+        public virtual PermissionInfor PermissionInfor1 { get; set; }
     }
 }

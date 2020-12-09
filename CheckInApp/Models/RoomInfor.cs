@@ -23,8 +23,7 @@ namespace CheckInApp.Models
     
         public int ID { get; set; }
         public int CourseID { get; set; }
-        public int TrainerID { get; set; }
-        public Nullable<int> VenueID { get; set; }
+        public int VenueID { get; set; }
         public string Name { get; set; }
         public string RoomUrl { get; set; }
         public byte[] QRCodeImage { get; set; }
@@ -33,13 +32,12 @@ namespace CheckInApp.Models
         public Nullable<bool> Status { get; set; }
         public Nullable<int> NoDaysGetGift { get; set; }
         public System.DateTime Datetime { get; set; }
-        public Nullable<int> IsStore { get; set; }
-        public Nullable<System.Guid> Guid { get; set; }
+        public System.Guid Guid { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CheckinInfor> CheckinInfors { get; set; }
-        public virtual TrainerInfor TrainerInfor { get; set; }
-        public virtual VenueInfor VenueInfor { get; set; }
+        public virtual CourseInfor CourseInfor { get; set; }
+        public virtual StoreInfor StoreInfor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TrainerRoomRecord> TrainerRoomRecords { get; set; }
     }

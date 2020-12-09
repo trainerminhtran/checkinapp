@@ -17,8 +17,9 @@ namespace CheckInApp.Models
         public int ID { get; set; }
         public int RoomID { get; set; }
         public int TrainerID { get; set; }
+        public Nullable<System.DateTime> Datetime { get; set; }
     
         public virtual RoomInfor RoomInfor { get; set; }
-        public virtual TrainerInfor TrainerInfor { get; set; }
+        public virtual UserInfor UserInfor { get; set; }
     }
 }

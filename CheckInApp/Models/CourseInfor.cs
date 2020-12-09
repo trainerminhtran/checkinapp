@@ -20,6 +20,7 @@ namespace CheckInApp.Models
             this.ContentCourseRecords = new HashSet<ContentCourseRecord>();
             this.CourseTestRecords = new HashSet<CourseTestRecord>();
             this.GiftCourseRecords = new HashSet<GiftCourseRecord>();
+            this.RoomInfors = new HashSet<RoomInfor>();
         }
     
         public int ID { get; set; }
@@ -35,5 +36,7 @@ namespace CheckInApp.Models
         public virtual ICollection<CourseTestRecord> CourseTestRecords { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GiftCourseRecord> GiftCourseRecords { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RoomInfor> RoomInfors { get; set; }
     }
 }

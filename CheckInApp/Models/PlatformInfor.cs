@@ -18,6 +18,7 @@ namespace CheckInApp.Models
         public PlatformInfor()
         {
             this.CourseInfors = new HashSet<CourseInfor>();
+            this.StoreInfors = new HashSet<StoreInfor>();
         }
     
         public int ID { get; set; }
@@ -26,5 +27,7 @@ namespace CheckInApp.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CourseInfor> CourseInfors { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StoreInfor> StoreInfors { get; set; }
     }
 }

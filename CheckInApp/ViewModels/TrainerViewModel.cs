@@ -9,9 +9,12 @@ namespace CheckInApp.ViewModels
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string MNV { get; set; }
         public string Tel { get; set; }
         public int provinceID { get; set; }
         public int positionID { get; set; }
+        public int StoreID { get; set; }
+
 
     }
     public class TrainerViewModel

@@ -36,9 +36,9 @@ namespace CheckInApp.Services
             var appUrl = HttpRuntime.AppDomainAppVirtualPath;
             return string.Format("{0}://{1}{2}/", request.Url.Scheme, request.Url.Authority, roomurl);
         }
-        public string getGuideIDFromRoomUrl(string url)
+        public string getGuideIDFromRoomUrl(string returnUrl)
         {
-            return url.Split('/').Last();
+            return returnUrl.Split('/').GetValue(4).ToString();
         }
         public byte[] GetQRCode(string st)
         {

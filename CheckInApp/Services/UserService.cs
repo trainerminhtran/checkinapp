@@ -22,8 +22,15 @@ namespace CheckInApp.Services
             }
             catch (Exception e)
             {
+                res.Action = "Index";
+                res.Controller = "Room";
                 return res;
             }
+        }
+
+        public string GetTrainerString(IEnumerable<string> trs)
+        {
+            return string.Join(" | ", trs);
         }
     }
 

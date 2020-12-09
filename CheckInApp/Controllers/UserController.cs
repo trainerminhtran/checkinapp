@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
@@ -15,7 +16,7 @@ namespace CheckInApp.Controllers
 
     public class UserController : BaseController
     {
-        private readonly InternalCheckinappEntities db = new InternalCheckinappEntities();
+        private readonly dbEntities _db = new dbEntities();
         private readonly UserService _us = new UserService();
         // GET: User
         public ActionResult Index()
@@ -56,34 +57,25 @@ namespace CheckInApp.Controllers
         [HttpPost]
         public ActionResult Login(UserSessionData usd)
         {
-            this.Session.Timeout = 4000;
+            this.Session.Timeout = 400;
             Session["UserTel"] = usd.UserTel;
 
             var returnUrl = usd.returnUrl;
-            var ur = db.UserInfors.FirstOrDefault(x => x.Tel == usd.UserTel);
-            var trainer = db.TrainerInfors.FirstOrDefault(x => x.Tel == usd.UserTel);
-            if (ur == null && trainer == null)
+            var ur = _db.UserInfors.FirstOrDefault(x => x.Tel == usd.UserTel);
+            if (ur == null)
             {
                 return RedirectToAction("Create", "User", new { returnUrl = returnUrl });
             }
-            else if (trainer != null)
-            {
-                Session["UserTel"] = usd.UserTel;
-
-                return RedirectToAction("index", "room");
-            }
             else
             {
-            
-
                 var uvm = new UserViewModel
                 {
-                    FullName = ur.Fullname,
+                    FullName = ur.EmployeeInfor.Fullname,
                     UserTel = ur.Tel,
                     Id = ur.ID,
                     PositionName = ur.PositionInfor.Name,
-                    StoreAddress = ur.StoreInfor.Address,
-                    StoreName = ur.StoreInfor.Name,
+                    StoreAddress = ur.EmployeeInfor.StoreInfor.Address,
+                    StoreName = ur.EmployeeInfor.StoreInfor.Name,
                     returnUrl = returnUrl
                 };
                 Session["UserViewModel"] = uvm;
@@ -99,46 +91,52 @@ namespace CheckInApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(UserCreateViewModel usd)
         {
-            var ur = new UserInfor
+            if (ModelState.IsValid)
             {
-                Fullname = usd.Name,
-                MNV = usd.MNV,
-                PositionID = usd.PositionId,
-                StoreID = usd.StoreId,
-                Status = true,
-                Tel = usd.Tel
-            };
-            db.UserInfors.Add(ur);
-            db.SaveChanges();
-            var guidId = string.Empty;
-            var nur = db.UserInfors.Include("PositionInfor").Include("StoreInfor").FirstOrDefault(x => x.ID == ur.ID);
-            try
-            {
-                var strAr = usd.returnUrl.Split('/');
-                guidId = strAr.Length == 4 ? strAr[3] : string.Empty;
+                var urf = _db.UserInfors.FirstOrDefault(x => x.Tel == usd.Tel);
+                if(urf != null) return View();
+                var ur = new UserInfor();
+                var emp = _db.EmployeeInfors.FirstOrDefault(x => x.MNV == usd.MNV);
+                if (emp == null)
+                {
+                    emp = new EmployeeInfor();
+                    emp.Fullname = usd.Name;
+                    emp.MNV = usd.MNV;
+                    emp.StoreID = usd.StoreId;
+                    _db.EmployeeInfors.AddOrUpdate(emp);
+                    _db.SaveChanges();
+                }
+                ur.EmployeeID = emp.ID;
+                ur.PositionID = usd.PositionId;
+                ur.PermissionID = (int)PermissionEnum.User;
+                ur.Status = true;
+                ur.Tel = usd.Tel;
+                _db.UserInfors.Add(ur);
+                _db.SaveChanges();
+
+                var store = _db.StoreInfors.FirstOrDefault(x => x.ID == usd.StoreId);
                 var uvm = new UserViewModel
                 {
-                    FullName = nur.Fullname,
-                    UserTel = nur.Tel,
-                    Id = nur.ID,
-                    PositionName = nur.PositionInfor.Name,
-                    StoreAddress = nur.StoreInfor.Address,
-                    StoreName = nur.StoreInfor.Name
+                    FullName = ur.EmployeeInfor.Fullname,
+                    UserTel = ur.Tel,
+                    Id = ur.ID,
+                    StoreAddress = store.Address,
+                    StoreName = store.Name
                 };
                 Session["UserViewModel"] = uvm;
-                return RedirectToAction(strAr[2], strAr[1], new { id = guidId });
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                TempData["Success"] = "Added Successfully!";
+              
 
-                ModelState.AddModelError("message", "Tạo lớp thất bại!!");
+                var rum = _us.ReturnUrlModelService(usd.returnUrl);
+                //ViewBag.xxx = rum;
+                //return View();
+                return RedirectToAction(rum.Action, rum.Controller, new { id = rum.Guid });
+
+            }
+            else
+            {
+                ModelState.AddModelError("message", "Tạo người dùng thất bại!!");
                 return View();
             }
-
-
-
         }
 
         [AllowAnonymous]
@@ -156,6 +154,7 @@ namespace CheckInApp.Controllers
             {
                 Console.Write(e.Message);
                 Console.Write(e.InnerException);
+                return RedirectToAction("Login",new {returnUrl });
             }
             return View(us);
         }

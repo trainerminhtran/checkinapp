@@ -55,7 +55,7 @@ namespace CheckInApp.Services
 
     public class CustomAuthorizeAttribute : AuthorizeAttribute
     {
-        private  readonly InternalCheckinappEntities _db = new InternalCheckinappEntities();
+        private readonly dbEntities _db = new dbEntities();
         private readonly string[] allowedroles;
         public CustomAuthorizeAttribute(params string[] roles)
         {
@@ -64,32 +64,13 @@ namespace CheckInApp.Services
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             const bool authorize = false;
-            var userTel = string.Empty;
-            try
-            {
-                userTel=Convert.ToString(httpContext.Session["UserTel"]);
-            }
-            catch (Exception e)
-            {
-                // ignored
-                var ignore = e.Message;
-            }
+            var userTel = Convert.ToString(httpContext.Session["UserTel"]);
+            if (string.IsNullOrEmpty(userTel)) return authorize;
 
-            var trainer = _db.TrainerInfors.FirstOrDefault(x => x.Tel == userTel);
-            var learner = _db.UserInfors.FirstOrDefault(x=>x.Tel == userTel);
-            var role = string.Empty;
 
-            if (learner != null)
-            {
-                role = "Learner";
-            }
-            if (trainer != null)
-            {
-                role = "Trainer";
-            }
-
-            if (string.IsNullOrEmpty(userTel) || (!(trainer != null | learner != null))) return authorize;
-            return allowedroles.Any(r => r == role) || authorize;
+            var user = _db.UserInfors.FirstOrDefault(x => x.Tel == userTel);
+            var permission = _db.PermissionInfors.FirstOrDefault(x => x.ID == user.PermissionID);
+            return allowedroles.Any(r => r == permission.Name) || authorize;
         }
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)

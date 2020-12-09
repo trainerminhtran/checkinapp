@@ -16,7 +16,7 @@ namespace CheckInApp.Controllers
 
     public class ContentTController : Controller
     {
-        private InternalCheckinappEntities db = new InternalCheckinappEntities();
+        private dbEntities db = new dbEntities();
         private Config cf = new Config();
 
         // GET: Content

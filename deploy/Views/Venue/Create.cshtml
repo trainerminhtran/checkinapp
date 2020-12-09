@@ -38,23 +38,35 @@
 
                         }
                         <div class="form-group">
-                            <label>Name:</label>
-                            <input type="text" name="Name" class="form-control "  required/>
-                        </div>
-                        <div class="form-group">
-                            <label>Tỉnh thành:</label> 
-                            <select id="ddlprovince" class="form-control select2" name="provinceID"  required style="width: 100%;">
+                            <label>Hình thức training:</label> 
+                            <select id="ddlplatform" class="form-control select2" name="platformID"  onchange="GetProvinces()"  required style="width: 100%;">
                             </select>
                         </div>
-                         <div class="form-group">
+                        <div class="form-group">
+                            <label>Đối tượng:</label>
+                            <input type="text" name="Name" class="form-control " required />
+                        </div>
+                        <div class="form-group">
+                            <label>Tỉnh thành:</label>
+                            <select id="ddlprovince" class="form-control select2" name="provinceID" onchange="GetAllDistrict()" required style="width: 100%;">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Quận/huyện:</label>
+                            <select id="ddldistrict" class="form-control select2" name="districtID" required style="width: 100%;">
+                            </select>
+                        </div>
+
+
+                        <div class="form-group">
                             <label>Address:</label>
-                            <input type="text" name="Address" class="form-control "  required/>
+                            <input type="text" name="Address" class="form-control " required />
                         </div>
-                         <div class="form-group">
+                        <div class="form-group">
                             <label>Tên nhân viên Khách Sạn:</label>
-                            <input type="text" name="ContactName" class="form-control "  required/>
+                            <input type="text" name="ContactName" class="form-control "  />
                         </div>
-                       
+
                         <div class="form-group">
                             <label>Số điện thoại nhân viên khách sạn:</label>
 
@@ -62,13 +74,13 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                 </div>
-                              
+
                                 <input type="text" class="form-control" name="ContactTel" data-inputmask='"mask": "(999) 999-9999"' data-mask>
                             </div>
                             <!-- /.input group -->
                         </div>
-                      
-                      
+
+
                     </div>
                     <!-- /.card-body -->
 
@@ -91,20 +103,49 @@
     <!-- InputMask -->
     <script src="../../plugins/moment/moment.min.js"></script>
     <script src="../../plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+    <script src="../../dist/bootoast.min.js"></script>
+
     <!-- date-range-picker -->
     <script>
-        $(function() {
+        $(function () {
             //Initialize Select2 Elements
-            $('#ddlprovince').select2({ placeholder: 'Chọn một tỉnh/thành' });
-            GetProvinces();
+            $('#ddlplatform').select2({ placeholder: 'Chọn một hình thức' });
 
-          
+            $('#ddlprovince').select2({ placeholder: 'Chọn một Tỉnh/Thành' });
+            $('#ddldistrict').select2({ placeholder: 'Chọn một Quận/Huyện' });
+            GetPlatform();
+            GetProvinces();
+            //GetAllDistrict();
+            GetAllInitDistrict();
             //Money Euro
-            $('[data-mask]').inputmask()
+            $('[data-mask]').inputmask();
 
         })
     </script>
-    <script >
+    <script>
+
+        function GetPlatform() {
+
+            var url = "/api/platforminfor/GetPlatformInfors/";
+            var markup = "";
+
+            $.ajax({
+                url: url,
+                cache: false,
+                success: function (data) {
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Id + ">" + data[x].Name + "</option>";
+                    }
+                    $("#ddlplatform").html(markup).show();
+                },
+                error: function (response) {
+                    bootoast.toast({
+                        message: response,
+                        type: 'danger'
+                    });
+                }
+            });
+        }
         function GetPositions() {
             var url = "/api/userinfor/GetAllPosition/";
             var markup = "";
@@ -126,20 +167,68 @@
                 }
             });
         }
-        
+
         function GetProvinces() {
 
             var url = "/api/storeinfor/GetAllProvince/";
-            var markup  = "";
+            var markup = "";
 
             $.ajax({
                 url: url,
                 cache: false,
                 success: function (data) {
+                    markup= "<option value='1'>Khác</option>";
                     for (var x = 0; x < data.length; x++) {
                         markup += "<option value=" + data[x].Id + ">" + data[x].Name + "</option>";
                     }
                     $("#ddlprovince").html(markup).show();
+                },
+                error: function (response) {
+                    bootoast.toast({
+                        message: response,
+                        type: 'danger'
+                    });
+                }
+            });
+        }
+
+        function GetAllInitDistrict() {
+            var url = "/api/storeinfor/GetAllDistrict/";
+            var markup = "";
+
+            $.ajax({
+                url: url,
+                cache: false,
+                data: { "provinceId": 1 },
+                success: function (data) {
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Id + ">" + data[x].Name + "</option>";
+                    }
+                    $("#ddldistrict").html(markup).show();
+                },
+                error: function (response) {
+                    bootoast.toast({
+                        message: response,
+                        type: 'danger'
+                    });
+                }
+            });
+        }
+        function GetAllDistrict() {
+            var value = $('#ddlisstore').val();
+            var provinceID = $('#ddlprovince').val();
+            var url = "/api/storeinfor/GetAllDistrict/";
+            var markup = "";
+
+            $.ajax({
+                url: url,
+                cache: false,
+                data: { "provinceId": provinceID },
+                success: function (data) {
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Id + ">" + data[x].Name + "</option>";
+                    }
+                    $("#ddldistrict").html(markup).show();
                 },
                 error: function (response) {
                     bootoast.toast({

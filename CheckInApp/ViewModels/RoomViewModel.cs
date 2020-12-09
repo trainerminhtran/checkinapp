@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -15,6 +16,7 @@ namespace CheckInApp.ViewModels
         public string VenueAddress { get; set; }
         public bool Status { get; set; }
         public string QRCode{ get; set; }
+        public string RoomUrl{ get; set; }
     }
 
 
@@ -49,6 +51,7 @@ namespace CheckInApp.ViewModels
         public int Id { get; set; }
         public string MNV { get; set; }
         public string Name { get; set; }
+        [Display(Name="Position")]
         public string PositionName { get; set; }
         public string Tel { get; set; }
         public string StoreName { get; set; }

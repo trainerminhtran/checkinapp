@@ -14,11 +14,19 @@ namespace CheckInApp.Models
     
     public partial class EmployeeInfor
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public EmployeeInfor()
+        {
+            this.UserInfors = new HashSet<UserInfor>();
+        }
+    
         public int ID { get; set; }
         public string MNV { get; set; }
         public string Fullname { get; set; }
-        public Nullable<int> StoreID { get; set; }
+        public int StoreID { get; set; }
     
         public virtual StoreInfor StoreInfor { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserInfor> UserInfors { get; set; }
     }
 }

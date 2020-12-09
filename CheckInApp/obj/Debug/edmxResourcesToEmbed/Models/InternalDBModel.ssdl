@@ -135,15 +135,6 @@
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="ProvinceID" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="EmployeeInfor">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="MNV" Type="nchar" MaxLength="20" />
-    <Property Name="Fullname" Type="nvarchar(max)" />
-    <Property Name="StoreID" Type="int" />
-  </EntityType>
   <EntityType Name="GiftCourseRecord">
     <Key>
       <PropertyRef Name="ID" />
@@ -271,8 +262,7 @@
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CourseID" Type="int" Nullable="false" />
-    <Property Name="TrainerID" Type="int" Nullable="false" />
-    <Property Name="VenueID" Type="int" />
+    <Property Name="VenueID" Type="int" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="RoomUrl" Type="nvarchar(max)" Nullable="false" />
     <Property Name="QRCodeImage" Type="image" Nullable="false" />
@@ -281,8 +271,7 @@
     <Property Name="Status" Type="bit" />
     <Property Name="NoDaysGetGift" Type="int" />
     <Property Name="Datetime" Type="datetime" Nullable="false" />
-    <Property Name="IsStore" Type="int" />
-    <Property Name="Guid" Type="uniqueidentifier" />
+    <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
   </EntityType>
   <EntityType Name="StoreInfor">
     <Key>
@@ -296,6 +285,9 @@
     <Property Name="MCScode" Type="nvarchar" MaxLength="50" />
     <Property Name="DealeCode" Type="nvarchar" MaxLength="50" />
     <Property Name="Status" Type="bit" />
+    <Property Name="ContactName" Type="nvarchar" MaxLength="50" />
+    <Property Name="ContactTel" Type="nvarchar" MaxLength="50" />
+    <Property Name="PlatformID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="TestInfor">
     <Key>
@@ -315,17 +307,6 @@
     <Property Name="QuestionID" Type="int" Nullable="false" />
     <Property Name="Status" Type="bit" />
   </EntityType>
-  <EntityType Name="TrainerInfor">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ProvinceID" Type="int" Nullable="false" />
-    <Property Name="PositionID" Type="int" Nullable="false" />
-    <Property Name="Fullname" Type="nvarchar" MaxLength="150" Nullable="false" />
-    <Property Name="Tel" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="Status" Type="bit" Nullable="false" />
-  </EntityType>
   <EntityType Name="TrainerRoomRecord">
     <Key>
       <PropertyRef Name="ID" />
@@ -333,6 +314,7 @@
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="RoomID" Type="int" Nullable="false" />
     <Property Name="TrainerID" Type="int" Nullable="false" />
+    <Property Name="Datetime" Type="datetime" />
   </EntityType>
   <EntityType Name="UserInfor">
     <Key>
@@ -346,7 +328,7 @@
     <Property Name="Password" Type="nvarchar" MaxLength="500" />
     <Property Name="Status" Type="bit" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" />
-    <Property Name="MNV" Type="nchar" MaxLength="20" />
+    <Property Name="MNV" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="UserPermissionRecord">
     <Key>
@@ -356,18 +338,6 @@
     <Property Name="UserID" Type="int" Nullable="false" />
     <Property Name="PermissionID" Type="int" Nullable="false" />
     <Property Name="Datetime" Type="datetime" Nullable="false" />
-  </EntityType>
-  <EntityType Name="VenueInfor">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ProvinceID" Type="int" />
-    <Property Name="Name" Type="nvarchar(max)" />
-    <Property Name="Address" Type="nvarchar(max)" />
-    <Property Name="Status" Type="bit" />
-    <Property Name="ContactName" Type="nvarchar" MaxLength="50" />
-    <Property Name="ContactTel" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <Association Name="FK_AccountInfor_ChannelInfor">
     <End Role="ChannelInfor" Type="Self.ChannelInfor" Multiplicity="1" />
@@ -561,18 +531,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_EmployeeInfor_StoreInfor">
-    <End Role="StoreInfor" Type="Self.StoreInfor" Multiplicity="0..1" />
-    <End Role="EmployeeInfor" Type="Self.EmployeeInfor" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="StoreInfor">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="EmployeeInfor">
-        <PropertyRef Name="StoreID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_GiftCourseRecord_CourseInfor">
     <End Role="CourseInfor" Type="Self.CourseInfor" Multiplicity="0..1" />
     <End Role="GiftCourseRecord" Type="Self.GiftCourseRecord" Multiplicity="*" />
@@ -705,14 +663,62 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_RoomInfor_TrainerInfor">
-    <End Role="TrainerInfor" Type="Self.TrainerInfor" Multiplicity="1" />
+  <Association Name="FK_RoomInfor_CourseInfor">
+    <End Role="CourseInfor" Type="Self.CourseInfor" Multiplicity="1" />
     <End Role="RoomInfor" Type="Self.RoomInfor" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="TrainerInfor">
+      <Principal Role="CourseInfor">
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="RoomInfor">
+        <PropertyRef Name="CourseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoomInfor_CourseInfor1">
+    <End Role="CourseInfor" Type="Self.CourseInfor" Multiplicity="1" />
+    <End Role="RoomInfor" Type="Self.RoomInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CourseInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RoomInfor">
+        <PropertyRef Name="CourseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoomInfor_StoreInfor">
+    <End Role="StoreInfor" Type="Self.StoreInfor" Multiplicity="1" />
+    <End Role="RoomInfor" Type="Self.RoomInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StoreInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RoomInfor">
+        <PropertyRef Name="VenueID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoomTrainerRecord_RoomInfor">
+    <End Role="RoomInfor" Type="Self.RoomInfor" Multiplicity="1" />
+    <End Role="TrainerRoomRecord" Type="Self.TrainerRoomRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RoomInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TrainerRoomRecord">
+        <PropertyRef Name="RoomID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoomTrainerRecord_UserInfor">
+    <End Role="UserInfor" Type="Self.UserInfor" Multiplicity="1" />
+    <End Role="TrainerRoomRecord" Type="Self.TrainerRoomRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TrainerRoomRecord">
         <PropertyRef Name="TrainerID" />
       </Dependent>
     </ReferentialConstraint>
@@ -741,6 +747,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_StoreInfor_PlatformInfor">
+    <End Role="PlatformInfor" Type="Self.PlatformInfor" Multiplicity="1" />
+    <End Role="StoreInfor" Type="Self.StoreInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PlatformInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="StoreInfor">
+        <PropertyRef Name="PlatformID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_TestQuestionRecord_QuestionInfor">
     <End Role="QuestionInfor" Type="Self.QuestionInfor" Multiplicity="1" />
     <End Role="TestQuestionRecord" Type="Self.TestQuestionRecord" Multiplicity="*" />
@@ -762,54 +780,6 @@
       </Principal>
       <Dependent Role="TestQuestionRecord">
         <PropertyRef Name="TestID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TrainerInfor_PositionInfor">
-    <End Role="PositionInfor" Type="Self.PositionInfor" Multiplicity="1" />
-    <End Role="TrainerInfor" Type="Self.TrainerInfor" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PositionInfor">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="TrainerInfor">
-        <PropertyRef Name="PositionID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TrainerInfor_ProvinceInfor">
-    <End Role="ProvinceInfor" Type="Self.ProvinceInfor" Multiplicity="1" />
-    <End Role="TrainerInfor" Type="Self.TrainerInfor" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProvinceInfor">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="TrainerInfor">
-        <PropertyRef Name="ProvinceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TrainerRoomRecord_RoomInfor">
-    <End Role="RoomInfor" Type="Self.RoomInfor" Multiplicity="1" />
-    <End Role="TrainerRoomRecord" Type="Self.TrainerRoomRecord" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="RoomInfor">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="TrainerRoomRecord">
-        <PropertyRef Name="RoomID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_TrainerRoomRecord_TrainerInfor">
-    <End Role="TrainerInfor" Type="Self.TrainerInfor" Multiplicity="1" />
-    <End Role="TrainerRoomRecord" Type="Self.TrainerRoomRecord" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="TrainerInfor">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="TrainerRoomRecord">
-        <PropertyRef Name="TrainerID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -861,18 +831,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_VenueInfor_ProvinceInfor">
-    <End Role="ProvinceInfor" Type="Self.ProvinceInfor" Multiplicity="0..1" />
-    <End Role="VenueInfor" Type="Self.VenueInfor" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProvinceInfor">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="VenueInfor">
-        <PropertyRef Name="ProvinceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityContainer Name="InternalCheckinappModelStoreContainer">
     <EntitySet Name="AccountInfor" EntityType="Self.AccountInfor" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AnswerInfor" EntityType="Self.AnswerInfor" Schema="dbo" store:Type="Tables" />
@@ -889,7 +847,6 @@
     <EntitySet Name="CourseInfor" EntityType="Self.CourseInfor" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CourseTestRecord" EntityType="Self.CourseTestRecord" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DistrictInfor" EntityType="Self.DistrictInfor" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="EmployeeInfor" EntityType="Self.EmployeeInfor" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="GiftCourseRecord" EntityType="Self.GiftCourseRecord" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="GiftInfor" EntityType="Self.GiftInfor" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="GiftType" EntityType="Self.GiftType" Schema="dbo" store:Type="Tables" />
@@ -907,11 +864,9 @@
     <EntitySet Name="StoreInfor" EntityType="Self.StoreInfor" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TestInfor" EntityType="Self.TestInfor" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TestQuestionRecord" EntityType="Self.TestQuestionRecord" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="TrainerInfor" EntityType="Self.TrainerInfor" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TrainerRoomRecord" EntityType="Self.TrainerRoomRecord" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserInfor" EntityType="Self.UserInfor" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserPermissionRecord" EntityType="Self.UserPermissionRecord" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="VenueInfor" EntityType="Self.VenueInfor" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_AccountInfor_ChannelInfor" Association="Self.FK_AccountInfor_ChannelInfor">
       <End Role="ChannelInfor" EntitySet="ChannelInfor" />
       <End Role="AccountInfor" EntitySet="AccountInfor" />
@@ -976,10 +931,6 @@
       <End Role="ProvinceInfor" EntitySet="ProvinceInfor" />
       <End Role="DistrictInfor" EntitySet="DistrictInfor" />
     </AssociationSet>
-    <AssociationSet Name="FK_EmployeeInfor_StoreInfor" Association="Self.FK_EmployeeInfor_StoreInfor">
-      <End Role="StoreInfor" EntitySet="StoreInfor" />
-      <End Role="EmployeeInfor" EntitySet="EmployeeInfor" />
-    </AssociationSet>
     <AssociationSet Name="FK_GiftCourseRecord_CourseInfor" Association="Self.FK_GiftCourseRecord_CourseInfor">
       <End Role="CourseInfor" EntitySet="CourseInfor" />
       <End Role="GiftCourseRecord" EntitySet="GiftCourseRecord" />
@@ -1024,9 +975,25 @@
       <End Role="AreaInfor" EntitySet="AreaInfor" />
       <End Role="RegionInfor" EntitySet="RegionInfor" />
     </AssociationSet>
-    <AssociationSet Name="FK_RoomInfor_TrainerInfor" Association="Self.FK_RoomInfor_TrainerInfor">
-      <End Role="TrainerInfor" EntitySet="TrainerInfor" />
+    <AssociationSet Name="FK_RoomInfor_CourseInfor" Association="Self.FK_RoomInfor_CourseInfor">
+      <End Role="CourseInfor" EntitySet="CourseInfor" />
       <End Role="RoomInfor" EntitySet="RoomInfor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoomInfor_CourseInfor1" Association="Self.FK_RoomInfor_CourseInfor1">
+      <End Role="CourseInfor" EntitySet="CourseInfor" />
+      <End Role="RoomInfor" EntitySet="RoomInfor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoomInfor_StoreInfor" Association="Self.FK_RoomInfor_StoreInfor">
+      <End Role="StoreInfor" EntitySet="StoreInfor" />
+      <End Role="RoomInfor" EntitySet="RoomInfor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoomTrainerRecord_RoomInfor" Association="Self.FK_RoomTrainerRecord_RoomInfor">
+      <End Role="RoomInfor" EntitySet="RoomInfor" />
+      <End Role="TrainerRoomRecord" EntitySet="TrainerRoomRecord" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoomTrainerRecord_UserInfor" Association="Self.FK_RoomTrainerRecord_UserInfor">
+      <End Role="UserInfor" EntitySet="UserInfor" />
+      <End Role="TrainerRoomRecord" EntitySet="TrainerRoomRecord" />
     </AssociationSet>
     <AssociationSet Name="FK_StoreInfor_AccountInfor" Association="Self.FK_StoreInfor_AccountInfor">
       <End Role="AccountInfor" EntitySet="AccountInfor" />
@@ -1036,6 +1003,10 @@
       <End Role="DistrictInfor" EntitySet="DistrictInfor" />
       <End Role="StoreInfor" EntitySet="StoreInfor" />
     </AssociationSet>
+    <AssociationSet Name="FK_StoreInfor_PlatformInfor" Association="Self.FK_StoreInfor_PlatformInfor">
+      <End Role="PlatformInfor" EntitySet="PlatformInfor" />
+      <End Role="StoreInfor" EntitySet="StoreInfor" />
+    </AssociationSet>
     <AssociationSet Name="FK_TestQuestionRecord_QuestionInfor" Association="Self.FK_TestQuestionRecord_QuestionInfor">
       <End Role="QuestionInfor" EntitySet="QuestionInfor" />
       <End Role="TestQuestionRecord" EntitySet="TestQuestionRecord" />
@@ -1043,22 +1014,6 @@
     <AssociationSet Name="FK_TestQuestionRecord_TestInfor" Association="Self.FK_TestQuestionRecord_TestInfor">
       <End Role="TestInfor" EntitySet="TestInfor" />
       <End Role="TestQuestionRecord" EntitySet="TestQuestionRecord" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TrainerInfor_PositionInfor" Association="Self.FK_TrainerInfor_PositionInfor">
-      <End Role="PositionInfor" EntitySet="PositionInfor" />
-      <End Role="TrainerInfor" EntitySet="TrainerInfor" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TrainerInfor_ProvinceInfor" Association="Self.FK_TrainerInfor_ProvinceInfor">
-      <End Role="ProvinceInfor" EntitySet="ProvinceInfor" />
-      <End Role="TrainerInfor" EntitySet="TrainerInfor" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TrainerRoomRecord_RoomInfor" Association="Self.FK_TrainerRoomRecord_RoomInfor">
-      <End Role="RoomInfor" EntitySet="RoomInfor" />
-      <End Role="TrainerRoomRecord" EntitySet="TrainerRoomRecord" />
-    </AssociationSet>
-    <AssociationSet Name="FK_TrainerRoomRecord_TrainerInfor" Association="Self.FK_TrainerRoomRecord_TrainerInfor">
-      <End Role="TrainerInfor" EntitySet="TrainerInfor" />
-      <End Role="TrainerRoomRecord" EntitySet="TrainerRoomRecord" />
     </AssociationSet>
     <AssociationSet Name="FK_UserInfor_PositionInfor" Association="Self.FK_UserInfor_PositionInfor">
       <End Role="PositionInfor" EntitySet="PositionInfor" />
@@ -1075,10 +1030,6 @@
     <AssociationSet Name="FK_UserPermissionRecord_UserInfor" Association="Self.FK_UserPermissionRecord_UserInfor">
       <End Role="UserInfor" EntitySet="UserInfor" />
       <End Role="UserPermissionRecord" EntitySet="UserPermissionRecord" />
-    </AssociationSet>
-    <AssociationSet Name="FK_VenueInfor_ProvinceInfor" Association="Self.FK_VenueInfor_ProvinceInfor">
-      <End Role="ProvinceInfor" EntitySet="ProvinceInfor" />
-      <End Role="VenueInfor" EntitySet="VenueInfor" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

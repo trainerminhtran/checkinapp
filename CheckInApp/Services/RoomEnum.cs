@@ -5,9 +5,18 @@ using System.Web;
 
 namespace CheckInApp.Services
 {
-    public enum RoomIsOnsite
+    public enum RoomEnum
     {
-        Hoitruong =0,
-        Onsite=1
+        Hoitruong =1,
+        Onsite,
+        Livestream,
+        Webtraining,
+        Event
+    }
+
+    public enum PermissionEnum
+    {
+        User =1,
+        Trainer
     }
 }

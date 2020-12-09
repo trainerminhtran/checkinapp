@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="../../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
     <!-- Bootstrap4 Duallistbox -->
     <link rel="stylesheet" href="../../plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+    <link rel="stylesheet" href="../../plugins/bootstrap-datepicker-1.9.0-dist/css/bootstrap-datepicker.min.css">
+
     <!-- daterange picker -->
 }
 <div class="container-fluid">
@@ -19,7 +21,7 @@
             <!-- general form elements -->
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Thêm Venue</h3>
+                    <h3 class="card-title">Thêm lớp học</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
@@ -41,16 +43,16 @@
                             <label>Name:</label>
                             <input type="text" name="Name" class="form-control " required />
                         </div>
+
+                        <!-- Date -->
                         <div class="form-group">
                             <label>Ngày bắt đầu:</label>
-
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                            <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                <input type="text" name="Datetime" class="form-control datetimepicker-input" data-target="#reservationdate" />
+                                <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
-                                <input type="text" class="form-control" name="Datetime" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask required>
                             </div>
-                            <!-- /.input group -->
                         </div>
                         <div class="form-group">
                             <label>Trainers:</label>
@@ -67,15 +69,9 @@
                             <select id="ddlprovince" class="form-control select2" name="ProvinceID" onchange="javascript:GetVenues()" required style="width: 100%;">
                             </select>
                         </div>
+
                         <div class="form-group">
-                            <label>Địa điểm training ở Hội trường/Store:</label>
-                            <select id="ddlisstore" class="form-control select2" name="IsStore" required style="width: 100%;" onchange="javascript:GetVenues()">
-                                <option value="0">Hội trường</option>
-                                <option value="1">Store</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Training tại tỉnh:</label>
+                            <label>Venue:</label>
                             <select id="ddlvenue" class="form-control select2" name="VenueID" required style="width: 100%;">
                             </select>
                         </div>
@@ -102,6 +98,8 @@
     <script src="../../plugins/moment/moment.min.js"></script>
     <script src="../../plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
     <!-- date-range-picker -->
+    <script src="../../plugins/bootstrap-datepicker-1.9.0-dist/js/bootstrap-datepicker.min.js"></script>
+
     <script>
         $(function () {
             //Initialize Select2 Elements
@@ -111,25 +109,43 @@
             $('#ddltrainers').select2({ placeholder: 'Chọn một/nhiều trainer' });
             $('#ddlcourse').select2({ placeholder: 'Chọn khóa học' });
 
-
+            $('#reservationdate').datepicker({
+                format: 'dd/mm/yyyy',
+                startDate: '-3d'
+            });
             //Money Euro
-            $('[data-mask]').inputmask();
             GetProvinces();
-            GetVenues();
+            GetInitVenues();
             GetTrainers();
             GetCourse();
         })
     </script>
     <script>
+
+        function GetInitVenues() {
+            var markup = "";
+            var url = "/api/storeinfor/GetAllStore/";
+            $.ajax({
+                url: url,
+                cache: false,
+                data: { "provinceId": 1 },
+                success: function (data) {
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Id + ">" + data[x].Name + "</option>";
+                    }
+                    $("#ddlvenue").html(markup).show();
+                },
+                error: function (response) {
+                    bootoast.toast({
+                        message: "Đã có lỗi xảy ra hoặc không tìm thấy thông tin.",
+                        type: 'danger'
+                    });
+                }
+            });
+        }
         function GetVenues() {
             var markup = "";
-            var url = "";
-            var value = $('#ddlisstore').val();
-            if (value == 0) {
-                url = "/api/storeinfor/GetAllVenue/";
-            } else {
-                url = "/api/storeinfor/GetAllStore/";
-            }
+            var url = "/api/storeinfor/GetAllStore/";
             var provinceID = $('#ddlprovince').val();
             $.ajax({
                 url: url,
@@ -159,6 +175,7 @@
                 url: url,
                 cache: false,
                 success: function (data) {
+                    markup= "<option value='1'>Khác</option>";
                     for (var x = 0; x < data.length; x++) {
                         markup += "<option value=" + data[x].Id + ">" + data[x].Name + "</option>";
                     }
@@ -206,7 +223,8 @@
                 cache: false,
                 success: function (data) {
                     for (var x = 0; x < data.length; x++) {
-                        markup += "<option value=" + data[x].Id + ">" + data[x].Name + "</option>";
+
+                        markup += "<option value=" + data[x].Id + " >" + data[x].Name + "</option>";
                     }
                     $("#ddlcourse").html(markup).show();
                 },

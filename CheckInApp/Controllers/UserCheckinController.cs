@@ -13,31 +13,31 @@ namespace CheckInApp.Controllers
     [CustomAuthenticationFilter]
     public class UserCheckinController : Controller
     {
-        private readonly InternalCheckinappEntities _db = new InternalCheckinappEntities();
-        private readonly QRCodeService qr = new QRCodeService();
+        private readonly dbEntities _db = new dbEntities();
+        private readonly QRCodeService _qr = new QRCodeService();
+        private readonly UserService _userService = new UserService();
+        private readonly DatetimeService _dt = new DatetimeService();
         // GET: UserCheckin
-        [CustomAuthorize("Learner","Trainer")]
+        [CustomAuthorize("User", "Trainer")]
 
-        public ActionResult Index(Guid id,string message)
+        public ActionResult Index(Guid id, string message, string checkinId)
         {
             if (!(Session["UserViewModel"] is UserViewModel u))
             {
                 return null;
             }
+
+
             var ro = _db.RoomInfors.FirstOrDefault(x => x.Guid == id);
-            
+
             if (ro == null)
             {
                 return null;
             }
 
-            var course = _db.CourseInfors.FirstOrDefault(x => x.ID == ro.CourseID);
-            if (course== null)
-            {
-                return null;
-            }
 
-            var venueName = ro.IsStore == (int)RoomIsOnsite.Hoitruong ? _db.VenueInfors.FirstOrDefault(x => x.ID == ro.VenueID)?.Name : _db.StoreInfors.FirstOrDefault(x => x.ID == ro.VenueID)?.Name;
+            var venueName = ro.StoreInfor.Name;
+            long.TryParse(checkinId, out var temcheck);
             var uvm = new UserCheckinViewModel
             {
                 Id = u.Id,
@@ -45,11 +45,27 @@ namespace CheckInApp.Controllers
                 PositionName = u.PositionName,
                 UserTel = u.UserTel,
                 RoomId = ro.ID,
-                TrainerName = ro.TrainerInfor.Fullname,
-                CourseName = course.Name,
+                TrainerName = _userService.GetTrainerString(ro.TrainerRoomRecords.Select(x => x.UserInfor.EmployeeInfor.Fullname)),
+                CourseName = ro.CourseInfor.Name,
                 Venue = venueName,
-                message = message
+                message = message,
+                checkinId = temcheck,
+                Date = _dt.GetVNDateString(ro.Datetime),
+                IsMotivationGift = false
             };
+
+            var ischeckin = _db.CheckinInfors.FirstOrDefault(x => x.RoomInfor.Guid == id && x.UserInfor.ID == u.Id);
+            if (ischeckin != null)
+            {
+                ViewBag.isCheckin = true;
+                uvm.checkinId = ischeckin.ID;
+                uvm.IsMotivationGift = ischeckin.IsMotivationGift.GetValueOrDefault();
+            }
+            else
+            {
+                ViewBag.isCheckin = false;
+            }
+
             return View(uvm);
         }
         [HttpPost]
@@ -58,9 +74,10 @@ namespace CheckInApp.Controllers
             if (!ModelState.IsValid) { ModelState.AddModelError("message", "Cập nhật chữ ký thất bại!!"); return View(); }
 
             var ro = _db.RoomInfors.FirstOrDefault(x => x.ID == us.RoomId);
-            try
+            if (ro != null)
             {
-                if (!ro.Status.GetValueOrDefault())
+                var cou = _db.CourseInfors.Find(ro.CourseID);
+                if (cou != null && (!ro.Status.GetValueOrDefault() || !cou.Status.GetValueOrDefault()))
                 {
                     ModelState.AddModelError("message", "Đã hết thời gian điểm danh!!");
                     return RedirectToAction("Index", new { ro.Guid, message = "Đã hết thời gian điểm danh!!" });
@@ -75,14 +92,13 @@ namespace CheckInApp.Controllers
                 };
                 _db.CheckinInfors.Add(ck);
                 _db.SaveChanges();
+                return RedirectToAction("Index", new { ro.Guid, message = "Thành công", checkinId = ck.ID.ToString() });
 
             }
-            catch (Exception)
+            else
             {
-                return RedirectToAction("Index",new {ro.Guid, message ="Thất bại, thử lại."});
+                ModelState.AddModelError("message", "Cập nhật chữ ký thất bại!!"); return View();
             }
-
-            return RedirectToAction("Index", new { ro.Guid, message = "Thành công" });
 
         }
         public ActionResult DoCheckin(Guid id)
@@ -93,8 +109,9 @@ namespace CheckInApp.Controllers
             var preCheckin = new PreCheckinViewModel();
             if (ro == null) return View(preCheckin);
             preCheckin.url = ro.RoomUrl;
-            preCheckin.TrainerName = ro.TrainerInfor.Fullname;
-            preCheckin.QRCode = qr.QRCodeView(ro.QRCodeImage);
+            preCheckin.TrainerName =
+                _userService.GetTrainerString(ro.TrainerRoomRecords.Select(x => x.UserInfor.EmployeeInfor.Fullname));
+            preCheckin.QRCode = _qr.QRCodeView(ro.QRCodeImage);
 
             return View(preCheckin);
         }

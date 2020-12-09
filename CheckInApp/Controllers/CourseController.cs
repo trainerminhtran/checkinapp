@@ -17,7 +17,7 @@ namespace CheckInApp.Controllers
 
     public class CourseController : Controller
     {
-        private InternalCheckinappEntities db = new InternalCheckinappEntities();
+        private dbEntities db = new dbEntities();
 
         // GET: Course
         public ActionResult Index()
@@ -59,7 +59,7 @@ namespace CheckInApp.Controllers
                 {
                     //insert course
                     var cou = new CourseInfor();
-                    cou.Name = courseInfor.Name;
+                    cou.Name = ((RoomEnum)courseInfor.platformID).ToString() + courseInfor.Datetime.Replace("/",".");
                     cou.PlatformID = courseInfor.platformID;
                     cou.Datetime = new DatetimeService().CreateEnDateTimeFromVNdate(courseInfor.Datetime);
                     cou.Status = true;

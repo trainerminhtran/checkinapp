@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="checkinappModelStoreContainer" CdmEntityContainer="checkinappEntities">
+  <EntityContainerMapping StorageEntityContainer="CheckinAppModelStoreContainer" CdmEntityContainer="dbEntities">
     <EntitySetMapping Name="AccountInfors">
-      <EntityTypeMapping TypeName="checkinappModel.AccountInfor">
+      <EntityTypeMapping TypeName="CheckinAppModel.AccountInfor">
         <MappingFragment StoreEntitySet="AccountInfor">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Fullname" ColumnName="Fullname" />
@@ -13,7 +13,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="AnswerInfors">
-      <EntityTypeMapping TypeName="checkinappModel.AnswerInfor">
+      <EntityTypeMapping TypeName="CheckinAppModel.AnswerInfor">
         <MappingFragment StoreEntitySet="AnswerInfor">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="CheckinInforID" ColumnName="CheckinInforID" />
@@ -23,7 +23,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="AnswerRecords">
-      <EntityTypeMapping TypeName="checkinappModel.AnswerRecord">
+      <EntityTypeMapping TypeName="CheckinAppModel.AnswerRecord">
         <MappingFragment StoreEntitySet="AnswerRecord">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="AnswerID" ColumnName="AnswerID" />
@@ -34,7 +34,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="AreaInfors">
-      <EntityTypeMapping TypeName="checkinappModel.AreaInfor">
+      <EntityTypeMapping TypeName="CheckinAppModel.AreaInfor">
         <MappingFragment StoreEntitySet="AreaInfor">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="NameVN" ColumnName="NameVN" />
@@ -43,7 +43,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="CatInfors">
-      <EntityTypeMapping TypeName="checkinappModel.CatInfor">
+      <EntityTypeMapping TypeName="CheckinAppModel.CatInfor">
         <MappingFragment StoreEntitySet="CatInfor">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -52,7 +52,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="ChannelInfors">
-      <EntityTypeMapping TypeName="checkinappModel.ChannelInfor">
+      <EntityTypeMapping TypeName="CheckinAppModel.ChannelInfor">
         <MappingFragment StoreEntitySet="ChannelInfor">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -60,7 +60,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="CheckinImageRecords">
-      <EntityTypeMapping TypeName="checkinappModel.CheckinImageRecord">
+      <EntityTypeMapping TypeName="CheckinAppModel.CheckinImageRecord">
         <MappingFragment StoreEntitySet="CheckinImageRecord">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="CheckinID" ColumnName="CheckinID" />
@@ -69,7 +69,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="CheckinInfors">
-      <EntityTypeMapping TypeName="checkinappModel.CheckinInfor">
+      <EntityTypeMapping TypeName="CheckinAppModel.CheckinInfor">
         <MappingFragment StoreEntitySet="CheckinInfor">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
@@ -84,7 +84,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="CityRuralInfors">
-      <EntityTypeMapping TypeName="checkinappModel.CityRuralInfor">
+      <EntityTypeMapping TypeName="CheckinAppModel.CityRuralInfor">
         <MappingFragment StoreEntitySet="CityRuralInfor">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -92,7 +92,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="ContentCourseRecords">
-      <EntityTypeMapping TypeName="checkinappModel.ContentCourseRecord">
+      <EntityTypeMapping TypeName="CheckinAppModel.ContentCourseRecord">
         <MappingFragment StoreEntitySet="ContentCourseRecord">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="CourseID" ColumnName="CourseID" />
@@ -102,7 +102,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="ContentInfors">
-      <EntityTypeMapping TypeName="checkinappModel.ContentInfor">
+      <EntityTypeMapping TypeName="CheckinAppModel.ContentInfor">
         <MappingFragment StoreEntitySet="ContentInfor">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -113,7 +113,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="ContentModelRecords">
-      <EntityTypeMapping TypeName="checkinappModel.ContentModelRecord">
+      <EntityTypeMapping TypeName="CheckinAppModel.ContentModelRecord">
         <MappingFragment StoreEntitySet="ContentModelRecord">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="ContentID" ColumnName="ContentID" />
@@ -122,18 +122,18 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="CourseInfors">
-      <EntityTypeMapping TypeName="checkinappModel.CourseInfor">
+      <EntityTypeMapping TypeName="CheckinAppModel.CourseInfor">
         <MappingFragment StoreEntitySet="CourseInfor">
-          <ScalarProperty Name="PlatformID" ColumnName="PlatformID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="PlatformID" ColumnName="PlatformID" />
           <ScalarProperty Name="Datetime" ColumnName="Datetime" />
           <ScalarProperty Name="Status" ColumnName="Status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="CourseTestRecords">
-      <EntityTypeMapping TypeName="checkinappModel.CourseTestRecord">
+      <EntityTypeMapping TypeName="CheckinAppModel.CourseTestRecord">
         <MappingFragment StoreEntitySet="CourseTestRecord">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="TestID" ColumnName="TestID" />
@@ -143,7 +143,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="DistrictInfors">
-      <EntityTypeMapping TypeName="checkinappModel.DistrictInfor">
+      <EntityTypeMapping TypeName="CheckinAppModel.DistrictInfor">
         <MappingFragment StoreEntitySet="DistrictInfor">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -151,8 +151,18 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="EmployeeInfors">
+      <EntityTypeMapping TypeName="CheckinAppModel.EmployeeInfor">
+        <MappingFragment StoreEntitySet="EmployeeInfor">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="MNV" ColumnName="MNV" />
+          <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+          <ScalarProperty Name="StoreID" ColumnName="StoreID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="GiftCourseRecords">
-      <EntityTypeMapping TypeName="checkinappModel.GiftCourseRecord">
+      <EntityTypeMapping TypeName="CheckinAppModel.GiftCourseRecord">
         <MappingFragment StoreEntitySet="GiftCourseRecord">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="CourseID" ColumnName="CourseID" />
@@ -163,7 +173,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="GiftInfors">
-      <EntityTypeMapping TypeName="checkinappModel.GiftInfor">
+      <EntityTypeMapping TypeName="CheckinAppModel.GiftInfor">
         <MappingFragment StoreEntitySet="GiftInfor">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="ImageID" ColumnName="ImageID" />
@@ -175,7 +185,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="GiftTypes">
-      <EntityTypeMapping TypeName="checkinappModel.GiftType">
+      <EntityTypeMapping TypeName="CheckinAppModel.GiftType">
         <MappingFragment StoreEntitySet="GiftType">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -183,7 +193,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="ImageInfors">
-      <EntityTypeMapping TypeName="checkinappModel.ImageInfor">
+      <EntityTypeMapping TypeName="CheckinAppModel.ImageInfor">
         <MappingFragment StoreEntitySet="ImageInfor">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="UrlThumbnail" ColumnName="UrlThumbnail" />
@@ -193,7 +203,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="LevelInfors">
-      <EntityTypeMapping TypeName="checkinappModel.LevelInfor">
+      <EntityTypeMapping TypeName="CheckinAppModel.LevelInfor">
         <MappingFragment StoreEntitySet="LevelInfor">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -201,7 +211,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="LoginInfors">
-      <EntityTypeMapping TypeName="checkinappModel.LoginInfor">
+      <EntityTypeMapping TypeName="CheckinAppModel.LoginInfor">
         <MappingFragment StoreEntitySet="LoginInfor">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
@@ -212,7 +222,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="ModelInfors">
-      <EntityTypeMapping TypeName="checkinappModel.ModelInfor">
+      <EntityTypeMapping TypeName="CheckinAppModel.ModelInfor">
         <MappingFragment StoreEntitySet="ModelInfor">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="CatID" ColumnName="CatID" />
@@ -222,7 +232,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="PermissionInfors">
-      <EntityTypeMapping TypeName="checkinappModel.PermissionInfor">
+      <EntityTypeMapping TypeName="CheckinAppModel.PermissionInfor">
         <MappingFragment StoreEntitySet="PermissionInfor">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -231,16 +241,16 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="PlatformInfors">
-      <EntityTypeMapping TypeName="checkinappModel.PlatformInfor">
+      <EntityTypeMapping TypeName="CheckinAppModel.PlatformInfor">
         <MappingFragment StoreEntitySet="PlatformInfor">
-          <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="PositionInfors">
-      <EntityTypeMapping TypeName="checkinappModel.PositionInfor">
+      <EntityTypeMapping TypeName="CheckinAppModel.PositionInfor">
         <MappingFragment StoreEntitySet="PositionInfor">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -248,7 +258,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="ProvinceInfors">
-      <EntityTypeMapping TypeName="checkinappModel.ProvinceInfor">
+      <EntityTypeMapping TypeName="CheckinAppModel.ProvinceInfor">
         <MappingFragment StoreEntitySet="ProvinceInfor">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="NameVN" ColumnName="NameVN" />
@@ -259,7 +269,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="QuestionInfors">
-      <EntityTypeMapping TypeName="checkinappModel.QuestionInfor">
+      <EntityTypeMapping TypeName="CheckinAppModel.QuestionInfor">
         <MappingFragment StoreEntitySet="QuestionInfor">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="CatID" ColumnName="CatID" />
@@ -276,7 +286,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="RegionInfors">
-      <EntityTypeMapping TypeName="checkinappModel.RegionInfor">
+      <EntityTypeMapping TypeName="CheckinAppModel.RegionInfor">
         <MappingFragment StoreEntitySet="RegionInfor">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="AreaID" ColumnName="AreaID" />
@@ -286,11 +296,10 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="RoomInfors">
-      <EntityTypeMapping TypeName="checkinappModel.RoomInfor">
+      <EntityTypeMapping TypeName="CheckinAppModel.RoomInfor">
         <MappingFragment StoreEntitySet="RoomInfor">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="CourseID" ColumnName="CourseID" />
-          <ScalarProperty Name="TrainerID" ColumnName="TrainerID" />
           <ScalarProperty Name="VenueID" ColumnName="VenueID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="RoomUrl" ColumnName="RoomUrl" />
@@ -298,11 +307,14 @@
           <ScalarProperty Name="RoomFee" ColumnName="RoomFee" />
           <ScalarProperty Name="TeabreakFee" ColumnName="TeabreakFee" />
           <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="NoDaysGetGift" ColumnName="NoDaysGetGift" />
+          <ScalarProperty Name="Datetime" ColumnName="Datetime" />
+          <ScalarProperty Name="Guid" ColumnName="Guid" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="StoreInfors">
-      <EntityTypeMapping TypeName="checkinappModel.StoreInfor">
+      <EntityTypeMapping TypeName="CheckinAppModel.StoreInfor">
         <MappingFragment StoreEntitySet="StoreInfor">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="AccountID" ColumnName="AccountID" />
@@ -312,11 +324,14 @@
           <ScalarProperty Name="MCScode" ColumnName="MCScode" />
           <ScalarProperty Name="DealeCode" ColumnName="DealeCode" />
           <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+          <ScalarProperty Name="ContactTel" ColumnName="ContactTel" />
+          <ScalarProperty Name="PlatformID" ColumnName="PlatformID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="sysdiagrams">
-      <EntityTypeMapping TypeName="checkinappModel.sysdiagram">
+      <EntityTypeMapping TypeName="CheckinAppModel.sysdiagram">
         <MappingFragment StoreEntitySet="sysdiagrams">
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="principal_id" ColumnName="principal_id" />
@@ -327,7 +342,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="TestInfors">
-      <EntityTypeMapping TypeName="checkinappModel.TestInfor">
+      <EntityTypeMapping TypeName="CheckinAppModel.TestInfor">
         <MappingFragment StoreEntitySet="TestInfor">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -337,7 +352,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="TestQuestionRecords">
-      <EntityTypeMapping TypeName="checkinappModel.TestQuestionRecord">
+      <EntityTypeMapping TypeName="CheckinAppModel.TestQuestionRecord">
         <MappingFragment StoreEntitySet="TestQuestionRecord">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="TestID" ColumnName="TestID" />
@@ -346,39 +361,27 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="UserInfors">
-      <EntityTypeMapping TypeName="checkinappModel.UserInfor">
-        <MappingFragment StoreEntitySet="UserInfor">
+    <EntitySetMapping Name="TrainerRoomRecords">
+      <EntityTypeMapping TypeName="CheckinAppModel.TrainerRoomRecord">
+        <MappingFragment StoreEntitySet="TrainerRoomRecord">
           <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="StoreID" ColumnName="StoreID" />
-          <ScalarProperty Name="PositionID" ColumnName="PositionID" />
-          <ScalarProperty Name="Fullname" ColumnName="Fullname" />
-          <ScalarProperty Name="Tel" ColumnName="Tel" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="Status" ColumnName="Status" />
-          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="UserPermissionRecords">
-      <EntityTypeMapping TypeName="checkinappModel.UserPermissionRecord">
-        <MappingFragment StoreEntitySet="UserPermissionRecord">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
-          <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
+          <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+          <ScalarProperty Name="TrainerID" ColumnName="TrainerID" />
           <ScalarProperty Name="Datetime" ColumnName="Datetime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="VenueInfors">
-      <EntityTypeMapping TypeName="checkinappModel.VenueInfor">
-        <MappingFragment StoreEntitySet="VenueInfor">
+    <EntitySetMapping Name="UserInfors">
+      <EntityTypeMapping TypeName="CheckinAppModel.UserInfor">
+        <MappingFragment StoreEntitySet="UserInfor">
           <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="ReceptionID" ColumnName="ReceptionID" />
-          <ScalarProperty Name="ProvinceID" ColumnName="ProvinceID" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+          <ScalarProperty Name="Tel" ColumnName="Tel" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+          <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

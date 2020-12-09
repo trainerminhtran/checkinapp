@@ -18,6 +18,10 @@ namespace CheckInApp.ViewModels
         public string TrainerName { get; set; }
         public string Venue { get; set; }
         public string message { get; set; }
+        public bool IsMotivationGift { get; set; }
+        public long checkinId { get; set; }
+        public string Date { get; set; }
+        public byte[] Signature{ get; set; }
 
     } 
 }

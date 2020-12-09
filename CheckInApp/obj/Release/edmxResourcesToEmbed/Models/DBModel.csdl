@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="checkinappModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+<Schema Namespace="CheckinAppModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityType Name="AccountInfor">
     <Key>
       <PropertyRef Name="ID" />
@@ -84,7 +84,7 @@
     <Property Name="IsMotivationActive" Type="Boolean" />
     <Property Name="IsDoorGift" Type="Boolean" />
     <Property Name="IsRecheckAnswer" Type="Boolean" />
-    <Property Name="Datetime" Type="DateTime" Precision="3" />
+    <Property Name="Datetime" Type="DateTime" Precision="3" Nullable="false" />
     <NavigationProperty Name="AnswerInfors" Relationship="Self.FK_AnswerInfor_CheckinInfor" FromRole="CheckinInfor" ToRole="AnswerInfor" />
     <NavigationProperty Name="CheckinImageRecords" Relationship="Self.FK_CheckinImageRecord_CheckinInfor" FromRole="CheckinInfor" ToRole="CheckinImageRecord" />
     <NavigationProperty Name="RoomInfor" Relationship="Self.FK_CheckinInfor_RoomInfor" FromRole="CheckinInfor" ToRole="RoomInfor" />
@@ -137,14 +137,14 @@
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PlatformID" Type="Int32" Nullable="false" />
     <Property Name="Datetime" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="Status" Type="Boolean" />
     <NavigationProperty Name="ContentCourseRecords" Relationship="Self.FK_ContentCourseRecord_CourseInfor" FromRole="CourseInfor" ToRole="ContentCourseRecord" />
+    <NavigationProperty Name="PlatformInfor" Relationship="Self.FK_CourseInfor_PlatformInfor" FromRole="CourseInfor" ToRole="PlatformInfor" />
     <NavigationProperty Name="CourseTestRecords" Relationship="Self.FK_CourseTestRecord_CourseInfor" FromRole="CourseInfor" ToRole="CourseTestRecord" />
     <NavigationProperty Name="GiftCourseRecords" Relationship="Self.FK_GiftCourseRecord_CourseInfor" FromRole="CourseInfor" ToRole="GiftCourseRecord" />
     <NavigationProperty Name="RoomInfors" Relationship="Self.FK_RoomInfor_CourseInfor" FromRole="CourseInfor" ToRole="RoomInfor" />
-    <Property Name="PlatformID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="PlatformInfor" Relationship="checkinappModel.FK_CourseInfor_PlatformInfor" FromRole="CourseInfor" ToRole="PlatformInfor" />
   </EntityType>
   <EntityType Name="CourseTestRecord">
     <Key>
@@ -166,6 +166,17 @@
     <Property Name="ProvinceID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="ProvinceInfor" Relationship="Self.FK_DistrictInfor_ProvinceInfor" FromRole="DistrictInfor" ToRole="ProvinceInfor" />
     <NavigationProperty Name="StoreInfors" Relationship="Self.FK_StoreInfor_DistrictInfor" FromRole="DistrictInfor" ToRole="StoreInfor" />
+  </EntityType>
+  <EntityType Name="EmployeeInfor">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MNV" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Fullname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="StoreID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="StoreInfor" Relationship="Self.FK_EmployeeInfor_StoreInfor" FromRole="EmployeeInfor" ToRole="StoreInfor" />
+    <NavigationProperty Name="UserInfors" Relationship="Self.FK_UserInfor_EmployeeInfor" FromRole="EmployeeInfor" ToRole="UserInfor" />
   </EntityType>
   <EntityType Name="GiftCourseRecord">
     <Key>
@@ -247,9 +258,10 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Status" Type="Boolean" />
-    <NavigationProperty Name="UserPermissionRecords" Relationship="Self.FK_UserPermissionRecord_PermissionInfor" FromRole="PermissionInfor" ToRole="UserPermissionRecord" />
+    <NavigationProperty Name="UserInfors" Relationship="Self.FK_UserInfor_PermissionInfor" FromRole="PermissionInfor" ToRole="UserInfor" />
+    <NavigationProperty Name="UserInfors1" Relationship="CheckinAppModel.FK_UserInfor_PermissionInfor1" FromRole="PermissionInfor" ToRole="UserInfor" />
   </EntityType>
   <EntityType Name="PlatformInfor">
     <Key>
@@ -258,7 +270,8 @@
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="CourseInfors" Relationship="checkinappModel.FK_CourseInfor_PlatformInfor" FromRole="PlatformInfor" ToRole="CourseInfor" />
+    <NavigationProperty Name="CourseInfors" Relationship="Self.FK_CourseInfor_PlatformInfor" FromRole="PlatformInfor" ToRole="CourseInfor" />
+    <NavigationProperty Name="StoreInfors" Relationship="Self.FK_StoreInfor_PlatformInfor" FromRole="PlatformInfor" ToRole="StoreInfor" />
   </EntityType>
   <EntityType Name="PositionInfor">
     <Key>
@@ -280,7 +293,6 @@
     <NavigationProperty Name="CityRuralInfor" Relationship="Self.FK_ProvinceInfor_CityRuralInfor" FromRole="ProvinceInfor" ToRole="CityRuralInfor" />
     <NavigationProperty Name="DistrictInfors" Relationship="Self.FK_DistrictInfor_ProvinceInfor" FromRole="ProvinceInfor" ToRole="DistrictInfor" />
     <NavigationProperty Name="RegionInfor" Relationship="Self.FK_ProvinceInfor_RegionInfor" FromRole="ProvinceInfor" ToRole="RegionInfor" />
-    <NavigationProperty Name="VenueInfors" Relationship="Self.FK_VenueInfor_ProvinceInfor" FromRole="ProvinceInfor" ToRole="VenueInfor" />
   </EntityType>
   <EntityType Name="QuestionInfor">
     <Key>
@@ -319,17 +331,20 @@
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="CourseID" Type="Int32" Nullable="false" />
-    <Property Name="TrainerID" Type="Int32" Nullable="false" />
-    <Property Name="VenueID" Type="Int32" />
+    <Property Name="VenueID" Type="Int32" Nullable="false" />
     <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="RoomUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="QRCodeImage" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
     <Property Name="RoomFee" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="TeabreakFee" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="Status" Type="Boolean" />
+    <Property Name="NoDaysGetGift" Type="Int32" />
+    <Property Name="Datetime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Guid" Type="Guid" Nullable="false" />
     <NavigationProperty Name="CheckinInfors" Relationship="Self.FK_CheckinInfor_RoomInfor" FromRole="RoomInfor" ToRole="CheckinInfor" />
     <NavigationProperty Name="CourseInfor" Relationship="Self.FK_RoomInfor_CourseInfor" FromRole="RoomInfor" ToRole="CourseInfor" />
-    <NavigationProperty Name="VenueInfor" Relationship="Self.FK_RoomInfor_VenueInfor" FromRole="RoomInfor" ToRole="VenueInfor" />
+    <NavigationProperty Name="StoreInfor" Relationship="Self.FK_RoomInfor_StoreInfor" FromRole="RoomInfor" ToRole="StoreInfor" />
+    <NavigationProperty Name="TrainerRoomRecords" Relationship="Self.FK_RoomTrainerRecord_RoomInfor" FromRole="RoomInfor" ToRole="TrainerRoomRecord" />
   </EntityType>
   <EntityType Name="StoreInfor">
     <Key>
@@ -343,9 +358,14 @@
     <Property Name="MCScode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="DealeCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Status" Type="Boolean" />
+    <Property Name="ContactName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ContactTel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PlatformID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="AccountInfor" Relationship="Self.FK_StoreInfor_AccountInfor" FromRole="StoreInfor" ToRole="AccountInfor" />
     <NavigationProperty Name="DistrictInfor" Relationship="Self.FK_StoreInfor_DistrictInfor" FromRole="StoreInfor" ToRole="DistrictInfor" />
-    <NavigationProperty Name="UserInfors" Relationship="Self.FK_UserInfor_StoreInfor" FromRole="StoreInfor" ToRole="UserInfor" />
+    <NavigationProperty Name="EmployeeInfors" Relationship="Self.FK_EmployeeInfor_StoreInfor" FromRole="StoreInfor" ToRole="EmployeeInfor" />
+    <NavigationProperty Name="PlatformInfor" Relationship="Self.FK_StoreInfor_PlatformInfor" FromRole="StoreInfor" ToRole="PlatformInfor" />
+    <NavigationProperty Name="RoomInfors" Relationship="Self.FK_RoomInfor_StoreInfor" FromRole="StoreInfor" ToRole="RoomInfor" />
   </EntityType>
   <EntityType Name="sysdiagram">
     <Key>
@@ -379,47 +399,36 @@
     <NavigationProperty Name="QuestionInfor" Relationship="Self.FK_TestQuestionRecord_QuestionInfor" FromRole="TestQuestionRecord" ToRole="QuestionInfor" />
     <NavigationProperty Name="TestInfor" Relationship="Self.FK_TestQuestionRecord_TestInfor" FromRole="TestQuestionRecord" ToRole="TestInfor" />
   </EntityType>
+  <EntityType Name="TrainerRoomRecord">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoomID" Type="Int32" Nullable="false" />
+    <Property Name="TrainerID" Type="Int32" Nullable="false" />
+    <Property Name="Datetime" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="RoomInfor" Relationship="Self.FK_RoomTrainerRecord_RoomInfor" FromRole="TrainerRoomRecord" ToRole="RoomInfor" />
+    <NavigationProperty Name="UserInfor" Relationship="Self.FK_RoomTrainerRecord_UserInfor" FromRole="TrainerRoomRecord" ToRole="UserInfor" />
+  </EntityType>
   <EntityType Name="UserInfor">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="StoreID" Type="Int32" Nullable="false" />
     <Property Name="PositionID" Type="Int32" Nullable="false" />
-    <Property Name="Fullname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="Tel" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Password" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
     <Property Name="Status" Type="Boolean" Nullable="false" />
     <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+    <Property Name="PermissionID" Type="Int32" />
     <NavigationProperty Name="CheckinInfors" Relationship="Self.FK_CheckinInfor_UserInfor" FromRole="UserInfor" ToRole="CheckinInfor" />
+    <NavigationProperty Name="EmployeeInfor" Relationship="Self.FK_UserInfor_EmployeeInfor" FromRole="UserInfor" ToRole="EmployeeInfor" />
     <NavigationProperty Name="LoginInfors" Relationship="Self.FK_LoginInfor_UserInfor" FromRole="UserInfor" ToRole="LoginInfor" />
+    <NavigationProperty Name="PermissionInfor" Relationship="Self.FK_UserInfor_PermissionInfor" FromRole="UserInfor" ToRole="PermissionInfor" />
     <NavigationProperty Name="PositionInfor" Relationship="Self.FK_UserInfor_PositionInfor" FromRole="UserInfor" ToRole="PositionInfor" />
-    <NavigationProperty Name="StoreInfor" Relationship="Self.FK_UserInfor_StoreInfor" FromRole="UserInfor" ToRole="StoreInfor" />
-    <NavigationProperty Name="UserPermissionRecords" Relationship="Self.FK_UserPermissionRecord_UserInfor" FromRole="UserInfor" ToRole="UserPermissionRecord" />
-  </EntityType>
-  <EntityType Name="UserPermissionRecord">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="UserID" Type="Int32" Nullable="false" />
-    <Property Name="PermissionID" Type="Int32" Nullable="false" />
-    <Property Name="Datetime" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="PermissionInfor" Relationship="Self.FK_UserPermissionRecord_PermissionInfor" FromRole="UserPermissionRecord" ToRole="PermissionInfor" />
-    <NavigationProperty Name="UserInfor" Relationship="Self.FK_UserPermissionRecord_UserInfor" FromRole="UserPermissionRecord" ToRole="UserInfor" />
-  </EntityType>
-  <EntityType Name="VenueInfor">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ReceptionID" Type="Int32" Nullable="false" />
-    <Property Name="ProvinceID" Type="Int32" />
-    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Status" Type="Boolean" />
-    <NavigationProperty Name="ProvinceInfor" Relationship="Self.FK_VenueInfor_ProvinceInfor" FromRole="VenueInfor" ToRole="ProvinceInfor" />
-    <NavigationProperty Name="RoomInfors" Relationship="Self.FK_RoomInfor_VenueInfor" FromRole="VenueInfor" ToRole="RoomInfor" />
+    <NavigationProperty Name="TrainerRoomRecords" Relationship="Self.FK_RoomTrainerRecord_UserInfor" FromRole="UserInfor" ToRole="TrainerRoomRecord" />
+    <NavigationProperty Name="PermissionInfor1" Relationship="CheckinAppModel.FK_UserInfor_PermissionInfor1" FromRole="UserInfor" ToRole="PermissionInfor" />
   </EntityType>
   <Association Name="FK_AccountInfor_ChannelInfor">
     <End Role="ChannelInfor" Type="Self.ChannelInfor" Multiplicity="1" />
@@ -625,6 +634,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_CourseInfor_PlatformInfor">
+    <End Role="PlatformInfor" Type="Self.PlatformInfor" Multiplicity="1" />
+    <End Role="CourseInfor" Type="Self.CourseInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PlatformInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CourseInfor">
+        <PropertyRef Name="PlatformID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_CourseTestRecord_CourseInfor">
     <End Role="CourseInfor" Type="Self.CourseInfor" Multiplicity="1" />
     <End Role="CourseTestRecord" Type="Self.CourseTestRecord" Multiplicity="*" />
@@ -650,6 +671,18 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_RoomInfor_CourseInfor">
+    <End Role="CourseInfor" Type="Self.CourseInfor" Multiplicity="1" />
+    <End Role="RoomInfor" Type="Self.RoomInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CourseInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RoomInfor">
+        <PropertyRef Name="CourseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoomInfor_CourseInfor1">
     <End Role="CourseInfor" Type="Self.CourseInfor" Multiplicity="1" />
     <End Role="RoomInfor" Type="Self.RoomInfor" Multiplicity="*" />
     <ReferentialConstraint>
@@ -694,6 +727,30 @@
       </Principal>
       <Dependent Role="StoreInfor">
         <PropertyRef Name="DistrictID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeInfor_StoreInfor">
+    <End Role="StoreInfor" Type="Self.StoreInfor" Multiplicity="1" />
+    <End Role="EmployeeInfor" Type="Self.EmployeeInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StoreInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="EmployeeInfor">
+        <PropertyRef Name="StoreID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserInfor_EmployeeInfor">
+    <End Role="EmployeeInfor" Type="Self.EmployeeInfor" Multiplicity="1" />
+    <End Role="UserInfor" Type="Self.UserInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserInfor">
+        <PropertyRef Name="EmployeeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -757,15 +814,27 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_UserPermissionRecord_PermissionInfor">
+  <Association Name="FK_UserInfor_PermissionInfor">
     <End Role="PermissionInfor" Type="Self.PermissionInfor" Multiplicity="1" />
-    <End Role="UserPermissionRecord" Type="Self.UserPermissionRecord" Multiplicity="*" />
+    <End Role="UserInfor" Type="Self.UserInfor" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PermissionInfor">
         <PropertyRef Name="ID" />
       </Principal>
-      <Dependent Role="UserPermissionRecord">
-        <PropertyRef Name="PermissionID" />
+      <Dependent Role="UserInfor">
+        <PropertyRef Name="EmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StoreInfor_PlatformInfor">
+    <End Role="PlatformInfor" Type="Self.PlatformInfor" Multiplicity="1" />
+    <End Role="StoreInfor" Type="Self.StoreInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PlatformInfor">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="StoreInfor">
+        <PropertyRef Name="PlatformID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -793,18 +862,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_VenueInfor_ProvinceInfor">
-    <End Role="ProvinceInfor" Type="Self.ProvinceInfor" Multiplicity="0..1" />
-    <End Role="VenueInfor" Type="Self.VenueInfor" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ProvinceInfor">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="VenueInfor">
-        <PropertyRef Name="ProvinceID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_TestQuestionRecord_QuestionInfor">
     <End Role="QuestionInfor" Type="Self.QuestionInfor" Multiplicity="1" />
     <End Role="TestQuestionRecord" Type="Self.TestQuestionRecord" Multiplicity="*" />
@@ -817,11 +874,11 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_RoomInfor_VenueInfor">
-    <End Role="VenueInfor" Type="Self.VenueInfor" Multiplicity="0..1" />
+  <Association Name="FK_RoomInfor_StoreInfor">
+    <End Role="StoreInfor" Type="Self.StoreInfor" Multiplicity="1" />
     <End Role="RoomInfor" Type="Self.RoomInfor" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="VenueInfor">
+      <Principal Role="StoreInfor">
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="RoomInfor">
@@ -829,15 +886,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_UserInfor_StoreInfor">
-    <End Role="StoreInfor" Type="Self.StoreInfor" Multiplicity="1" />
-    <End Role="UserInfor" Type="Self.UserInfor" Multiplicity="*" />
+  <Association Name="FK_RoomTrainerRecord_RoomInfor">
+    <End Role="RoomInfor" Type="Self.RoomInfor" Multiplicity="1" />
+    <End Role="TrainerRoomRecord" Type="Self.TrainerRoomRecord" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="StoreInfor">
+      <Principal Role="RoomInfor">
         <PropertyRef Name="ID" />
       </Principal>
-      <Dependent Role="UserInfor">
-        <PropertyRef Name="StoreID" />
+      <Dependent Role="TrainerRoomRecord">
+        <PropertyRef Name="RoomID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -853,19 +910,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_UserPermissionRecord_UserInfor">
+  <Association Name="FK_RoomTrainerRecord_UserInfor">
     <End Role="UserInfor" Type="Self.UserInfor" Multiplicity="1" />
-    <End Role="UserPermissionRecord" Type="Self.UserPermissionRecord" Multiplicity="*" />
+    <End Role="TrainerRoomRecord" Type="Self.TrainerRoomRecord" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="UserInfor">
         <PropertyRef Name="ID" />
       </Principal>
-      <Dependent Role="UserPermissionRecord">
-        <PropertyRef Name="UserID" />
+      <Dependent Role="TrainerRoomRecord">
+        <PropertyRef Name="TrainerID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="checkinappEntities" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="dbEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="AccountInfors" EntityType="Self.AccountInfor" />
     <EntitySet Name="AnswerInfors" EntityType="Self.AnswerInfor" />
     <EntitySet Name="AnswerRecords" EntityType="Self.AnswerRecord" />
@@ -881,6 +938,7 @@
     <EntitySet Name="CourseInfors" EntityType="Self.CourseInfor" />
     <EntitySet Name="CourseTestRecords" EntityType="Self.CourseTestRecord" />
     <EntitySet Name="DistrictInfors" EntityType="Self.DistrictInfor" />
+    <EntitySet Name="EmployeeInfors" EntityType="Self.EmployeeInfor" />
     <EntitySet Name="GiftCourseRecords" EntityType="Self.GiftCourseRecord" />
     <EntitySet Name="GiftInfors" EntityType="Self.GiftInfor" />
     <EntitySet Name="GiftTypes" EntityType="Self.GiftType" />
@@ -899,9 +957,8 @@
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <EntitySet Name="TestInfors" EntityType="Self.TestInfor" />
     <EntitySet Name="TestQuestionRecords" EntityType="Self.TestQuestionRecord" />
+    <EntitySet Name="TrainerRoomRecords" EntityType="Self.TrainerRoomRecord" />
     <EntitySet Name="UserInfors" EntityType="Self.UserInfor" />
-    <EntitySet Name="UserPermissionRecords" EntityType="Self.UserPermissionRecord" />
-    <EntitySet Name="VenueInfors" EntityType="Self.VenueInfor" />
     <AssociationSet Name="FK_AccountInfor_ChannelInfor" Association="Self.FK_AccountInfor_ChannelInfor">
       <End Role="ChannelInfor" EntitySet="ChannelInfors" />
       <End Role="AccountInfor" EntitySet="AccountInfors" />
@@ -970,6 +1027,10 @@
       <End Role="ModelInfor" EntitySet="ModelInfors" />
       <End Role="ContentModelRecord" EntitySet="ContentModelRecords" />
     </AssociationSet>
+    <AssociationSet Name="FK_CourseInfor_PlatformInfor" Association="Self.FK_CourseInfor_PlatformInfor">
+      <End Role="PlatformInfor" EntitySet="PlatformInfors" />
+      <End Role="CourseInfor" EntitySet="CourseInfors" />
+    </AssociationSet>
     <AssociationSet Name="FK_CourseTestRecord_CourseInfor" Association="Self.FK_CourseTestRecord_CourseInfor">
       <End Role="CourseInfor" EntitySet="CourseInfors" />
       <End Role="CourseTestRecord" EntitySet="CourseTestRecords" />
@@ -979,6 +1040,10 @@
       <End Role="GiftCourseRecord" EntitySet="GiftCourseRecords" />
     </AssociationSet>
     <AssociationSet Name="FK_RoomInfor_CourseInfor" Association="Self.FK_RoomInfor_CourseInfor">
+      <End Role="CourseInfor" EntitySet="CourseInfors" />
+      <End Role="RoomInfor" EntitySet="RoomInfors" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoomInfor_CourseInfor1" Association="Self.FK_RoomInfor_CourseInfor1">
       <End Role="CourseInfor" EntitySet="CourseInfors" />
       <End Role="RoomInfor" EntitySet="RoomInfors" />
     </AssociationSet>
@@ -993,6 +1058,14 @@
     <AssociationSet Name="FK_StoreInfor_DistrictInfor" Association="Self.FK_StoreInfor_DistrictInfor">
       <End Role="DistrictInfor" EntitySet="DistrictInfors" />
       <End Role="StoreInfor" EntitySet="StoreInfors" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeInfor_StoreInfor" Association="Self.FK_EmployeeInfor_StoreInfor">
+      <End Role="StoreInfor" EntitySet="StoreInfors" />
+      <End Role="EmployeeInfor" EntitySet="EmployeeInfors" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserInfor_EmployeeInfor" Association="Self.FK_UserInfor_EmployeeInfor">
+      <End Role="EmployeeInfor" EntitySet="EmployeeInfors" />
+      <End Role="UserInfor" EntitySet="UserInfors" />
     </AssociationSet>
     <AssociationSet Name="FK_GiftCourseRecord_GiftInfor" Association="Self.FK_GiftCourseRecord_GiftInfor">
       <End Role="GiftInfor" EntitySet="GiftInfors" />
@@ -1014,9 +1087,13 @@
       <End Role="UserInfor" EntitySet="UserInfors" />
       <End Role="LoginInfor" EntitySet="LoginInfors" />
     </AssociationSet>
-    <AssociationSet Name="FK_UserPermissionRecord_PermissionInfor" Association="Self.FK_UserPermissionRecord_PermissionInfor">
+    <AssociationSet Name="FK_UserInfor_PermissionInfor" Association="Self.FK_UserInfor_PermissionInfor">
       <End Role="PermissionInfor" EntitySet="PermissionInfors" />
-      <End Role="UserPermissionRecord" EntitySet="UserPermissionRecords" />
+      <End Role="UserInfor" EntitySet="UserInfors" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StoreInfor_PlatformInfor" Association="Self.FK_StoreInfor_PlatformInfor">
+      <End Role="PlatformInfor" EntitySet="PlatformInfors" />
+      <End Role="StoreInfor" EntitySet="StoreInfors" />
     </AssociationSet>
     <AssociationSet Name="FK_UserInfor_PositionInfor" Association="Self.FK_UserInfor_PositionInfor">
       <End Role="PositionInfor" EntitySet="PositionInfors" />
@@ -1026,44 +1103,40 @@
       <End Role="RegionInfor" EntitySet="RegionInfors" />
       <End Role="ProvinceInfor" EntitySet="ProvinceInfors" />
     </AssociationSet>
-    <AssociationSet Name="FK_VenueInfor_ProvinceInfor" Association="Self.FK_VenueInfor_ProvinceInfor">
-      <End Role="ProvinceInfor" EntitySet="ProvinceInfors" />
-      <End Role="VenueInfor" EntitySet="VenueInfors" />
-    </AssociationSet>
     <AssociationSet Name="FK_TestQuestionRecord_QuestionInfor" Association="Self.FK_TestQuestionRecord_QuestionInfor">
       <End Role="QuestionInfor" EntitySet="QuestionInfors" />
       <End Role="TestQuestionRecord" EntitySet="TestQuestionRecords" />
     </AssociationSet>
-    <AssociationSet Name="FK_RoomInfor_VenueInfor" Association="Self.FK_RoomInfor_VenueInfor">
-      <End Role="VenueInfor" EntitySet="VenueInfors" />
+    <AssociationSet Name="FK_RoomInfor_StoreInfor" Association="Self.FK_RoomInfor_StoreInfor">
+      <End Role="StoreInfor" EntitySet="StoreInfors" />
       <End Role="RoomInfor" EntitySet="RoomInfors" />
     </AssociationSet>
-    <AssociationSet Name="FK_UserInfor_StoreInfor" Association="Self.FK_UserInfor_StoreInfor">
-      <End Role="StoreInfor" EntitySet="StoreInfors" />
-      <End Role="UserInfor" EntitySet="UserInfors" />
+    <AssociationSet Name="FK_RoomTrainerRecord_RoomInfor" Association="Self.FK_RoomTrainerRecord_RoomInfor">
+      <End Role="RoomInfor" EntitySet="RoomInfors" />
+      <End Role="TrainerRoomRecord" EntitySet="TrainerRoomRecords" />
     </AssociationSet>
     <AssociationSet Name="FK_TestQuestionRecord_TestInfor" Association="Self.FK_TestQuestionRecord_TestInfor">
       <End Role="TestInfor" EntitySet="TestInfors" />
       <End Role="TestQuestionRecord" EntitySet="TestQuestionRecords" />
     </AssociationSet>
-    <AssociationSet Name="FK_UserPermissionRecord_UserInfor" Association="Self.FK_UserPermissionRecord_UserInfor">
+    <AssociationSet Name="FK_RoomTrainerRecord_UserInfor" Association="Self.FK_RoomTrainerRecord_UserInfor">
       <End Role="UserInfor" EntitySet="UserInfors" />
-      <End Role="UserPermissionRecord" EntitySet="UserPermissionRecords" />
+      <End Role="TrainerRoomRecord" EntitySet="TrainerRoomRecords" />
     </AssociationSet>
-    <AssociationSet Name="FK_CourseInfor_PlatformInfor" Association="checkinappModel.FK_CourseInfor_PlatformInfor">
-      <End Role="PlatformInfor" EntitySet="PlatformInfors" />
-      <End Role="CourseInfor" EntitySet="CourseInfors" />
+    <AssociationSet Name="FK_UserInfor_PermissionInfor1" Association="CheckinAppModel.FK_UserInfor_PermissionInfor1">
+      <End Role="PermissionInfor" EntitySet="PermissionInfors" />
+      <End Role="UserInfor" EntitySet="UserInfors" />
     </AssociationSet>
   </EntityContainer>
-  <Association Name="FK_CourseInfor_PlatformInfor">
-    <End Type="checkinappModel.PlatformInfor" Role="PlatformInfor" Multiplicity="1" />
-    <End Type="checkinappModel.CourseInfor" Role="CourseInfor" Multiplicity="*" />
+  <Association Name="FK_UserInfor_PermissionInfor1">
+    <End Type="CheckinAppModel.PermissionInfor" Role="PermissionInfor" Multiplicity="0..1" />
+    <End Type="CheckinAppModel.UserInfor" Role="UserInfor" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="PlatformInfor">
+      <Principal Role="PermissionInfor">
         <PropertyRef Name="ID" />
       </Principal>
-      <Dependent Role="CourseInfor">
-        <PropertyRef Name="PlatformID" />
+      <Dependent Role="UserInfor">
+        <PropertyRef Name="PermissionID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

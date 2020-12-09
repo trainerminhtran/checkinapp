@@ -1,6 +1,3 @@
-C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\CheckInApp.dll.config
-C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\CheckInApp.dll
-C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\CheckInApp.pdb
 C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\roslyn\csc.exe
 C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\roslyn\csc.exe.config
 C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\roslyn\csc.rsp
@@ -85,8 +82,14 @@ C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\Microsoft.CodeDom.Provide
 C:\Users\Admin\Documents\App\checkinapp\CheckInApp\obj\Debug\CheckInApp.csprojAssemblyReference.cache
 C:\Users\Admin\Documents\App\checkinapp\CheckInApp\obj\Debug\CheckInApp.csproj.CoreCompileInputs.cache
 C:\Users\Admin\Documents\App\checkinapp\CheckInApp\obj\Debug\CheckInApp.csproj.CopyComplete
-C:\Users\Admin\Documents\App\checkinapp\CheckInApp\obj\Debug\CheckInApp.dll
-C:\Users\Admin\Documents\App\checkinapp\CheckInApp\obj\Debug\CheckInApp.pdb
 C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\QRCoder.dll
 C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\System.Numerics.Vectors.dll
 C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\System.Numerics.Vectors.xml
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\EPPlus.dll
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\System.ComponentModel.Annotations.dll
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\EPPlus.xml
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\checkinapp.dll.config
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\checkinapp.dll
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\checkinapp.pdb
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\obj\Debug\checkinapp.dll
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\obj\Debug\checkinapp.pdb

@@ -16,16 +16,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/CheckInApp.dll">
-      <publishTime>12/03/2020 22:16:55</publishTime>
+      <publishTime>12/09/2020 21:55:59</publishTime>
     </File>
     <File Include="bin/CheckInApp.pdb">
-      <publishTime>12/03/2020 22:16:55</publishTime>
+      <publishTime>12/09/2020 21:55:59</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>04/16/2020 20:38:42</publishTime>
     </File>
     <File Include="bin/EntityFramework.SqlServer.dll">
       <publishTime>04/16/2020 20:38:56</publishTime>
+    </File>
+    <File Include="bin/EPPlus.dll">
+      <publishTime>11/19/2020 13:53:42</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>09/05/2018 16:10:50</publishTime>
@@ -185,6 +188,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="bin/roslyn/VBCSCompiler.exe.config">
       <publishTime>08/08/2018 12:18:16</publishTime>
+    </File>
+    <File Include="bin/System.ComponentModel.Annotations.dll">
+      <publishTime>05/15/2018 13:29:36</publishTime>
     </File>
     <File Include="bin/System.Net.Http.Formatting.dll">
       <publishTime>11/28/2018 13:00:36</publishTime>
@@ -408,6 +414,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="dist/img/prod-5.jpg">
       <publishTime>05/19/2020 13:41:10</publishTime>
     </File>
+    <File Include="dist/img/Samsung-Logo.png">
+      <publishTime>12/04/2020 12:33:11</publishTime>
+    </File>
     <File Include="dist/img/user1-128x128.jpg">
       <publishTime>05/19/2020 13:41:10</publishTime>
     </File>
@@ -478,7 +487,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/14/2020 20:06:01</publishTime>
     </File>
     <File Include="Models/DBModel.edmx.diagram">
-      <publishTime>11/15/2020 12:07:23</publishTime>
+      <publishTime>12/08/2020 07:59:34</publishTime>
     </File>
     <File Include="Models/InternalDBModel.edmx.diagram">
       <publishTime>11/30/2020 22:00:55</publishTime>
@@ -509,6 +518,297 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js.map">
       <publishTime>05/19/2020 13:41:10</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/css/bootstrap-datepicker.css">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/css/bootstrap-datepicker.css.map">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/css/bootstrap-datepicker.min.css">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/css/bootstrap-datepicker.standalone.css">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/css/bootstrap-datepicker.standalone.css.map">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/css/bootstrap-datepicker.standalone.min.css">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/css/bootstrap-datepicker3.css">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/css/bootstrap-datepicker3.css.map">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/css/bootstrap-datepicker3.min.css">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/css/bootstrap-datepicker3.standalone.css">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/css/bootstrap-datepicker3.standalone.css.map">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/css/bootstrap-datepicker3.standalone.min.css">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/js/bootstrap-datepicker.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/js/bootstrap-datepicker.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker-en-CA.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.ar-tn.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.ar.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.az.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.bg.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.bm.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.bn.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.br.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.bs.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.ca.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.cs.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.cy.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.da.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.de.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.el.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.en-AU.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.en-CA.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.en-GB.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.en-IE.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.en-NZ.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.en-ZA.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.eo.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.es.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.et.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.eu.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.fa.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.fi.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.fo.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.fr-CH.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.fr.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.gl.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.he.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.hi.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.hr.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.hu.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.hy.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.id.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.is.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.it-CH.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.it.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.ja.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.ka.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.kh.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.kk.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.km.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.ko.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.kr.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.lt.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.lv.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.me.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.mk.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.mn.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.ms.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.nl-BE.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.nl.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.no.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.oc.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.pl.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.pt-BR.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.pt.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.ro.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.rs-latin.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.rs.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.ru.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.si.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.sk.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.sl.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.sq.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.sr-latin.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.sr.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.sv.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.sw.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.ta.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.tg.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.th.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.tk.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.tr.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.uk.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.uz-cyrl.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.uz-latn.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.vi.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.zh-CN.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
+    </File>
+    <File Include="plugins/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.zh-TW.min.js">
+      <publishTime>05/20/2019 19:26:50</publishTime>
     </File>
     <File Include="plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css">
       <publishTime>11/15/2020 13:18:26</publishTime>
@@ -6253,7 +6553,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/22/2020 08:33:06</publishTime>
     </File>
     <File Include="Views/Course/Create.cshtml">
-      <publishTime>11/23/2020 05:48:33</publishTime>
+      <publishTime>12/08/2020 08:35:26</publishTime>
     </File>
     <File Include="Views/Course/Delete.cshtml">
       <publishTime>11/22/2020 08:17:39</publishTime>
@@ -6277,40 +6577,43 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/14/2020 20:06:01</publishTime>
     </File>
     <File Include="Views/Room/Create.cshtml">
-      <publishTime>11/30/2020 21:42:13</publishTime>
+      <publishTime>12/08/2020 08:42:50</publishTime>
     </File>
     <File Include="Views/Room/Detailprint.cshtml">
-      <publishTime>11/30/2020 23:27:38</publishTime>
+      <publishTime>12/09/2020 06:37:18</publishTime>
     </File>
     <File Include="Views/Room/Details.cshtml">
-      <publishTime>11/30/2020 23:25:20</publishTime>
+      <publishTime>12/09/2020 21:55:25</publishTime>
+    </File>
+    <File Include="Views/Room/Edit.cshtml">
+      <publishTime>12/05/2020 11:26:05</publishTime>
     </File>
     <File Include="Views/Room/Index.cshtml">
-      <publishTime>11/28/2020 19:48:18</publishTime>
+      <publishTime>12/09/2020 06:55:39</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>11/14/2020 20:06:01</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>11/29/2020 13:20:19</publishTime>
+      <publishTime>12/08/2020 21:28:03</publishTime>
     </File>
     <File Include="Views/Shared/_UserLayout.cshtml">
-      <publishTime>11/29/2020 13:22:38</publishTime>
+      <publishTime>12/08/2020 11:38:54</publishTime>
     </File>
     <File Include="Views/Trainer/Create.cshtml">
-      <publishTime>11/28/2020 05:29:50</publishTime>
+      <publishTime>12/08/2020 07:20:43</publishTime>
     </File>
     <File Include="Views/Trainer/Delete.cshtml">
       <publishTime>11/22/2020 14:26:26</publishTime>
     </File>
     <File Include="Views/Trainer/Index.cshtml">
-      <publishTime>11/22/2020 14:42:52</publishTime>
+      <publishTime>12/05/2020 23:22:20</publishTime>
     </File>
     <File Include="Views/User/Create.cshtml">
-      <publishTime>12/03/2020 21:58:21</publishTime>
+      <publishTime>12/08/2020 21:39:40</publishTime>
     </File>
     <File Include="Views/User/Login.cshtml">
-      <publishTime>12/03/2020 20:12:01</publishTime>
+      <publishTime>12/04/2020 00:30:49</publishTime>
     </File>
     <File Include="Views/User/ReCheck.cshtml">
       <publishTime>11/29/2020 13:53:48</publishTime>
@@ -6322,16 +6625,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/26/2020 06:00:46</publishTime>
     </File>
     <File Include="Views/UserCheckin/Index.cshtml">
-      <publishTime>11/29/2020 11:19:50</publishTime>
+      <publishTime>12/08/2020 22:32:19</publishTime>
     </File>
     <File Include="Views/Venue/Create.cshtml">
-      <publishTime>11/27/2020 07:20:49</publishTime>
+      <publishTime>12/08/2020 08:32:21</publishTime>
     </File>
     <File Include="Views/Venue/Delete.cshtml">
       <publishTime>11/23/2020 04:12:29</publishTime>
     </File>
     <File Include="Views/Venue/Index.cshtml">
-      <publishTime>11/23/2020 04:15:34</publishTime>
+      <publishTime>12/06/2020 16:45:07</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>11/14/2020 20:06:01</publishTime>
@@ -6340,7 +6643,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/14/2020 20:06:01</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>12/03/2020 22:16:56</publishTime>
+      <publishTime>12/07/2020 08:11:17</publishTime>
     </File>
   </ItemGroup>
 </Project>

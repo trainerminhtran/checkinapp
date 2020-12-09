@@ -17,8 +17,8 @@ namespace CheckInApp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public StoreInfor()
         {
-            this.UserInfors = new HashSet<UserInfor>();
             this.EmployeeInfors = new HashSet<EmployeeInfor>();
+            this.RoomInfors = new HashSet<RoomInfor>();
         }
     
         public int ID { get; set; }
@@ -29,12 +29,16 @@ namespace CheckInApp.Models
         public string MCScode { get; set; }
         public string DealeCode { get; set; }
         public Nullable<bool> Status { get; set; }
+        public string ContactName { get; set; }
+        public string ContactTel { get; set; }
+        public int PlatformID { get; set; }
     
         public virtual AccountInfor AccountInfor { get; set; }
         public virtual DistrictInfor DistrictInfor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserInfor> UserInfors { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EmployeeInfor> EmployeeInfors { get; set; }
+        public virtual PlatformInfor PlatformInfor { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RoomInfor> RoomInfors { get; set; }
     }
 }

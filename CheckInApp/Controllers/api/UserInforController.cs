@@ -5,18 +5,19 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using CheckInApp.Models;
+using CheckInApp.Services;
 using Checkinapp.ViewModels;
 
 namespace CheckInApp.Controllers.api
 {
     public class UserInforController : ApiController
     {
-        private readonly InternalCheckinappEntities _db = new InternalCheckinappEntities();
+        private readonly dbEntities _db = new dbEntities();
 
         [HttpGet]
         public IHttpActionResult GetAllPosition()
         { 
-            var pos = _db.PositionInfors.Select(x=> new {Id = x.ID, Name = x.Name}).ToList();
+            var pos = _db.PositionInfors.Where(x=>x.Name !="Khác").Select(x=> new {Id = x.ID, Name = x.Name}).ToList();
             if (pos.Count == 0)
             {
                 return BadRequest();
@@ -26,8 +27,8 @@ namespace CheckInApp.Controllers.api
         }
         public IHttpActionResult GetTrainers()
         {
-            var trs = _db.TrainerInfors.Select(x=> new {Id = x.ID, Name = x.Fullname}).ToList();
-            if (trs.Count == 0)
+            var trs = _db.UserInfors.Where(x=>x.PermissionID == (int)PermissionEnum.Trainer).Select(x=> new {Id = x.ID, Name = x.EmployeeInfor.Fullname});
+            if (trs.Count() == 0)
             {
                 return BadRequest();
             }
@@ -50,7 +51,7 @@ namespace CheckInApp.Controllers.api
         {
             try
             {
-                var t = _db.TrainerInfors.FirstOrDefault(x => x.ID == ucs.id);
+                var t = _db.UserInfors.FirstOrDefault(x => x.ID == ucs.id);
                 t.Status = ucs.sts;
                 _db.SaveChanges();
                 return true;
@@ -62,5 +63,23 @@ namespace CheckInApp.Controllers.api
 
         }
         
+         [HttpPost]
+        public bool UpdateMotivationGiftStatus([FromBody] UpdateStatus ucs)
+        {
+            try
+            {
+                var t = _db.CheckinInfors.FirstOrDefault(x => x.ID == ucs.id);
+                t.IsMotivationGift = ucs.sts;
+                _db.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
+        }
+        
+
     }
 }

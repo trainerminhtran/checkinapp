@@ -288,6 +288,9 @@
     <EntitySetMapping Name="StoreInfors">
       <EntityTypeMapping TypeName="InternalCheckinappModel.StoreInfor">
         <MappingFragment StoreEntitySet="StoreInfor">
+          <ScalarProperty Name="PlatformID" ColumnName="PlatformID" />
+          <ScalarProperty Name="ContactTel" ColumnName="ContactTel" />
+          <ScalarProperty Name="ContactName" ColumnName="ContactName" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="AccountID" ColumnName="AccountID" />
           <ScalarProperty Name="DistrictID" ColumnName="DistrictID" />
@@ -322,7 +325,6 @@
     <EntitySetMapping Name="UserInfors">
       <EntityTypeMapping TypeName="InternalCheckinappModel.UserInfor">
         <MappingFragment StoreEntitySet="UserInfor">
-          <ScalarProperty Name="MNV" ColumnName="MNV" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="StoreID" ColumnName="StoreID" />
           <ScalarProperty Name="PositionID" ColumnName="PositionID" />
@@ -344,38 +346,9 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="VenueInfors">
-      <EntityTypeMapping TypeName="InternalCheckinappModel.VenueInfor">
-        <MappingFragment StoreEntitySet="VenueInfor">
-          <ScalarProperty Name="ContactTel" ColumnName="ContactTel" />
-          <ScalarProperty Name="ContactName" ColumnName="ContactName" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="ProvinceID" ColumnName="ProvinceID" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="Status" ColumnName="Status" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TrainerInfors">
-      <EntityTypeMapping TypeName="InternalCheckinappModel.TrainerInfor">
-        <MappingFragment StoreEntitySet="TrainerInfor">
-          <ScalarProperty Name="Status" ColumnName="Status" />
-          <ScalarProperty Name="Tel" ColumnName="Tel" />
-          <ScalarProperty Name="Fullname" ColumnName="Fullname" />
-          <ScalarProperty Name="PositionID" ColumnName="PositionID" />
-          <ScalarProperty Name="ProvinceID" ColumnName="ProvinceID" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="RoomInfors">
       <EntityTypeMapping TypeName="InternalCheckinappModel.RoomInfor">
         <MappingFragment StoreEntitySet="RoomInfor">
-          <ScalarProperty Name="Guid" ColumnName="Guid" />
-          <ScalarProperty Name="IsStore" ColumnName="IsStore" />
-          <ScalarProperty Name="Datetime" ColumnName="Datetime" />
-          <ScalarProperty Name="NoDaysGetGift" ColumnName="NoDaysGetGift" />
           <ScalarProperty Name="Status" ColumnName="Status" />
           <ScalarProperty Name="TeabreakFee" ColumnName="TeabreakFee" />
           <ScalarProperty Name="RoomFee" ColumnName="RoomFee" />
@@ -383,18 +356,7 @@
           <ScalarProperty Name="RoomUrl" ColumnName="RoomUrl" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="VenueID" ColumnName="VenueID" />
-          <ScalarProperty Name="TrainerID" ColumnName="TrainerID" />
           <ScalarProperty Name="CourseID" ColumnName="CourseID" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="EmployeeInfors">
-      <EntityTypeMapping TypeName="InternalCheckinappModel.EmployeeInfor">
-        <MappingFragment StoreEntitySet="EmployeeInfor">
-          <ScalarProperty Name="StoreID" ColumnName="StoreID" />
-          <ScalarProperty Name="Fullname" ColumnName="Fullname" />
-          <ScalarProperty Name="MNV" ColumnName="MNV" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -402,6 +364,7 @@
     <EntitySetMapping Name="TrainerRoomRecords">
       <EntityTypeMapping TypeName="InternalCheckinappModel.TrainerRoomRecord">
         <MappingFragment StoreEntitySet="TrainerRoomRecord">
+          <ScalarProperty Name="Datetime" ColumnName="Datetime" />
           <ScalarProperty Name="TrainerID" ColumnName="TrainerID" />
           <ScalarProperty Name="RoomID" ColumnName="RoomID" />
           <ScalarProperty Name="ID" ColumnName="ID" />

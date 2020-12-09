@@ -17,7 +17,8 @@ namespace CheckInApp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PermissionInfor()
         {
-            this.UserPermissionRecords = new HashSet<UserPermissionRecord>();
+            this.UserInfors = new HashSet<UserInfor>();
+            this.UserInfors1 = new HashSet<UserInfor>();
         }
     
         public int ID { get; set; }
@@ -25,6 +26,8 @@ namespace CheckInApp.Models
         public Nullable<bool> Status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserPermissionRecord> UserPermissionRecords { get; set; }
+        public virtual ICollection<UserInfor> UserInfors { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserInfor> UserInfors1 { get; set; }
     }
 }

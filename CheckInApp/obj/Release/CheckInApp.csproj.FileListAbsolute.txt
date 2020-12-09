@@ -90,3 +90,6 @@ C:\Users\Admin\Documents\App\checkinapp\CheckInApp\obj\Release\CheckInApp.csproj
 C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\QRCoder.dll
 C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\System.Numerics.Vectors.dll
 C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\System.Numerics.Vectors.xml
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\EPPlus.dll
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\System.ComponentModel.Annotations.dll
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\EPPlus.xml

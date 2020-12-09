@@ -10,7 +10,14 @@
 
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-
+    <style type="text/css">
+        .nav-sidebar .nav-treeview {
+            display: none;
+            list-style: none;
+            padding: 0;
+            margin-left: 13px;
+        }
+    </style>
     @*@Scripts.Render("~/bundles/modernizr")*@
 
 </head>
@@ -41,14 +48,23 @@
                     </div>
                 </div>
             </form>
-
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+    
+                <li class="nav-item">
+                    <a  data-slide="true" href="/user/logout" role="button">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </li>
+            </ul>
+    </nav>
+    <!-- /.navbar -->
            
-        </nav>
         <!-- /.navbar -->
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="../../index3.html" class="brand-link">
+            <a href="/" class="brand-link">
                 <img src="../../dist/img/AdminLTELogo.png"
                      alt="AdminLTE Logo"
                      class="brand-image img-circle elevation-3"
@@ -84,14 +100,40 @@
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
                                         <a href="/room/index" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
+                                            <i class="fas fa-angle-right nav-icon"></i>
                                             <p>Danh sách lớp học</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="/room/Create" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
+                                            <i class="fas fa-angle-right nav-icon"></i>
                                             <p>Thêm lớp học</p>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                            
+                            
+                            <li class="nav-item has-treeview">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-copy"></i>
+                                    <p>
+                                        Địa điểm training
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="/venue/index" class="nav-link">
+                                            <i class="fas fa-angle-right nav-icon"></i>
+                                            <p>Danh sách địa điểm</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/venue/Create" class="nav-link">
+                                            <i class="fas fa-angle-right nav-icon"></i>
+                                            <p>Thêm địa điểm</p>
                                         </a>
                                     </li>
 
@@ -100,105 +142,105 @@
                         </li>
                         <li class="nav-header">Khóa học</li>
                         <li class="nav-item">
-                            <li class="nav-item has-treeview">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-edit"></i>
-                                    <p>
-                                        Quản lý khóa học
-                                        <i class="fas fa-angle-left right"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="/course/index" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Danh sách khóa học</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="/course/create" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Tạo khóa học mới</p>
-                                        </a>
-                                    </li>
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>
+                                    Quản lý khóa học
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/course/index" class="nav-link">
+                                        <i class="fas fa-angle-right nav-icon"></i>
+                                        <p>Danh sách khóa học</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/course/create" class="nav-link">
+                                        <i class="fas fa-angle-right nav-icon"></i>
+                                        <p>Tạo khóa học mới</p>
+                                    </a>
+                                </li>
 
-                                </ul>
-                            </li>
-                            <li class="nav-item has-treeview">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-copy"></i>
-                                    <p>
-                                        Quản lý nội dung
-                                        <i class="fas fa-angle-left right"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="/Contentt/index" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Danh sách nội dung</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="/Contentt/Create" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Thêm nội dung</p>
-                                        </a>
-                                    </li>
-
-                                </ul>
-                            </li>
-                            <li class="nav-item has-treeview">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-copy"></i>
-                                    <p>
-                                        Quản lý hội trường
-                                        <i class="fas fa-angle-left right"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="/venue/index" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Danh sách hội trường</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="/venue/Create" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Thêm hội trường</p>
-                                        </a>
-                                    </li>
-
-                                </ul>
-                            </li>
+                            </ul>
                         </li>
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>
+                                    Quản lý nội dung
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/Contentt/index" class="nav-link">
+                                        <i class="fas fa-angle-right nav-icon"></i>
+                                        <p>Danh sách nội dung</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/Contentt/Create" class="nav-link">
+                                        <i class="fas fa-angle-right nav-icon"></i>
+                                        <p>Thêm nội dung</p>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        </li>
+
+                   
                         <li class="nav-header">Người dùng</li>
                         <li class="nav-item">
-                            <li class="nav-item has-treeview">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-copy"></i>
-                                    <p>
-                                        Danh sách người dùng
-                                        <i class="fas fa-angle-left right"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="/trainer/index" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Danh sách Trainer</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="/trainer/Create" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Thêm Trainer</p>
-                                        </a>
-                                    </li>
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>
+                                    Danh sách người dùng
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="/trainer/index" class="nav-link">
+                                        <i class="fas fa-angle-right nav-icon"></i>
+                                        <p>Danh sách Trainer</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/trainer/Create" class="nav-link">
+                                        <i class="fas fa-angle-right nav-icon"></i>
+                                        <p>Thêm Trainer</p>
+                                    </a>
+                                </li>
 
-                                </ul>
-                            </li>
+                            </ul>
+                        </li>
+                        </li>
+                        <li class="nav-header">Report</li>
+                        <li class="nav-item">
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>
+                                    Danh sách Export
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                @using (Html.BeginForm("index", "export", FormMethod.Post, new {enctype = "multipart/form-data", @id = "formID"}))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit">Export trainer</button>   
+                                }
+                                </li>
+                            </ul>
+                        </li>
                         </li>
                     </ul>
                 </nav>
@@ -232,11 +274,7 @@
         <!-- /.content-wrapper -->
 
         <footer class="main-footer">
-            <div class="float-right d-none d-sm-block">
-                <b>Version</b> 1.0.1
-            </div>
-            <strong>Copyright &copy; 2020 <a href="/">DA Training Team</a>.</strong> All rights
-            reserved.
+          
         </footer>
 
         <!-- Control Sidebar -->

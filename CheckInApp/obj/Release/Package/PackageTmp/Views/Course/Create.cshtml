@@ -8,6 +8,7 @@
     <!-- Select2 -->
     <link rel="stylesheet" href="../../plugins/select2/css/select2.min.css">
     <link rel="stylesheet" href="../../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <link rel="stylesheet" href="../../plugins/bootstrap-datepicker-1.9.0-dist/css/bootstrap-datepicker.min.css">
     <!-- Bootstrap4 Duallistbox -->
     <link rel="stylesheet" href="../../plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
     <!-- daterange picker -->
@@ -37,27 +38,23 @@
                             @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
                         }
-                        <div class="form-group">
-                            <label>Name:</label>
-                            <input type="text" name="Name" class="form-control "  required/>
-                        </div>
-                        <div class="form-group">
-                            <label>Ngày bắt đầu:</label>
-
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                                </div>
-                                <input type="text" class="form-control"name="Datetime" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask required>
-                            </div>
-                            <!-- /.input group -->
-                        </div>
                       
                         <div class="form-group">
-                            <label>Hình thức training:</label> 
-                            <select id="ddlplatform" class="form-control select2" name="platformID"  required style="width: 100%;">
+                            <label>Hình thức training:</label>
+                            <select id="ddlplatform" class="form-control select2" name="platformID" required style="width: 100%;">
                             </select>
                         </div>
+                        <!-- Date -->
+                        <div class="form-group">
+                            <label>Ngày bắt đầu::</label>
+                            <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                <input type="text" name="Datetime" class="form-control datetimepicker-input" data-target="#reservationdate" />
+                                <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                      
                         <div class="form-group">
                             <label>Nội dung:</label>
                             <select id="ddlContent" class="form-control select2" name="contentIDs" multiple required style="width: 100%;">
@@ -83,18 +80,24 @@
     <!-- Bootstrap4 Duallistbox -->
     <script src="../../plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
     <!-- InputMask -->
+    <!-- date-range-picker -->
     <script src="../../plugins/moment/moment.min.js"></script>
     <script src="../../plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+    <script src="../../plugins/bootstrap-datepicker-1.9.0-dist/js/bootstrap-datepicker.min.js"></script>
+
     <!-- date-range-picker -->
     <script>
-        $(function() {
+        $(function () {
             //Initialize Select2 Elements
             $('#ddlplatform').select2({ placeholder: 'Chọn một hình thức' });
             $('#ddlContent').select2({ placeholder: 'Chọn một/nhiều nội dung cần train' });
 
-          
-            //Money Euro
-            $('[data-mask]').inputmask()
+            //Date range picker
+           
+            $('#reservationdate').datepicker({
+                format: 'dd/mm/yyyy',
+                startDate: '-3d'
+            });
         })
     </script>
     <script language="javascript" type="text/javascript">
@@ -103,7 +106,7 @@
             GetContents();
         });
 
-       
+
 
         function GetPlatform() {
 
@@ -127,11 +130,11 @@
                 }
             });
         }
-        
+
         function GetContents() {
 
             var url = "/api/courseinfor/GetAllContent/";
-            var markup  = "";
+            var markup = "";
 
             $.ajax({
                 url: url,

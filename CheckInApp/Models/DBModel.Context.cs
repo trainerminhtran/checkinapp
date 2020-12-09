@@ -13,10 +13,10 @@ namespace CheckInApp.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class checkinappEntities : DbContext
+    public partial class dbEntities : DbContext
     {
-        public checkinappEntities()
-            : base("name=checkinappEntities")
+        public dbEntities()
+            : base("name=dbEntities")
         {
         }
     
@@ -40,6 +40,7 @@ namespace CheckInApp.Models
         public virtual DbSet<CourseInfor> CourseInfors { get; set; }
         public virtual DbSet<CourseTestRecord> CourseTestRecords { get; set; }
         public virtual DbSet<DistrictInfor> DistrictInfors { get; set; }
+        public virtual DbSet<EmployeeInfor> EmployeeInfors { get; set; }
         public virtual DbSet<GiftCourseRecord> GiftCourseRecords { get; set; }
         public virtual DbSet<GiftInfor> GiftInfors { get; set; }
         public virtual DbSet<GiftType> GiftTypes { get; set; }
@@ -58,8 +59,7 @@ namespace CheckInApp.Models
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TestInfor> TestInfors { get; set; }
         public virtual DbSet<TestQuestionRecord> TestQuestionRecords { get; set; }
+        public virtual DbSet<TrainerRoomRecord> TrainerRoomRecords { get; set; }
         public virtual DbSet<UserInfor> UserInfors { get; set; }
-        public virtual DbSet<UserPermissionRecord> UserPermissionRecords { get; set; }
-        public virtual DbSet<VenueInfor> VenueInfors { get; set; }
     }
 }

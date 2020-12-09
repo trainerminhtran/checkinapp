@@ -29,13 +29,13 @@ namespace CheckInApp.Models
         public Nullable<bool> IsMotivationActive { get; set; }
         public Nullable<bool> IsDoorGift { get; set; }
         public Nullable<bool> IsRecheckAnswer { get; set; }
-        public Nullable<System.DateTime> Datetime { get; set; }
+        public System.DateTime Datetime { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AnswerInfor> AnswerInfors { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CheckinImageRecord> CheckinImageRecords { get; set; }
-        public virtual UserInfor UserInfor { get; set; }
         public virtual RoomInfor RoomInfor { get; set; }
+        public virtual UserInfor UserInfor { get; set; }
     }
 }

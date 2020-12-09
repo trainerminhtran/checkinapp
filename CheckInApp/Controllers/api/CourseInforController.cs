@@ -14,7 +14,7 @@ namespace CheckInApp.Controllers
 {
     public class CourseInforController : ApiController
     {
-        private InternalCheckinappEntities _db = new InternalCheckinappEntities();
+        private dbEntities _db = new dbEntities();
 
         [HttpGet]
         //Get Model by CatID
@@ -152,7 +152,7 @@ namespace CheckInApp.Controllers
         {
             try
             {
-                var content = _db.VenueInfors.Where(x => x.ID == ucs.id).FirstOrDefault();
+                var content = _db.StoreInfors.Where(x => x.ID == ucs.id).FirstOrDefault();
                 content.Status = ucs.sts;
                 _db.SaveChanges();
                 return true;

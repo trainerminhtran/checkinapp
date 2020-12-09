@@ -14,6 +14,8 @@ namespace CheckInApp.ViewModels
         public string ContactName { get; set; }
         public string ContactTel { get; set; }
         public int provinceID { get; set; }
+        public int districtID { get; set; }
+        public int platformID { get; set; }
         public bool Status { get; set; }
 
     }
@@ -24,7 +26,7 @@ namespace CheckInApp.ViewModels
         public string Address { get; set; }
         public string ContactName { get; set; }
         public string ContactTel { get; set; }
-        public TrainerProvince TrainerProvince { get; set; }
+        public TrainerProvince Province { get; set; }
         public bool Sts { get; set; }
     }
 
