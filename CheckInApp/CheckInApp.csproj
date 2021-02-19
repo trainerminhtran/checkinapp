@@ -177,6 +177,7 @@
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\TrainerController.cs" />
     <Compile Include="Controllers\UserCheckinController.cs" />
+    <Compile Include="Controllers\QuizController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VenueController.cs" />
     <Compile Include="Global.asax.cs">
@@ -329,6 +330,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Quiz.css" />
     <Content Include="dist\bootoast.min.css" />
     <Content Include="dist\bootoast.min.js" />
     <Content Include="dist\css\adminlte.css" />
@@ -2430,6 +2432,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\counter.js" />
+    <Content Include="Scripts\Quiz.js" />
     <Content Include="UploadedFiles\DatabaseModeling.v.1.4.jpeg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -2478,6 +2482,7 @@
     <Content Include="Views\User\UnAuthorized.cshtml" />
     <Content Include="Views\Room\Detailprint.cshtml" />
     <Content Include="Views\Room\Edit.cshtml" />
+    <Content Include="Views\Quiz\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
