@@ -93,3 +93,4 @@ C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\checkinapp.dll
 C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\checkinapp.pdb
 C:\Users\Admin\Documents\App\checkinapp\CheckInApp\obj\Debug\checkinapp.dll
 C:\Users\Admin\Documents\App\checkinapp\CheckInApp\obj\Debug\checkinapp.pdb
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\Elmah.dll

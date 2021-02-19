@@ -7,7 +7,7 @@ namespace CheckInApp.Services
 {
     public enum RoomEnum
     {
-        Hoitruong =1,
+        Inclass =1,
         Onsite,
         Livestream,
         Webtraining,

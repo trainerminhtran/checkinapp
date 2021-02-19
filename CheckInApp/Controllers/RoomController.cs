@@ -73,10 +73,11 @@ namespace CheckInApp.Controllers
             {
                 var guid = Guid.NewGuid();
                 var rurl = _qr.GetBaseUrl(guid.ToString());
+                var cour = _db.CourseInfors.FirstOrDefault(x => x.ID == tcvm.CourseID);
                 //insert course
                 var ro = new RoomInfor
                 {
-                    Name = tcvm.Name,
+                    Name = cour.Name + "."+ tcvm.Name,
                     CourseID = tcvm.CourseID == 0 ? 0 : tcvm.CourseID,
                     VenueID = tcvm.VenueID == 0 ? 0 : tcvm.VenueID,
                     Datetime = new DatetimeService().CreateEnDateTimeFromVNdate(tcvm.Datetime),
@@ -89,10 +90,8 @@ namespace CheckInApp.Controllers
                 };
                 _db.RoomInfors.Add(ro);
                 var trr = tcvm.TrainerID.Select(tc => new TrainerRoomRecord { RoomID = ro.ID, TrainerID = tc }).ToList();
-
                 _db.TrainerRoomRecords.AddRange(trr);
                 _db.SaveChanges();
-
             }
             catch (Exception ex)
             {
@@ -111,16 +110,23 @@ namespace CheckInApp.Controllers
         public ActionResult Delete(int id)
         {
             var roomInfors = _db.RoomInfors.Include(x => x.TrainerRoomRecords).FirstOrDefault(x => x.ID == id);
-            if (roomInfors != null)
+            if (roomInfors == null) return RedirectToAction("Index");
+            try
             {
-                var checkinroom = _db.CheckinInfors.Where(x => x.RoomID == id);
-                var trainerroomrecord = _db.TrainerRoomRecords.Where(x => x.RoomID == id);
-                _db.CheckinInfors.RemoveRange(checkinroom);
-                _db.TrainerRoomRecords.RemoveRange(trainerroomrecord);
+                //var checkinroom = _db.CheckinInfors.Where(x => x.RoomID == id);
+                //var trainerroomrecord = _db.TrainerRoomRecords.Where(x => x.RoomID == id);
+                //_db.CheckinInfors.RemoveRange(checkinroom);
+                //_db.TrainerRoomRecords.RemoveRange(trainerroomrecord);
                 _db.RoomInfors.Remove(roomInfors);
                 _db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            catch (Exception e)
+            {
+                Console.Write(e);
+                return RedirectToAction("Index");
+            }
+           
         }
 
         [HttpGet]

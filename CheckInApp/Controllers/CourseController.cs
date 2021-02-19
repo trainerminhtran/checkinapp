@@ -57,11 +57,12 @@ namespace CheckInApp.Controllers
             {
                 try
                 {
+                    var date = new DatetimeService().CreateEnDateTimeFromVNdate(courseInfor.Datetime);
                     //insert course
                     var cou = new CourseInfor();
                     cou.Name = ((RoomEnum)courseInfor.platformID).ToString() + courseInfor.Datetime.Replace("/",".");
                     cou.PlatformID = courseInfor.platformID;
-                    cou.Datetime = new DatetimeService().CreateEnDateTimeFromVNdate(courseInfor.Datetime);
+                    cou.Datetime = date;
                     cou.Status = true;
                     db.CourseInfors.Add(cou);
                     db.SaveChanges();

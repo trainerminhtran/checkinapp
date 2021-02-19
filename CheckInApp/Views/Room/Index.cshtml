@@ -106,11 +106,11 @@
                 <td>
                     @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |*@
                     @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @using (Html.BeginForm("Delete", "Room", FormMethod.Post, new { enctype = "multipart/form-data", @id = "formID" }))
+                    @using (Html.BeginForm("Delete", "Room", FormMethod.Post, new { enctype = "multipart/form-data", @id = "formID2" , onsubmit = "return confirm('Bạn thật sự muốn xóa lớp học này?');" }))
                     {
                         @Html.AntiForgeryToken()
                         <input type="hidden" name="id" value="@item.Id" />
-                        <button type="submit" class="btn btn-warning">Delete</button>
+                        <button type="submit" class="btn btn-warning" >Delete</button>
                     }
                 </td>
             </tr>
@@ -202,6 +202,10 @@
             //Money Euro
             $("#lbDatetime").inputmask('dd/MM/yyyy');
 
+            
+            $("input[data-bootstrap-switch]").each(function () {
+                $(this).bootstrapSwitch('state', $(this).prop('checked'));
+            });
             $('.table').DataTable({
                 "paging": true,
                 "lengthChange": true,
@@ -211,10 +215,6 @@
                 "autoWidth": false,
                 "responsive": true,
             });
-            $("input[data-bootstrap-switch]").each(function () {
-                $(this).bootstrapSwitch('state', $(this).prop('checked'));
-            });
-
 
             $('input[data-bootstrap-switch]').on('switchChange.bootstrapSwitch',
                 function (e, data) {
