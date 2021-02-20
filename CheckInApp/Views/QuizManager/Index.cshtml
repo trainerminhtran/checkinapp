@@ -1,11 +1,89 @@
-﻿@{
+﻿
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section Styles{
     <link href="~/Content/Quiz.css" rel="stylesheet" />
 }
+<div class="container-fluid" id="join-list">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="display: block">
+                <h4 class="text-center">Tên bài kiểm tra</h4>
+            </div>
+            <div class="modal-header">
+                <div class="row col">
+                    <div class="col-8 text-center"></div>
+                    <div class="col-4 text-right">
+                        <button class="btn btn-primary" type="button">
+                            11
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <header>
+                    <h4 class="text-center">Danh Sách tham gia</h4>
+                </header>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Thứ tự</th>
+                            <th>Tên</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="rank">1</td>
+                            <td class="team">Spain</td>
+                        </tr>
+                        <tr>
+                            <td class="rank">2</td>
+                            <td class="team">Germany</td>
+                        </tr>
+                        <tr>
+                            <td class="rank">3</td>
+                            <td class="team">Portugal</td>
+                        </tr>
+                        <tr>
+                            <td class="rank">4</td>
+                            <td class="team">Brazil</td>
+                        </tr>
+                        <tr>
+                            <td class="rank">5</td>
+                            <td class="team">Colombia</td>
+                        </tr>
+                        <tr>
+                            <td class="rank">6</td>
+                            <td class="team">Uruguay</td>
+                        </tr>
+                        <tr>
+                            <td class="rank">7</td>
+                            <td class="team">Argentina</td>
+                        </tr>
+                        <tr>
+                            <td class="rank">8</td>
+                            <td class="team">Switzerland</td>
+                        </tr>
+                        <tr>
+                            <td class="rank">9</td>
+                            <td class="team">Italy</td>
+                        </tr>
+                        <tr>
+                            <td class="rank">10</td>
+                            <td class="team">Greece</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer text-muted">
+                <button type="button" class="btn btn-default" onclick="StartQuiz()">Bắt đầu</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-<div class="container-fluid" id="quiz-test">
+<div class="container-fluid" id="quiz-test" style="display: none">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="display: block">
@@ -32,15 +110,11 @@
                         </div>
                     </div>
                 </div>
-                <div id="counters_1">
-                    <span style="float: left">
+                <div id="counters_admin">
+                    <span class="text-center" style="display: block; font-size: 25px; font-weight: bold">
                         0:<span class="counter" data-TargetNum="15" data-Speed="15000"
                                 data-Direction="reverse" data-Easing="linear"></span>
-                    </span><span class="text-center" style="display: block">80 Point</span>
-                </div>
-                <div class="progress" style="margin-bottom: 1rem;">
-                    <div class="progress-bar progress-bar-striped progress-time" style="min-width: 20px;">
-                    </div>
+                    </span>
                 </div>
                 <div class="quiz" id="quiz" data-toggle="buttons">
                     <label class="element-animation1 btn btn-lg btn-primary btn-block ans">Đáp án thứ nhất</label>
@@ -61,13 +135,6 @@
         <div class="modal-content">
             <div class="modal-header" style="display: block">
                 <h4 class="text-center">Tên bài kiểm tra</h4>
-            </div>
-            <div class="modal-header">
-                <div class="row col">
-                    <div class="col-4 text-center">30 <br /> Vừa được</div>
-                    <div class="col-4 text-center">Tên User </div>
-                    <div class="col-4 text-center">11 <br /> Vị thứ</div>
-                </div>
             </div>
             <div class="modal-body">
                 <header>
@@ -136,7 +203,7 @@
                 </table>
             </div>
             <div class="modal-footer text-muted">
-                <span id="answer" style="display: none">Hệ thống đã ghi nhận câu trả lời của bạn, vui lòng đợi câu hỏi tiếp theo.</span>
+                <button type="button" class="btn btn-default" onclick="NextQuiz()">Câu hỏi tiếp theo</button>
             </div>
         </div>
     </div>
@@ -144,8 +211,19 @@
 
 @section Scripts{
     <script>
-        let pageId = 1;
+        let pageId = 2;
     </script>
-    <script src="~/Scripts/Quiz.js"></script>
     <script src="~/Scripts/counter.js"></script>
+    <script>
+        var StartQuiz = function() {
+            $("#join-list").hide();
+            $("#ranking").hide();
+            $("#quiz-test").fadeIn();
+            counter_init("#counters_admin");
+        }
+        var NextQuiz = function() {
+            StartQuiz();
+        }
+    </script>
+
 }
