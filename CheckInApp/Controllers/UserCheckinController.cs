@@ -34,8 +34,6 @@ namespace CheckInApp.Controllers
             {
                 return null;
             }
-
-
             var venueName = ro.StoreInfor.Name;
             long.TryParse(checkinId, out var temcheck);
             var uvm = new UserCheckinViewModel
@@ -51,7 +49,8 @@ namespace CheckInApp.Controllers
                 message = message,
                 checkinId = temcheck,
                 Date = _dt.GetVNDateString(ro.Datetime),
-                IsMotivationGift = false
+                IsMotivationGift = false,
+                RoomGuid = ro.Guid,
             };
 
             var ischeckin = _db.CheckinInfors.FirstOrDefault(x => x.RoomInfor.Guid == id && x.UserInfor.ID == u.Id);

@@ -53,11 +53,8 @@ function doCount(num, index, speed, groupClass, direction, easing) {
             if (direction == 'reverse') {
                 if (num - Math.floor(now) < 10) {
                     $(this).html("0" + (num - Math.floor(now)));
-                    console.log(now);
-                    console.log($(this));
                 } else {
                     $(this).html(num - Math.floor(now));
-                    console.log(num);
                 }
 
             } else {

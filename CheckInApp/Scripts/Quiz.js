@@ -1,5 +1,4 @@
 ﻿$(function () {
-    var loading = $('#loadbar').hide();
     $(document)
         .ajaxStart(function () {
             loading.show();
@@ -20,11 +19,12 @@
         $('#answer').fadeIn();
     });
 
-    $ans = 3;
+    showload();
 });	
 
 var i = 0;
 function makeProgress() {
+    var timerProgress = 0;
     if (i < 100) {
         i = i + 1;
         $(".progress-time").css("width", i + "%");
@@ -43,8 +43,26 @@ function makeProgress() {
             $("#quiz-test").hide();
             $("#ranking").fadeIn();
         }, 5000)
+        clearTimeout(timerProgress);
     }
-    // Wait for sometime before running this script again
-    setTimeout("makeProgress()", 150);
+    timerProgress = setTimeout("makeProgress()", 150);
+};
+
+var textready;
+var showtext = function() {
+    textready = setInterval(function () { animationready(); }, 3000);
 }
-makeProgress();
+var animationready = function() {
+    $(".animate").attr('class', 'animate');
+    setTimeout(function () {
+        $(".animate").addClass("one");
+    }, 20);
+}
+var loadinghide = function() {
+    $('#loadbar').hide();
+    clearInterval(textready);
+}
+var showload = function() {
+    $('#loadbar').fadeIn();
+    showtext();
+}

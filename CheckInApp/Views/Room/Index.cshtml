@@ -112,7 +112,7 @@
                         <input type="hidden" name="id" value="@item.Id" />
                         <button type="submit" class="btn btn-warning">Delete</button>
                     }
-                    <a class="btn btn-primary" href="@Url.Action("Index","QuizManager")" role="button">Test</a>
+                    <a class="btn btn-primary" href="@Url.Action("Index","QuizManager",new {RoomId = item.RoomGuid})" role="button">Test</a>
 
                 </td>
             </tr>

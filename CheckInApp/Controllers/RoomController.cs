@@ -37,7 +37,8 @@ namespace CheckInApp.Controllers
                     Name = r.Name,
                     QRCode = _qr.QRCodeView(_qr.GetQRCode(_qr.GetUrlByRoomurl(r.RoomUrl))),
                     TrainerName = _userService.GetTrainerString(r.TrainerRoomRecords.Select(x => x.UserInfor.EmployeeInfor.Fullname)),
-                    RoomUrl = _qr.GetUrlByRoomurl(r.RoomUrl)
+                    RoomUrl = _qr.GetUrlByRoomurl(r.RoomUrl),
+                    RoomGuid = r.Guid
                 };
 
                 var sto = _db.StoreInfors.FirstOrDefault(x => x.ID == r.VenueID);
