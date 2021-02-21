@@ -202,3 +202,4 @@ D:\Freelance\SamSung\QAA\checkinapp\CheckInApp\bin\Microsoft.AspNet.SignalR.Syst
 D:\Freelance\SamSung\QAA\checkinapp\CheckInApp\bin\Microsoft.Owin.xml
 D:\Freelance\SamSung\QAA\checkinapp\CheckInApp\bin\Microsoft.Owin.Host.SystemWeb.xml
 D:\Freelance\SamSung\QAA\checkinapp\CheckInApp\bin\Microsoft.Owin.Security.xml
+D:\Freelance\SamSung\QAA\checkinapp\CheckInApp\obj\Debug\CheckInApp.csprojAssemblyReference.cache

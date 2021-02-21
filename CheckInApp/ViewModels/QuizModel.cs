@@ -17,5 +17,37 @@ namespace Checkinapp.ViewModels
         public string TestName { get; set; }
 
         public Guid RoomId { get; set; }
+
+        public int TestId { get; set; }
+    }
+    public class QuizView
+    {
+        public string TestName { get; set; }
+
+        public Guid RoomId { get; set; }
+
+        public int TestId { get; set; }
+    }
+
+    public class QuizManagerListView
+    {
+        public string TestName { get; set; }
+        public Guid RoomId { get; set; }
+        public int TestId { get; set; }
+        public int Time { get; set; }
+        public int Total { get; set; }
+        public int QuestionId { get; set; }
+        public string QuestionContent { get; set; }
+        public string Choose1 { get; set; }
+        public string Choose2 { get; set; }
+        public string Choose3 { get; set; }
+        public string Choose4 { get; set; }
+    }
+    public class Ansewr
+    {
+        public Guid RoomId { get; set; }
+        public int TestId { get; set; }
+        public int QuestionId { get; set; }
+        public int Choose { get; set; }
     }
 }

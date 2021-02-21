@@ -1,27 +1,17 @@
 ﻿$(function () {
     $(document)
         .ajaxStart(function () {
-            loading.show();
+            //loading.show();
         }).ajaxStop(function () {
-            loading.hide();
+            //loading.hide();
         });
 
-    $("label.btn").on('click', function () {
-        $(this).attr("data-chose", "1");
-        $('#loadbar').show();
-        $(".quiz .ans").each(function (index) {
-            if ($(this).attr("data-chose") == "1") {
-                $(this).addClass("btn-dark");
-            } else {
-                $(this).removeClass("btn-primary btn-danger btn-warning btn-success").addClass("btn-secondary");
-            }
-        });
-        $('#answer').fadeIn();
+    $(".quiz .ans").on('click', function () {
+        
     });
 
     showload();
 });	
-
 var i = 0;
 function makeProgress() {
     var timerProgress = 0;
@@ -39,13 +29,9 @@ function makeProgress() {
         }
     }
     if (i == 100) {
-        setTimeout(function () {
-            $("#quiz-test").hide();
-            $("#ranking").fadeIn();
-        }, 5000)
         clearTimeout(timerProgress);
     }
-    timerProgress = setTimeout("makeProgress()", 150);
+    timerProgress = setTimeout("makeProgress()", 200);
 };
 
 var textready;

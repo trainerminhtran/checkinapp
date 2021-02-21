@@ -14,12 +14,20 @@ namespace CheckInApp.Models
     
     public partial class CourseTestRecord
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public CourseTestRecord()
+        {
+            this.CourseInfor = new HashSet<CourseInfor>();
+            this.TestInfor = new HashSet<TestInfor>();
+        }
+
         public long ID { get; set; }
         public int TestID { get; set; }
         public int CourseID { get; set; }
         public Nullable<bool> Status { get; set; }
-    
-        public virtual CourseInfor CourseInfor { get; set; }
-        public virtual TestInfor TestInfor { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CourseInfor> CourseInfor { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TestInfor> TestInfor { get; set; }
     }
 }
