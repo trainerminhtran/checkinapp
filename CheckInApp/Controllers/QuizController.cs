@@ -93,15 +93,15 @@ namespace CheckInApp.Controllers
         [HttpPost]
         public JsonResult Ansewr(Ansewr model)
         {
-            var ck = new AnswerRecord()
-            {
-                //RoomID = us.RoomId,
-                //UserID = us.UserId,
-                //Signature = us.Signature,
-                //Datetime = new DatetimeService().GetDateTimeNow()
-            };
-            _db.CheckinInfors.Add(ck);
-            _db.SaveChanges();
+            //var ck = new AnswerRecord()
+            //{
+            //    //RoomID = us.RoomId,
+            //    //UserID = us.UserId,
+            //    //Signature = us.Signature,
+            //    //Datetime = new DatetimeService().GetDateTimeNow()
+            //};
+            //_db.CheckinInfors.Add(ck);
+            //_db.SaveChanges();
             return new JsonResult() { Data = model, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
     }

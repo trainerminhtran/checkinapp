@@ -330,6 +330,7 @@
           <Property Name="TestID" Type="int" Nullable="false" />
           <Property Name="QuestionID" Type="int" Nullable="false" />
           <Property Name="Status" Type="bit" />
+          <Property Name="QuestionOrder" Type="int" />
         </EntityType>
         <EntityType Name="TrainerRoomRecord">
           <Key>
@@ -351,7 +352,7 @@
           <Property Name="Status" Type="bit" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" />
           <Property Name="EmployeeID" Type="int" Nullable="false" />
-          <Property Name="PermissionID" Type="int" />
+          <Property Name="PermissionID" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_AccountInfor_ChannelInfor">
           <End Role="ChannelInfor" Type="Self.ChannelInfor" Multiplicity="1" />
@@ -822,7 +823,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserInfor_PermissionInfor">
-          <End Role="PermissionInfor" Type="Self.PermissionInfor" Multiplicity="0..1" />
+          <End Role="PermissionInfor" Type="Self.PermissionInfor" Multiplicity="1" />
           <End Role="UserInfor" Type="Self.UserInfor" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PermissionInfor">
@@ -1304,16 +1305,6 @@
           <NavigationProperty Name="CatInfor" Relationship="Self.FK_ModelInfor_CatInfor" FromRole="ModelInfor" ToRole="CatInfor" />
           <NavigationProperty Name="ContentModelRecords" Relationship="Self.FK_ContentModelRecord_ModelInfor" FromRole="ModelInfor" ToRole="ContentModelRecord" />
         </EntityType>
-        <EntityType Name="PermissionInfor">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Status" Type="Boolean" />
-          <NavigationProperty Name="UserInfors" Relationship="Self.FK_UserInfor_PermissionInfor" FromRole="PermissionInfor" ToRole="UserInfor" />
-          <NavigationProperty Name="UserInfors1" Relationship="CheckinAppModel.FK_UserInfor_PermissionInfor1" FromRole="PermissionInfor" ToRole="UserInfor" />
-        </EntityType>
         <EntityType Name="PlatformInfor">
           <Key>
             <PropertyRef Name="ID" />
@@ -1449,6 +1440,7 @@
           <Property Name="Status" Type="Boolean" />
           <NavigationProperty Name="QuestionInfor" Relationship="Self.FK_TestQuestionRecord_QuestionInfor" FromRole="TestQuestionRecord" ToRole="QuestionInfor" />
           <NavigationProperty Name="TestInfor" Relationship="Self.FK_TestQuestionRecord_TestInfor" FromRole="TestQuestionRecord" ToRole="TestInfor" />
+          <Property Name="QuestionOrder" Type="Int32" />
         </EntityType>
         <EntityType Name="TrainerRoomRecord">
           <Key>
@@ -1472,14 +1464,13 @@
           <Property Name="Status" Type="Boolean" Nullable="false" />
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="EmployeeID" Type="Int32" Nullable="false" />
-          <Property Name="PermissionID" Type="Int32" />
+          <Property Name="PermissionID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CheckinInfors" Relationship="Self.FK_CheckinInfor_UserInfor" FromRole="UserInfor" ToRole="CheckinInfor" />
           <NavigationProperty Name="EmployeeInfor" Relationship="Self.FK_UserInfor_EmployeeInfor" FromRole="UserInfor" ToRole="EmployeeInfor" />
           <NavigationProperty Name="LoginInfors" Relationship="Self.FK_LoginInfor_UserInfor" FromRole="UserInfor" ToRole="LoginInfor" />
-          <NavigationProperty Name="PermissionInfor" Relationship="Self.FK_UserInfor_PermissionInfor" FromRole="UserInfor" ToRole="PermissionInfor" />
           <NavigationProperty Name="PositionInfor" Relationship="Self.FK_UserInfor_PositionInfor" FromRole="UserInfor" ToRole="PositionInfor" />
           <NavigationProperty Name="TrainerRoomRecords" Relationship="Self.FK_RoomTrainerRecord_UserInfor" FromRole="UserInfor" ToRole="TrainerRoomRecord" />
-          <NavigationProperty Name="PermissionInfor1" Relationship="CheckinAppModel.FK_UserInfor_PermissionInfor1" FromRole="UserInfor" ToRole="PermissionInfor" />
+          <NavigationProperty Name="PermissionInfor" Relationship="CheckinAppModel.FK_UserInfor_PermissionInfor" FromRole="UserInfor" ToRole="PermissionInfor" />
         </EntityType>
         <Association Name="FK_AccountInfor_ChannelInfor">
           <End Role="ChannelInfor" Type="Self.ChannelInfor" Multiplicity="1" />
@@ -1865,18 +1856,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserInfor_PermissionInfor">
-          <End Role="PermissionInfor" Type="Self.PermissionInfor" Multiplicity="1" />
-          <End Role="UserInfor" Type="Self.UserInfor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PermissionInfor">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="UserInfor">
-              <PropertyRef Name="EmployeeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_StoreInfor_PlatformInfor">
           <End Role="PlatformInfor" Type="Self.PlatformInfor" Multiplicity="1" />
           <End Role="StoreInfor" Type="Self.StoreInfor" Multiplicity="*" />
@@ -1997,7 +1976,6 @@
           <EntitySet Name="LevelInfors" EntityType="Self.LevelInfor" />
           <EntitySet Name="LoginInfors" EntityType="Self.LoginInfor" />
           <EntitySet Name="ModelInfors" EntityType="Self.ModelInfor" />
-          <EntitySet Name="PermissionInfors" EntityType="Self.PermissionInfor" />
           <EntitySet Name="PlatformInfors" EntityType="Self.PlatformInfor" />
           <EntitySet Name="PositionInfors" EntityType="Self.PositionInfor" />
           <EntitySet Name="ProvinceInfors" EntityType="Self.ProvinceInfor" />
@@ -2138,10 +2116,6 @@
             <End Role="UserInfor" EntitySet="UserInfors" />
             <End Role="LoginInfor" EntitySet="LoginInfors" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserInfor_PermissionInfor" Association="Self.FK_UserInfor_PermissionInfor">
-            <End Role="PermissionInfor" EntitySet="PermissionInfors" />
-            <End Role="UserInfor" EntitySet="UserInfors" />
-          </AssociationSet>
           <AssociationSet Name="FK_StoreInfor_PlatformInfor" Association="Self.FK_StoreInfor_PlatformInfor">
             <End Role="PlatformInfor" EntitySet="PlatformInfors" />
             <End Role="StoreInfor" EntitySet="StoreInfors" />
@@ -2174,13 +2148,23 @@
             <End Role="UserInfor" EntitySet="UserInfors" />
             <End Role="TrainerRoomRecord" EntitySet="TrainerRoomRecords" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserInfor_PermissionInfor1" Association="CheckinAppModel.FK_UserInfor_PermissionInfor1">
+          <EntitySet Name="PermissionInfors" EntityType="CheckinAppModel.PermissionInfor" />
+          <AssociationSet Name="FK_UserInfor_PermissionInfor" Association="CheckinAppModel.FK_UserInfor_PermissionInfor">
             <End Role="PermissionInfor" EntitySet="PermissionInfors" />
             <End Role="UserInfor" EntitySet="UserInfors" />
           </AssociationSet>
         </EntityContainer>
-        <Association Name="FK_UserInfor_PermissionInfor1">
-          <End Type="CheckinAppModel.PermissionInfor" Role="PermissionInfor" Multiplicity="0..1" />
+        <EntityType Name="PermissionInfor">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" />
+          <NavigationProperty Name="UserInfors" Relationship="CheckinAppModel.FK_UserInfor_PermissionInfor" FromRole="PermissionInfor" ToRole="UserInfor" />
+        </EntityType>
+        <Association Name="FK_UserInfor_PermissionInfor">
+          <End Type="CheckinAppModel.PermissionInfor" Role="PermissionInfor" Multiplicity="1" />
           <End Type="CheckinAppModel.UserInfor" Role="UserInfor" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PermissionInfor">
@@ -2427,15 +2411,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PermissionInfors">
-            <EntityTypeMapping TypeName="CheckinAppModel.PermissionInfor">
-              <MappingFragment StoreEntitySet="PermissionInfor">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PlatformInfors">
             <EntityTypeMapping TypeName="CheckinAppModel.PlatformInfor">
               <MappingFragment StoreEntitySet="PlatformInfor">
@@ -2550,6 +2525,7 @@
           <EntitySetMapping Name="TestQuestionRecords">
             <EntityTypeMapping TypeName="CheckinAppModel.TestQuestionRecord">
               <MappingFragment StoreEntitySet="TestQuestionRecord">
+                <ScalarProperty Name="QuestionOrder" ColumnName="QuestionOrder" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="TestID" ColumnName="TestID" />
                 <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
@@ -2578,6 +2554,15 @@
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
                 <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PermissionInfors">
+            <EntityTypeMapping TypeName="CheckinAppModel.PermissionInfor">
+              <MappingFragment StoreEntitySet="PermissionInfor">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

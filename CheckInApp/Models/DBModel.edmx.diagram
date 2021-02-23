@@ -28,7 +28,6 @@
         <EntityTypeShape EntityType="CheckinAppModel.LevelInfor" Width="1.5" PointX="10.75" PointY="18" IsExpanded="true" />
         <EntityTypeShape EntityType="CheckinAppModel.LoginInfor" Width="1.5" PointX="9.75" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CheckinAppModel.ModelInfor" Width="1.5" PointX="13" PointY="20.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="CheckinAppModel.PermissionInfor" Width="1.5" PointX="5.25" PointY="3.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CheckinAppModel.PlatformInfor" Width="1.5" PointX="0.75" PointY="12.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CheckinAppModel.PositionInfor" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="CheckinAppModel.ProvinceInfor" Width="1.5" PointX="1.5" PointY="20.5" IsExpanded="true" />
@@ -73,7 +72,6 @@
         <AssociationConnector Association="CheckinAppModel.FK_GiftInfor_ImageInfor" ManuallyRouted="false" />
         <AssociationConnector Association="CheckinAppModel.FK_QuestionInfor_LevelInfor" ManuallyRouted="false" />
         <AssociationConnector Association="CheckinAppModel.FK_LoginInfor_UserInfor" ManuallyRouted="false" />
-        <AssociationConnector Association="CheckinAppModel.FK_UserInfor_PermissionInfor" ManuallyRouted="false" />
         <AssociationConnector Association="CheckinAppModel.FK_StoreInfor_PlatformInfor" ManuallyRouted="false" />
         <AssociationConnector Association="CheckinAppModel.FK_UserInfor_PositionInfor" ManuallyRouted="false" />
         <AssociationConnector Association="CheckinAppModel.FK_ProvinceInfor_RegionInfor" ManuallyRouted="false" />
@@ -82,7 +80,8 @@
         <AssociationConnector Association="CheckinAppModel.FK_RoomTrainerRecord_RoomInfor" ManuallyRouted="false" />
         <AssociationConnector Association="CheckinAppModel.FK_TestQuestionRecord_TestInfor" ManuallyRouted="false" />
         <AssociationConnector Association="CheckinAppModel.FK_RoomTrainerRecord_UserInfor" ManuallyRouted="false" />
-        <AssociationConnector Association="CheckinAppModel.FK_UserInfor_PermissionInfor1" />
+        <EntityTypeShape EntityType="CheckinAppModel.PermissionInfor" Width="1.5" PointX="10.375" PointY="0.875" />
+        <AssociationConnector Association="CheckinAppModel.FK_UserInfor_PermissionInfor" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

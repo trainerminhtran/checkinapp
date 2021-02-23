@@ -48,7 +48,6 @@ namespace CheckInApp.Models
         public virtual DbSet<LevelInfor> LevelInfors { get; set; }
         public virtual DbSet<LoginInfor> LoginInfors { get; set; }
         public virtual DbSet<ModelInfor> ModelInfors { get; set; }
-        public virtual DbSet<PermissionInfor> PermissionInfors { get; set; }
         public virtual DbSet<PlatformInfor> PlatformInfors { get; set; }
         public virtual DbSet<PositionInfor> PositionInfors { get; set; }
         public virtual DbSet<ProvinceInfor> ProvinceInfors { get; set; }
@@ -61,5 +60,6 @@ namespace CheckInApp.Models
         public virtual DbSet<TestQuestionRecord> TestQuestionRecords { get; set; }
         public virtual DbSet<TrainerRoomRecord> TrainerRoomRecords { get; set; }
         public virtual DbSet<UserInfor> UserInfors { get; set; }
+        public virtual DbSet<PermissionInfor> PermissionInfors { get; set; }
     }
 }

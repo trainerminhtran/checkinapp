@@ -29,17 +29,16 @@ namespace CheckInApp.Models
         public bool Status { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public int EmployeeID { get; set; }
-        public Nullable<int> PermissionID { get; set; }
+        public int PermissionID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CheckinInfor> CheckinInfors { get; set; }
         public virtual EmployeeInfor EmployeeInfor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LoginInfor> LoginInfors { get; set; }
-        public virtual PermissionInfor PermissionInfor { get; set; }
         public virtual PositionInfor PositionInfor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TrainerRoomRecord> TrainerRoomRecords { get; set; }
-        public virtual PermissionInfor PermissionInfor1 { get; set; }
+        public virtual PermissionInfor PermissionInfor { get; set; }
     }
 }

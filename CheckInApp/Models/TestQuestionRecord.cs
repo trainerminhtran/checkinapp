@@ -19,6 +19,7 @@ namespace CheckInApp.Models
         public int QuestionID { get; set; }
         public Nullable<bool> Status { get; set; }
         public Nullable<int> QuestionOrder { get; set; }
+    
         public virtual QuestionInfor QuestionInfor { get; set; }
         public virtual TestInfor TestInfor { get; set; }
     }
