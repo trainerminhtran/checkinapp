@@ -241,6 +241,9 @@
     <Compile Include="Models\CourseInfor.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CourseQuestionProcess.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CourseTestRecord.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>

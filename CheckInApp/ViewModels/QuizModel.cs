@@ -11,6 +11,11 @@ namespace Checkinapp.ViewModels
         public Guid RoomId { get; set; }
         public int UserId { get; set; }
     }
+    public class StartRoom
+    {
+        public Guid RoomId { get; set; }
+        public int TestId { get; set; }
+    }
 
     public class QuizManagerView
     {
@@ -23,10 +28,9 @@ namespace Checkinapp.ViewModels
     public class QuizView
     {
         public string TestName { get; set; }
-
         public Guid RoomId { get; set; }
-
         public int TestId { get; set; }
+        public bool Process { get; set; }
     }
 
     public class QuizManagerListView
@@ -34,7 +38,7 @@ namespace Checkinapp.ViewModels
         public string TestName { get; set; }
         public Guid RoomId { get; set; }
         public int TestId { get; set; }
-        public int Time { get; set; }
+        public long Time { get; set; }
         public int Total { get; set; }
         public int QuestionId { get; set; }
         public string QuestionContent { get; set; }
@@ -42,6 +46,8 @@ namespace Checkinapp.ViewModels
         public string Choose2 { get; set; }
         public string Choose3 { get; set; }
         public string Choose4 { get; set; }
+        public string ChooseTrue { get; set; }
+        public int AnsTime { get; set; }
     }
     public class Ansewr
     {
@@ -49,5 +55,6 @@ namespace Checkinapp.ViewModels
         public int TestId { get; set; }
         public int QuestionId { get; set; }
         public int Choose { get; set; }
+        public int TimeAns { get; set; }
     }
 }

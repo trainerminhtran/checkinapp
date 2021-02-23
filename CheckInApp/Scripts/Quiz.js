@@ -31,7 +31,7 @@ function makeProgress() {
     if (i == 100) {
         clearTimeout(timerProgress);
     }
-    timerProgress = setTimeout("makeProgress()", 200);
+    timerProgress = setTimeout("makeProgress()", parseInt((parseInt($(".counter").attr("data-TargetNum")) * 10)));
 };
 
 var textready;

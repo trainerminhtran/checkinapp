@@ -27,12 +27,10 @@ namespace CheckInApp.Models
     
         public virtual DbSet<AccountInfor> AccountInfors { get; set; }
         public virtual DbSet<AnswerInfor> AnswerInfors { get; set; }
-        public virtual DbSet<AnswerRecord> AnswerRecords { get; set; }
         public virtual DbSet<AreaInfor> AreaInfors { get; set; }
         public virtual DbSet<CatInfor> CatInfors { get; set; }
         public virtual DbSet<ChannelInfor> ChannelInfors { get; set; }
         public virtual DbSet<CheckinImageRecord> CheckinImageRecords { get; set; }
-        public virtual DbSet<CheckinInfor> CheckinInfors { get; set; }
         public virtual DbSet<CityRuralInfor> CityRuralInfors { get; set; }
         public virtual DbSet<ContentCourseRecord> ContentCourseRecords { get; set; }
         public virtual DbSet<ContentInfor> ContentInfors { get; set; }
@@ -57,9 +55,12 @@ namespace CheckInApp.Models
         public virtual DbSet<StoreInfor> StoreInfors { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TestInfor> TestInfors { get; set; }
-        public virtual DbSet<TestQuestionRecord> TestQuestionRecords { get; set; }
         public virtual DbSet<TrainerRoomRecord> TrainerRoomRecords { get; set; }
         public virtual DbSet<UserInfor> UserInfors { get; set; }
         public virtual DbSet<PermissionInfor> PermissionInfors { get; set; }
+        public virtual DbSet<TestQuestionRecord> TestQuestionRecords { get; set; }
+        public virtual DbSet<CourseQuestionProcess> CourseQuestionProcesses { get; set; }
+        public virtual DbSet<AnswerRecord> AnswerRecords { get; set; }
+        public virtual DbSet<CheckinInfor> CheckinInfors { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace CheckInApp.Models
         public long CheckinID { get; set; }
         public Nullable<long> ImageID { get; set; }
     
-        public virtual CheckinInfor CheckinInfor { get; set; }
         public virtual ImageInfor ImageInfor { get; set; }
+        public virtual CheckinInfor CheckinInfor { get; set; }
     }
 }

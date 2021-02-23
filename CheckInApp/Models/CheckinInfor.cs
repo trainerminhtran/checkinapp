@@ -30,6 +30,7 @@ namespace CheckInApp.Models
         public Nullable<bool> IsDoorGift { get; set; }
         public Nullable<bool> IsRecheckAnswer { get; set; }
         public System.DateTime Datetime { get; set; }
+        public Nullable<int> CountingScore { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AnswerInfor> AnswerInfors { get; set; }

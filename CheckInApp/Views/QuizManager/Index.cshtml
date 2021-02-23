@@ -150,7 +150,9 @@
                             $("#countJoin").html(next);
                             var html = "<tr data-user='" +
                                 roominfo.UserId +
-                                "'><td class='rank'>" + next + "</td><td class='team'>" +
+                                "'><td class='rank'>" +
+                                next +
+                                "</td><td class='team'>" +
                                 roominfo.FullName +
                                 "</td></tr>";
                             $("#list-join-data tbody").append(html);
@@ -171,18 +173,21 @@
     </script>
     <script src="~/Scripts/counter.js"></script>
     <script>
-        var StartQuiz = function () {
-            var url = "@Url.Action("_ListQuiz",new{TestId=Model.TestId,RoomId=Model.RoomId})";
-            url = url.replace("amp;",'')
-            $.get(url, function(data) {
-                $(".quiz-manager .modal-content").html(data);
-                var StartObj = {};
-                StartObj["TestId"] = @Model.TestId;
-                StartObj["RoomId"] = "@Model.RoomId";
-                var dataPush = JSON.stringify(StartObj);
-                chat.server.group("Start", dataPush);
-                counter_init("#counters_admin");
-            });
+        var StartQuiz = function() {
+            var url = "@Url.Action("_ListQuiz", new {TestId = Model.TestId, RoomId = Model.RoomId})";
+            url = url.replace("amp;", '')
+            $.get(url,
+                function(data) {
+                    if (data.length > 1) {
+                        $(".quiz-manager .modal-content").html(data);
+                        var StartObj = {};
+                        StartObj["TestId"] = @Model.TestId;
+                        StartObj["RoomId"] = "@Model.RoomId";
+                        var dataPush = JSON.stringify(StartObj);
+                        chat.server.group("Start", dataPush);
+                        counter_init("#counters_admin");
+                    }
+                });
         }
         var NextQuiz = function() {
             StartQuiz();

@@ -14,7 +14,6 @@
     </div>
     <div class="modal-body">
         <div id="loadbar" style="display: none;">
-            <div class="bg-dack"></div>
             <div id="circle">
                 <div class="loader">
                     <div class="loader">
@@ -25,10 +24,15 @@
                     </div>
                 </div>
             </div>
+            <div class="bg-dack">
+                <div class="animate one" style="left: 19%">
+                    <span>G</span><span>h</span><span>i</span>&nbsp;<span>n</span><span>h</span><span>ậ</span><span>n</span>&nbsp;<span>c</span><span>â</span><span>u</span>&nbsp;<span>t</span><span>r</span><span>ả</span>&nbsp;<span>l</span><span>ờ</span><span>i</span>
+                </div>
+            </div>
         </div>
         <div id="counters_1">
             <span style="float: left">
-                0:<span class="counter" data-TargetNum="20" data-Speed="20000"
+                0:<span class="counter" data-TargetNum="@Model.Time" data-Speed="@(Model.Time * 1000)"
                         data-Direction="reverse" data-Easing="linear"></span>
             </span><span class="text-center" style="display: block">80 Point</span>
         </div>
@@ -43,8 +47,9 @@
             <label class="element-animation4 btn btn-lg btn-success btn-block ans" onclick="ChooseAns(4)" data-choose="4">@Model.Choose4</label>
         </div>
     </div>
-    <div class="modal-footer text-muted">
+    @Html.HiddenFor(m=>m.AnsTime)
+    @*<div class="modal-footer text-muted">
         <span id="answer" style="display: none">Hệ thống đã ghi nhận câu trả lời của bạn, vui lòng đợi câu hỏi tiếp theo.</span>
-    </div>
+    </div>*@
     @Html.HiddenFor(m=>m.QuestionId)
 }

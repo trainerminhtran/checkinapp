@@ -49,7 +49,8 @@ function doCount(num, index, speed, groupClass, direction, easing) {
     }, {
         duration: +speed,
         easing: easing,
-        step: function (now) {
+            step: function (now) {
+                $("#AnsTime").val(num - Math.floor(now));
             if (direction == 'reverse') {
                 if (num - Math.floor(now) < 10) {
                     $(this).html("0" + (num - Math.floor(now)));
@@ -86,17 +87,13 @@ function completeTime() {
             1000);
     } else {
         setTimeout(function () {
-            $(".quiz .ans").removeClass("btn-primary btn-danger btn-warning btn-warning")
+            $(".quiz .ans").removeClass("btn-primary btn-danger btn-warning btn-warning btn-success")
                 .addClass("btn-secondary");
-            setTimeout(function() {
-                $("#join-list").hide();
-                $("#quiz-test").hide();
-                $("#counters_admin").html("");
-                $("#counters_admin").html("<span class='text-center' style='display: block; font-size: 25px; font-weight: bold'>0:<span class='counter c_0' data-targetnum='15' data-speed='15000' data-direction='reverse' data-easing='linear' style=''>00</span></span>");
-                $("#quiz").html("");
-                $("#quiz").html("<label class='element-animation1 btn btn-lg btn-primary btn-block ans'>Đáp án thứ nhất</label> <label class='element-animation2 btn btn-lg btn-danger btn-block ans'>Đáp án thứ hai</label> <label class='element-animation3 btn btn-lg btn-warning btn-block ans'>Đáp án thứ ba</label> <label class='element-animation4 btn btn-lg btn-success btn-block ans'>Đáp án thứ tư (nếu nội dung đáp án thứ tư dài hơn 1 dòng sẽ hiển thị thêm 1 dòng)</label>");
-                $("#ranking").fadeIn();
-            },3000)
+                $(".quiz .ans").each(function (index) {
+                    if ($(this).attr("data-ans") == "1") {
+                        $(this).addClass("btn-success");
+                    }
+                });
         },
             1000);
     }

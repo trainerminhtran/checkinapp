@@ -12,17 +12,13 @@ namespace CheckInApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AnswerRecord
+    public partial class CourseQuestionProcess
     {
         public int ID { get; set; }
-        public int QuesionID { get; set; }
-        public Nullable<int> CheckinInforID { get; set; }
-        public string AnswerOption { get; set; }
-        public int TimeScore { get; set; }
-        public Nullable<System.DateTime> Datetime { get; set; }
-        public Nullable<int> RoomID { get; set; }
-    
-        public virtual AnswerInfor AnswerInfor { get; set; }
-        public virtual QuestionInfor QuestionInfor { get; set; }
+        public int QuestionID { get; set; }
+        public int ProcessID { get; set; }
+        public int RoomID { get; set; }
+        public int QuestionOrder { get; set; }
+        public Nullable<long> TimeEnd { get; set; }
     }
 }

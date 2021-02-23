@@ -25,8 +25,8 @@ namespace CheckInApp.Models
         public Nullable<decimal> Score { get; set; }
         public Nullable<System.DateTime> Datetime { get; set; }
     
-        public virtual CheckinInfor CheckinInfor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AnswerRecord> AnswerRecords { get; set; }
+        public virtual CheckinInfor CheckinInfor { get; set; }
     }
 }

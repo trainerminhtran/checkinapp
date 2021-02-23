@@ -19,4 +19,10 @@ namespace CheckInApp.Services
         User =1,
         Trainer
     }
+    public enum ProcessIDEnum
+    {
+        Create = 1,
+        Process = 2,
+        Finish = 3
+    }
 }

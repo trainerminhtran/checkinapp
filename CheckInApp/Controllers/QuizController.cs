@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using Checkinapp.ViewModels;
@@ -16,6 +17,7 @@ namespace CheckInApp.Controllers
     {
         private readonly dbEntities _db = new dbEntities();
         private readonly UserService _us = new UserService();
+        private DatetimeService ds = new DatetimeService();
         // GET: User
         public ActionResult Index(Guid RoomId)
         {
@@ -44,17 +46,34 @@ namespace CheckInApp.Controllers
                 TestName = ti.Name,
                 RoomId = ro.Guid,
                 TestId = ct.TestID,
+                Process = false
             };
-            var JoinRoom = new JoinRoom
+            var process = _db.CourseQuestionProcesses.Where(x => x.RoomID == ro.ID && x.ProcessID != (int)ProcessIDEnum.Finish).OrderBy(x=>x.QuestionOrder).FirstOrDefault();
+            if (process != null)
             {
-                FullName = u.FullName,
-                RoomId = ro.Guid,
-                UserId = u.Id,
-            };
-            var context = GlobalHost.ConnectionManager.GetHubContext<QuizHub>();
-
-            context.Clients.All.addNewMessageToGroup("JoinRoom", JsonConvert.SerializeObject(JoinRoom));
-            return View(model);
+                if (process.ProcessID == (int) ProcessIDEnum.Create && process.QuestionOrder == 1)
+                {
+                    var JoinRoom = new JoinRoom
+                    {
+                        FullName = u.FullName,
+                        RoomId = ro.Guid,
+                        UserId = u.Id,
+                    };
+                    var context = GlobalHost.ConnectionManager.GetHubContext<QuizHub>();
+                    context.Clients.All.addNewMessageToGroup("JoinRoom", JsonConvert.SerializeObject(JoinRoom));
+                    return View(model);
+                }
+                else
+                {
+                    model.Process = true;
+                    return View(model);
+                }
+            }
+            else
+            {
+                model.Process = true;
+                return View(model);
+            }
         }
 
         public ActionResult _ListQuiz(int TestId, Guid RoomId)
@@ -75,33 +94,83 @@ namespace CheckInApp.Controllers
             {
                 model.TestName = ti.Name;
             }
-            var curentquestion = _db.QuestionInfors.FirstOrDefault();
-            if (curentquestion != null)
+            var process = _db.CourseQuestionProcesses.Where(x => x.RoomID == ro.ID && x.ProcessID != (int)ProcessIDEnum.Finish).OrderBy(x => x.QuestionOrder).FirstOrDefault();
+            if (process != null)
             {
-                model.RoomId = ro.Guid;
-                model.TestId = TestId;
-                model.Time = 20;
-                model.QuestionId = curentquestion.ID;
-                model.QuestionContent = curentquestion.QuestionContent;
-                model.Choose1 = curentquestion.Choose1;
-                model.Choose2 = curentquestion.Choose2;
-                model.Choose3 = curentquestion.Choose3;
-                model.Choose4 = curentquestion.Choose4;
+                if (process.ProcessID == (int) ProcessIDEnum.Process)
+                {
+                    var curentquestion = _db.QuestionInfors.FirstOrDefault(x=>x.ID == process.QuestionID);
+                    if (curentquestion != null)
+                    {
+                        var timenew = process.TimeEnd.GetValueOrDefault() - ds.ConvertToUnixTimestamp(DateTime.Now);
+                        model.RoomId = ro.Guid;
+                        model.TestId = TestId;
+                        model.Time = timenew > 0 ? timenew : 0;
+                        model.QuestionId = curentquestion.ID;
+                        model.QuestionContent = curentquestion.QuestionContent;
+                        model.Choose1 = curentquestion.Choose1;
+                        model.Choose2 = curentquestion.Choose2;
+                        model.Choose3 = curentquestion.Choose3;
+                        model.Choose4 = curentquestion.Choose4;
+                    }
+                    return PartialView(model);
+                }
+                else
+                {
+                    if (process.QuestionOrder == 1)
+                    {
+                        return null;
+                    }
+                    else // load lai bang danh sach
+                    {
+                    }
+                }
             }
-            return PartialView(model);
+
+            return null;
         }
         [HttpPost]
         public JsonResult Ansewr(Ansewr model)
         {
-            //var ck = new AnswerRecord()
-            //{
-            //    //RoomID = us.RoomId,
-            //    //UserID = us.UserId,
-            //    //Signature = us.Signature,
-            //    //Datetime = new DatetimeService().GetDateTimeNow()
-            //};
-            //_db.CheckinInfors.Add(ck);
-            //_db.SaveChanges();
+            if (!(Session["UserViewModel"] is UserViewModel u))
+            {
+                return null;
+            }
+            var ro = _db.RoomInfors.FirstOrDefault(x => x.Guid == model.RoomId);
+            if (ro == null)
+            {
+                return null;
+            }
+            var curentquestion = _db.QuestionInfors.FirstOrDefault(x => x.ID == model.QuestionId);
+            if (curentquestion == null)
+            {
+                return null;
+            }
+
+            if (curentquestion.TrueChoose != model.Choose.ToString() || model.Choose == 0)
+            {
+                model.TimeAns = 0;
+            }
+            var ar = new AnswerRecord()
+            {
+                QuesionID = model.QuestionId,
+                CheckinInforID = u.Id,
+                AnswerOption = model.Choose.ToString(),
+                TimeScore = model.TimeAns,
+                RoomID = ro.ID,
+            };
+            _db.AnswerRecords.Add(ar);
+            _db.SaveChanges();
+            if (model.TimeAns > 0)
+            {
+                var ci = _db.CheckinInfors.FirstOrDefault(x => x.RoomID == ro.ID && x.ID == u.Id);
+                if (ci != null)
+                {
+                    ci.CountingScore = ci.CountingScore + model.TimeAns;
+                    _db.Entry(ci).State = EntityState.Modified;
+                    _db.SaveChanges();
+                }
+            }
             return new JsonResult() { Data = model, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
     }

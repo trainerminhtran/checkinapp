@@ -29,10 +29,12 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="AnswerID" Type="int" Nullable="false" />
           <Property Name="QuesionID" Type="int" Nullable="false" />
+          <Property Name="CheckinInforID" Type="int" />
           <Property Name="AnswerOption" Type="char" MaxLength="10" />
+          <Property Name="TimeScore" Type="int" Nullable="false" />
           <Property Name="Datetime" Type="datetime" />
+          <Property Name="RoomID" Type="int" />
         </EntityType>
         <EntityType Name="AreaInfor">
           <Key>
@@ -78,6 +80,7 @@
           <Property Name="IsDoorGift" Type="bit" />
           <Property Name="IsRecheckAnswer" Type="bit" />
           <Property Name="Datetime" Type="datetime" Nullable="false" />
+          <Property Name="CountingScore" Type="int" />
         </EntityType>
         <EntityType Name="CityRuralInfor">
           <Key>
@@ -122,6 +125,17 @@
           <Property Name="PlatformID" Type="int" Nullable="false" />
           <Property Name="Datetime" Type="datetime" Nullable="false" />
           <Property Name="Status" Type="bit" />
+        </EntityType>
+        <EntityType Name="CourseQuestionProcess">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuestionID" Type="int" Nullable="false" />
+          <Property Name="ProcessID" Type="int" Nullable="false" />
+          <Property Name="RoomID" Type="int" Nullable="false" />
+          <Property Name="QuestionOrder" Type="int" Nullable="false" />
+          <Property Name="TimeEnd" Type="bigint" />
         </EntityType>
         <EntityType Name="CourseTestRecord">
           <Key>
@@ -330,7 +344,6 @@
           <Property Name="TestID" Type="int" Nullable="false" />
           <Property Name="QuestionID" Type="int" Nullable="false" />
           <Property Name="Status" Type="bit" />
-          <Property Name="QuestionOrder" Type="int" />
         </EntityType>
         <EntityType Name="TrainerRoomRecord">
           <Key>
@@ -386,7 +399,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="AnswerRecord">
-              <PropertyRef Name="AnswerID" />
+              <PropertyRef Name="TimeScore" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -860,6 +873,7 @@
           <EntitySet Name="ContentInfor" EntityType="Self.ContentInfor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ContentModelRecord" EntityType="Self.ContentModelRecord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CourseInfor" EntityType="Self.CourseInfor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CourseQuestionProcess" EntityType="Self.CourseQuestionProcess" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CourseTestRecord" EntityType="Self.CourseTestRecord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DistrictInfor" EntityType="Self.DistrictInfor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeInfor" EntityType="Self.EmployeeInfor" Schema="dbo" store:Type="Tables" />
@@ -1072,20 +1086,8 @@
           <Property Name="CheckinInforID" Type="Int64" Nullable="false" />
           <Property Name="Score" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="Datetime" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="CheckinInfor" Relationship="Self.FK_AnswerInfor_CheckinInfor" FromRole="AnswerInfor" ToRole="CheckinInfor" />
-          <NavigationProperty Name="AnswerRecords" Relationship="Self.FK_AnswerRecord_AnswerInfor" FromRole="AnswerInfor" ToRole="AnswerRecord" />
-        </EntityType>
-        <EntityType Name="AnswerRecord">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AnswerID" Type="Int32" Nullable="false" />
-          <Property Name="QuesionID" Type="Int32" Nullable="false" />
-          <Property Name="AnswerOption" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
-          <Property Name="Datetime" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="AnswerInfor" Relationship="Self.FK_AnswerRecord_AnswerInfor" FromRole="AnswerRecord" ToRole="AnswerInfor" />
-          <NavigationProperty Name="QuestionInfor" Relationship="Self.FK_AnswerRecord_QuestionInfor" FromRole="AnswerRecord" ToRole="QuestionInfor" />
+          <NavigationProperty Name="AnswerRecords" Relationship="CheckinAppModel.FK_AnswerRecord_AnswerInfor" FromRole="AnswerInfor" ToRole="AnswerRecord" />
+          <NavigationProperty Name="CheckinInfor" Relationship="CheckinAppModel.FK_AnswerInfor_CheckinInfor" FromRole="AnswerInfor" ToRole="CheckinInfor" />
         </EntityType>
         <EntityType Name="AreaInfor">
           <Key>
@@ -1121,26 +1123,8 @@
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CheckinID" Type="Int64" Nullable="false" />
           <Property Name="ImageID" Type="Int64" />
-          <NavigationProperty Name="CheckinInfor" Relationship="Self.FK_CheckinImageRecord_CheckinInfor" FromRole="CheckinImageRecord" ToRole="CheckinInfor" />
           <NavigationProperty Name="ImageInfor" Relationship="Self.FK_CheckinImageRecord_ImageInfor" FromRole="CheckinImageRecord" ToRole="ImageInfor" />
-        </EntityType>
-        <EntityType Name="CheckinInfor">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="RoomID" Type="Int32" Nullable="false" />
-          <Property Name="Signature" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="IsMotivationGift" Type="Boolean" />
-          <Property Name="IsMotivationActive" Type="Boolean" />
-          <Property Name="IsDoorGift" Type="Boolean" />
-          <Property Name="IsRecheckAnswer" Type="Boolean" />
-          <Property Name="Datetime" Type="DateTime" Precision="3" Nullable="false" />
-          <NavigationProperty Name="AnswerInfors" Relationship="Self.FK_AnswerInfor_CheckinInfor" FromRole="CheckinInfor" ToRole="AnswerInfor" />
-          <NavigationProperty Name="CheckinImageRecords" Relationship="Self.FK_CheckinImageRecord_CheckinInfor" FromRole="CheckinInfor" ToRole="CheckinImageRecord" />
-          <NavigationProperty Name="RoomInfor" Relationship="Self.FK_CheckinInfor_RoomInfor" FromRole="CheckinInfor" ToRole="RoomInfor" />
-          <NavigationProperty Name="UserInfor" Relationship="Self.FK_CheckinInfor_UserInfor" FromRole="CheckinInfor" ToRole="UserInfor" />
+          <NavigationProperty Name="CheckinInfor" Relationship="CheckinAppModel.FK_CheckinImageRecord_CheckinInfor" FromRole="CheckinImageRecord" ToRole="CheckinInfor" />
         </EntityType>
         <EntityType Name="CityRuralInfor">
           <Key>
@@ -1351,10 +1335,10 @@
           <Property Name="Choose4" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Datetime" Type="DateTime" Precision="3" />
           <Property Name="Status" Type="Boolean" />
-          <NavigationProperty Name="AnswerRecords" Relationship="Self.FK_AnswerRecord_QuestionInfor" FromRole="QuestionInfor" ToRole="AnswerRecord" />
           <NavigationProperty Name="CatInfor" Relationship="Self.FK_QuestionInfor_CatInfor" FromRole="QuestionInfor" ToRole="CatInfor" />
           <NavigationProperty Name="LevelInfor" Relationship="Self.FK_QuestionInfor_LevelInfor" FromRole="QuestionInfor" ToRole="LevelInfor" />
-          <NavigationProperty Name="TestQuestionRecords" Relationship="Self.FK_TestQuestionRecord_QuestionInfor" FromRole="QuestionInfor" ToRole="TestQuestionRecord" />
+          <NavigationProperty Name="TestQuestionRecords" Relationship="CheckinAppModel.FK_TestQuestionRecord_QuestionInfor" FromRole="QuestionInfor" ToRole="TestQuestionRecord" />
+          <NavigationProperty Name="AnswerRecords" Relationship="CheckinAppModel.FK_AnswerRecord_QuestionInfor" FromRole="QuestionInfor" ToRole="AnswerRecord" />
         </EntityType>
         <EntityType Name="RegionInfor">
           <Key>
@@ -1383,10 +1367,10 @@
           <Property Name="NoDaysGetGift" Type="Int32" />
           <Property Name="Datetime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Guid" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="CheckinInfors" Relationship="Self.FK_CheckinInfor_RoomInfor" FromRole="RoomInfor" ToRole="CheckinInfor" />
           <NavigationProperty Name="CourseInfor" Relationship="Self.FK_RoomInfor_CourseInfor" FromRole="RoomInfor" ToRole="CourseInfor" />
           <NavigationProperty Name="StoreInfor" Relationship="Self.FK_RoomInfor_StoreInfor" FromRole="RoomInfor" ToRole="StoreInfor" />
           <NavigationProperty Name="TrainerRoomRecords" Relationship="Self.FK_RoomTrainerRecord_RoomInfor" FromRole="RoomInfor" ToRole="TrainerRoomRecord" />
+          <NavigationProperty Name="CheckinInfors" Relationship="CheckinAppModel.FK_CheckinInfor_RoomInfor" FromRole="RoomInfor" ToRole="CheckinInfor" />
         </EntityType>
         <EntityType Name="StoreInfor">
           <Key>
@@ -1428,19 +1412,7 @@
           <Property Name="Score" Type="Int32" />
           <Property Name="datetime" Type="DateTime" Precision="3" />
           <NavigationProperty Name="CourseTestRecords" Relationship="Self.FK_CourseTestRecord_TestInfor" FromRole="TestInfor" ToRole="CourseTestRecord" />
-          <NavigationProperty Name="TestQuestionRecords" Relationship="Self.FK_TestQuestionRecord_TestInfor" FromRole="TestInfor" ToRole="TestQuestionRecord" />
-        </EntityType>
-        <EntityType Name="TestQuestionRecord">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TestID" Type="Int32" Nullable="false" />
-          <Property Name="QuestionID" Type="Int32" Nullable="false" />
-          <Property Name="Status" Type="Boolean" />
-          <NavigationProperty Name="QuestionInfor" Relationship="Self.FK_TestQuestionRecord_QuestionInfor" FromRole="TestQuestionRecord" ToRole="QuestionInfor" />
-          <NavigationProperty Name="TestInfor" Relationship="Self.FK_TestQuestionRecord_TestInfor" FromRole="TestQuestionRecord" ToRole="TestInfor" />
-          <Property Name="QuestionOrder" Type="Int32" />
+          <NavigationProperty Name="TestQuestionRecords" Relationship="CheckinAppModel.FK_TestQuestionRecord_TestInfor" FromRole="TestInfor" ToRole="TestQuestionRecord" />
         </EntityType>
         <EntityType Name="TrainerRoomRecord">
           <Key>
@@ -1465,12 +1437,12 @@
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="EmployeeID" Type="Int32" Nullable="false" />
           <Property Name="PermissionID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="CheckinInfors" Relationship="Self.FK_CheckinInfor_UserInfor" FromRole="UserInfor" ToRole="CheckinInfor" />
           <NavigationProperty Name="EmployeeInfor" Relationship="Self.FK_UserInfor_EmployeeInfor" FromRole="UserInfor" ToRole="EmployeeInfor" />
           <NavigationProperty Name="LoginInfors" Relationship="Self.FK_LoginInfor_UserInfor" FromRole="UserInfor" ToRole="LoginInfor" />
           <NavigationProperty Name="PositionInfor" Relationship="Self.FK_UserInfor_PositionInfor" FromRole="UserInfor" ToRole="PositionInfor" />
           <NavigationProperty Name="TrainerRoomRecords" Relationship="Self.FK_RoomTrainerRecord_UserInfor" FromRole="UserInfor" ToRole="TrainerRoomRecord" />
           <NavigationProperty Name="PermissionInfor" Relationship="CheckinAppModel.FK_UserInfor_PermissionInfor" FromRole="UserInfor" ToRole="PermissionInfor" />
+          <NavigationProperty Name="CheckinInfors" Relationship="CheckinAppModel.FK_CheckinInfor_UserInfor" FromRole="UserInfor" ToRole="CheckinInfor" />
         </EntityType>
         <Association Name="FK_AccountInfor_ChannelInfor">
           <End Role="ChannelInfor" Type="Self.ChannelInfor" Multiplicity="1" />
@@ -1493,42 +1465,6 @@
             </Principal>
             <Dependent Role="StoreInfor">
               <PropertyRef Name="AccountID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AnswerInfor_CheckinInfor">
-          <End Role="CheckinInfor" Type="Self.CheckinInfor" Multiplicity="1" />
-          <End Role="AnswerInfor" Type="Self.AnswerInfor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CheckinInfor">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="AnswerInfor">
-              <PropertyRef Name="CheckinInforID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AnswerRecord_AnswerInfor">
-          <End Role="AnswerInfor" Type="Self.AnswerInfor" Multiplicity="1" />
-          <End Role="AnswerRecord" Type="Self.AnswerRecord" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AnswerInfor">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="AnswerRecord">
-              <PropertyRef Name="AnswerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AnswerRecord_QuestionInfor">
-          <End Role="QuestionInfor" Type="Self.QuestionInfor" Multiplicity="1" />
-          <End Role="AnswerRecord" Type="Self.AnswerRecord" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="QuestionInfor">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="AnswerRecord">
-              <PropertyRef Name="QuesionID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1568,18 +1504,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CheckinImageRecord_CheckinInfor">
-          <End Role="CheckinInfor" Type="Self.CheckinInfor" Multiplicity="1" />
-          <End Role="CheckinImageRecord" Type="Self.CheckinImageRecord" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CheckinInfor">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="CheckinImageRecord">
-              <PropertyRef Name="CheckinID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_CheckinImageRecord_ImageInfor">
           <End Role="ImageInfor" Type="Self.ImageInfor" Multiplicity="0..1" />
           <End Role="CheckinImageRecord" Type="Self.CheckinImageRecord" Multiplicity="*" />
@@ -1589,30 +1513,6 @@
             </Principal>
             <Dependent Role="CheckinImageRecord">
               <PropertyRef Name="ImageID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CheckinInfor_RoomInfor">
-          <End Role="RoomInfor" Type="Self.RoomInfor" Multiplicity="1" />
-          <End Role="CheckinInfor" Type="Self.CheckinInfor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RoomInfor">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="CheckinInfor">
-              <PropertyRef Name="RoomID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CheckinInfor_UserInfor">
-          <End Role="UserInfor" Type="Self.UserInfor" Multiplicity="1" />
-          <End Role="CheckinInfor" Type="Self.CheckinInfor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserInfor">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="CheckinInfor">
-              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1892,18 +1792,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TestQuestionRecord_QuestionInfor">
-          <End Role="QuestionInfor" Type="Self.QuestionInfor" Multiplicity="1" />
-          <End Role="TestQuestionRecord" Type="Self.TestQuestionRecord" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="QuestionInfor">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="TestQuestionRecord">
-              <PropertyRef Name="QuestionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_RoomInfor_StoreInfor">
           <End Role="StoreInfor" Type="Self.StoreInfor" Multiplicity="1" />
           <End Role="RoomInfor" Type="Self.RoomInfor" Multiplicity="*" />
@@ -1928,18 +1816,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TestQuestionRecord_TestInfor">
-          <End Role="TestInfor" Type="Self.TestInfor" Multiplicity="1" />
-          <End Role="TestQuestionRecord" Type="Self.TestQuestionRecord" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TestInfor">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="TestQuestionRecord">
-              <PropertyRef Name="TestID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_RoomTrainerRecord_UserInfor">
           <End Role="UserInfor" Type="Self.UserInfor" Multiplicity="1" />
           <End Role="TrainerRoomRecord" Type="Self.TrainerRoomRecord" Multiplicity="*" />
@@ -1955,12 +1831,10 @@
         <EntityContainer Name="dbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AccountInfors" EntityType="Self.AccountInfor" />
           <EntitySet Name="AnswerInfors" EntityType="Self.AnswerInfor" />
-          <EntitySet Name="AnswerRecords" EntityType="Self.AnswerRecord" />
           <EntitySet Name="AreaInfors" EntityType="Self.AreaInfor" />
           <EntitySet Name="CatInfors" EntityType="Self.CatInfor" />
           <EntitySet Name="ChannelInfors" EntityType="Self.ChannelInfor" />
           <EntitySet Name="CheckinImageRecords" EntityType="Self.CheckinImageRecord" />
-          <EntitySet Name="CheckinInfors" EntityType="Self.CheckinInfor" />
           <EntitySet Name="CityRuralInfors" EntityType="Self.CityRuralInfor" />
           <EntitySet Name="ContentCourseRecords" EntityType="Self.ContentCourseRecord" />
           <EntitySet Name="ContentInfors" EntityType="Self.ContentInfor" />
@@ -1985,7 +1859,6 @@
           <EntitySet Name="StoreInfors" EntityType="Self.StoreInfor" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="TestInfors" EntityType="Self.TestInfor" />
-          <EntitySet Name="TestQuestionRecords" EntityType="Self.TestQuestionRecord" />
           <EntitySet Name="TrainerRoomRecords" EntityType="Self.TrainerRoomRecord" />
           <EntitySet Name="UserInfors" EntityType="Self.UserInfor" />
           <AssociationSet Name="FK_AccountInfor_ChannelInfor" Association="Self.FK_AccountInfor_ChannelInfor">
@@ -1995,18 +1868,6 @@
           <AssociationSet Name="FK_StoreInfor_AccountInfor" Association="Self.FK_StoreInfor_AccountInfor">
             <End Role="AccountInfor" EntitySet="AccountInfors" />
             <End Role="StoreInfor" EntitySet="StoreInfors" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AnswerInfor_CheckinInfor" Association="Self.FK_AnswerInfor_CheckinInfor">
-            <End Role="CheckinInfor" EntitySet="CheckinInfors" />
-            <End Role="AnswerInfor" EntitySet="AnswerInfors" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AnswerRecord_AnswerInfor" Association="Self.FK_AnswerRecord_AnswerInfor">
-            <End Role="AnswerInfor" EntitySet="AnswerInfors" />
-            <End Role="AnswerRecord" EntitySet="AnswerRecords" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AnswerRecord_QuestionInfor" Association="Self.FK_AnswerRecord_QuestionInfor">
-            <End Role="QuestionInfor" EntitySet="QuestionInfors" />
-            <End Role="AnswerRecord" EntitySet="AnswerRecords" />
           </AssociationSet>
           <AssociationSet Name="FK_RegionInfor_AreaInfor" Association="Self.FK_RegionInfor_AreaInfor">
             <End Role="AreaInfor" EntitySet="AreaInfors" />
@@ -2020,21 +1881,9 @@
             <End Role="CatInfor" EntitySet="CatInfors" />
             <End Role="QuestionInfor" EntitySet="QuestionInfors" />
           </AssociationSet>
-          <AssociationSet Name="FK_CheckinImageRecord_CheckinInfor" Association="Self.FK_CheckinImageRecord_CheckinInfor">
-            <End Role="CheckinInfor" EntitySet="CheckinInfors" />
-            <End Role="CheckinImageRecord" EntitySet="CheckinImageRecords" />
-          </AssociationSet>
           <AssociationSet Name="FK_CheckinImageRecord_ImageInfor" Association="Self.FK_CheckinImageRecord_ImageInfor">
             <End Role="ImageInfor" EntitySet="ImageInfors" />
             <End Role="CheckinImageRecord" EntitySet="CheckinImageRecords" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CheckinInfor_RoomInfor" Association="Self.FK_CheckinInfor_RoomInfor">
-            <End Role="RoomInfor" EntitySet="RoomInfors" />
-            <End Role="CheckinInfor" EntitySet="CheckinInfors" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CheckinInfor_UserInfor" Association="Self.FK_CheckinInfor_UserInfor">
-            <End Role="UserInfor" EntitySet="UserInfors" />
-            <End Role="CheckinInfor" EntitySet="CheckinInfors" />
           </AssociationSet>
           <AssociationSet Name="FK_ProvinceInfor_CityRuralInfor" Association="Self.FK_ProvinceInfor_CityRuralInfor">
             <End Role="CityRuralInfor" EntitySet="CityRuralInfors" />
@@ -2128,10 +1977,6 @@
             <End Role="RegionInfor" EntitySet="RegionInfors" />
             <End Role="ProvinceInfor" EntitySet="ProvinceInfors" />
           </AssociationSet>
-          <AssociationSet Name="FK_TestQuestionRecord_QuestionInfor" Association="Self.FK_TestQuestionRecord_QuestionInfor">
-            <End Role="QuestionInfor" EntitySet="QuestionInfors" />
-            <End Role="TestQuestionRecord" EntitySet="TestQuestionRecords" />
-          </AssociationSet>
           <AssociationSet Name="FK_RoomInfor_StoreInfor" Association="Self.FK_RoomInfor_StoreInfor">
             <End Role="StoreInfor" EntitySet="StoreInfors" />
             <End Role="RoomInfor" EntitySet="RoomInfors" />
@@ -2139,10 +1984,6 @@
           <AssociationSet Name="FK_RoomTrainerRecord_RoomInfor" Association="Self.FK_RoomTrainerRecord_RoomInfor">
             <End Role="RoomInfor" EntitySet="RoomInfors" />
             <End Role="TrainerRoomRecord" EntitySet="TrainerRoomRecords" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TestQuestionRecord_TestInfor" Association="Self.FK_TestQuestionRecord_TestInfor">
-            <End Role="TestInfor" EntitySet="TestInfors" />
-            <End Role="TestQuestionRecord" EntitySet="TestQuestionRecords" />
           </AssociationSet>
           <AssociationSet Name="FK_RoomTrainerRecord_UserInfor" Association="Self.FK_RoomTrainerRecord_UserInfor">
             <End Role="UserInfor" EntitySet="UserInfors" />
@@ -2152,6 +1993,42 @@
           <AssociationSet Name="FK_UserInfor_PermissionInfor" Association="CheckinAppModel.FK_UserInfor_PermissionInfor">
             <End Role="PermissionInfor" EntitySet="PermissionInfors" />
             <End Role="UserInfor" EntitySet="UserInfors" />
+          </AssociationSet>
+          <EntitySet Name="TestQuestionRecords" EntityType="CheckinAppModel.TestQuestionRecord" />
+          <AssociationSet Name="FK_TestQuestionRecord_QuestionInfor" Association="CheckinAppModel.FK_TestQuestionRecord_QuestionInfor">
+            <End Role="QuestionInfor" EntitySet="QuestionInfors" />
+            <End Role="TestQuestionRecord" EntitySet="TestQuestionRecords" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TestQuestionRecord_TestInfor" Association="CheckinAppModel.FK_TestQuestionRecord_TestInfor">
+            <End Role="TestInfor" EntitySet="TestInfors" />
+            <End Role="TestQuestionRecord" EntitySet="TestQuestionRecords" />
+          </AssociationSet>
+          <EntitySet Name="CourseQuestionProcesses" EntityType="CheckinAppModel.CourseQuestionProcess" />
+          <EntitySet Name="AnswerRecords" EntityType="CheckinAppModel.AnswerRecord" />
+          <AssociationSet Name="FK_AnswerRecord_AnswerInfor" Association="CheckinAppModel.FK_AnswerRecord_AnswerInfor">
+            <End Role="AnswerInfor" EntitySet="AnswerInfors" />
+            <End Role="AnswerRecord" EntitySet="AnswerRecords" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AnswerRecord_QuestionInfor" Association="CheckinAppModel.FK_AnswerRecord_QuestionInfor">
+            <End Role="QuestionInfor" EntitySet="QuestionInfors" />
+            <End Role="AnswerRecord" EntitySet="AnswerRecords" />
+          </AssociationSet>
+          <EntitySet Name="CheckinInfors" EntityType="CheckinAppModel.CheckinInfor" />
+          <AssociationSet Name="FK_AnswerInfor_CheckinInfor" Association="CheckinAppModel.FK_AnswerInfor_CheckinInfor">
+            <End Role="CheckinInfor" EntitySet="CheckinInfors" />
+            <End Role="AnswerInfor" EntitySet="AnswerInfors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CheckinImageRecord_CheckinInfor" Association="CheckinAppModel.FK_CheckinImageRecord_CheckinInfor">
+            <End Role="CheckinInfor" EntitySet="CheckinInfors" />
+            <End Role="CheckinImageRecord" EntitySet="CheckinImageRecords" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CheckinInfor_RoomInfor" Association="CheckinAppModel.FK_CheckinInfor_RoomInfor">
+            <End Role="RoomInfor" EntitySet="RoomInfors" />
+            <End Role="CheckinInfor" EntitySet="CheckinInfors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CheckinInfor_UserInfor" Association="CheckinAppModel.FK_CheckinInfor_UserInfor">
+            <End Role="UserInfor" EntitySet="UserInfors" />
+            <End Role="CheckinInfor" EntitySet="CheckinInfors" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="PermissionInfor">
@@ -2172,6 +2049,157 @@
             </Principal>
             <Dependent Role="UserInfor">
               <PropertyRef Name="PermissionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TestQuestionRecord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TestID" Type="Int32" Nullable="false" />
+          <Property Name="QuestionID" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Boolean" />
+          <NavigationProperty Name="QuestionInfor" Relationship="CheckinAppModel.FK_TestQuestionRecord_QuestionInfor" FromRole="TestQuestionRecord" ToRole="QuestionInfor" />
+          <NavigationProperty Name="TestInfor" Relationship="CheckinAppModel.FK_TestQuestionRecord_TestInfor" FromRole="TestQuestionRecord" ToRole="TestInfor" />
+        </EntityType>
+        <Association Name="FK_TestQuestionRecord_QuestionInfor">
+          <End Type="CheckinAppModel.QuestionInfor" Role="QuestionInfor" Multiplicity="1" />
+          <End Type="CheckinAppModel.TestQuestionRecord" Role="TestQuestionRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionInfor">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TestQuestionRecord">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TestQuestionRecord_TestInfor">
+          <End Type="CheckinAppModel.TestInfor" Role="TestInfor" Multiplicity="1" />
+          <End Type="CheckinAppModel.TestQuestionRecord" Role="TestQuestionRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestInfor">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TestQuestionRecord">
+              <PropertyRef Name="TestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CourseQuestionProcess">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuestionID" Type="Int32" Nullable="false" />
+          <Property Name="ProcessID" Type="Int32" Nullable="false" />
+          <Property Name="RoomID" Type="Int32" Nullable="false" />
+          <Property Name="QuestionOrder" Type="Int32" Nullable="false" />
+          <Property Name="TimeEnd" Type="Int64" />
+        </EntityType>
+        <EntityType Name="AnswerRecord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuesionID" Type="Int32" Nullable="false" />
+          <Property Name="CheckinInforID" Type="Int32" />
+          <Property Name="AnswerOption" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="TimeScore" Type="Int32" Nullable="false" />
+          <Property Name="Datetime" Type="DateTime" Precision="3" />
+          <Property Name="RoomID" Type="Int32" />
+          <NavigationProperty Name="AnswerInfor" Relationship="CheckinAppModel.FK_AnswerRecord_AnswerInfor" FromRole="AnswerRecord" ToRole="AnswerInfor" />
+          <NavigationProperty Name="QuestionInfor" Relationship="CheckinAppModel.FK_AnswerRecord_QuestionInfor" FromRole="AnswerRecord" ToRole="QuestionInfor" />
+        </EntityType>
+        <Association Name="FK_AnswerRecord_AnswerInfor">
+          <End Type="CheckinAppModel.AnswerInfor" Role="AnswerInfor" Multiplicity="1" />
+          <End Type="CheckinAppModel.AnswerRecord" Role="AnswerRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AnswerInfor">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AnswerRecord">
+              <PropertyRef Name="TimeScore" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AnswerRecord_QuestionInfor">
+          <End Type="CheckinAppModel.QuestionInfor" Role="QuestionInfor" Multiplicity="1" />
+          <End Type="CheckinAppModel.AnswerRecord" Role="AnswerRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionInfor">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AnswerRecord">
+              <PropertyRef Name="QuesionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CheckinInfor">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="RoomID" Type="Int32" Nullable="false" />
+          <Property Name="Signature" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="IsMotivationGift" Type="Boolean" />
+          <Property Name="IsMotivationActive" Type="Boolean" />
+          <Property Name="IsDoorGift" Type="Boolean" />
+          <Property Name="IsRecheckAnswer" Type="Boolean" />
+          <Property Name="Datetime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CountingScore" Type="Int32" />
+          <NavigationProperty Name="AnswerInfors" Relationship="CheckinAppModel.FK_AnswerInfor_CheckinInfor" FromRole="CheckinInfor" ToRole="AnswerInfor" />
+          <NavigationProperty Name="CheckinImageRecords" Relationship="CheckinAppModel.FK_CheckinImageRecord_CheckinInfor" FromRole="CheckinInfor" ToRole="CheckinImageRecord" />
+          <NavigationProperty Name="RoomInfor" Relationship="CheckinAppModel.FK_CheckinInfor_RoomInfor" FromRole="CheckinInfor" ToRole="RoomInfor" />
+          <NavigationProperty Name="UserInfor" Relationship="CheckinAppModel.FK_CheckinInfor_UserInfor" FromRole="CheckinInfor" ToRole="UserInfor" />
+        </EntityType>
+        <Association Name="FK_AnswerInfor_CheckinInfor">
+          <End Type="CheckinAppModel.CheckinInfor" Role="CheckinInfor" Multiplicity="1" />
+          <End Type="CheckinAppModel.AnswerInfor" Role="AnswerInfor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CheckinInfor">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AnswerInfor">
+              <PropertyRef Name="CheckinInforID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CheckinImageRecord_CheckinInfor">
+          <End Type="CheckinAppModel.CheckinInfor" Role="CheckinInfor" Multiplicity="1" />
+          <End Type="CheckinAppModel.CheckinImageRecord" Role="CheckinImageRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CheckinInfor">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CheckinImageRecord">
+              <PropertyRef Name="CheckinID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CheckinInfor_RoomInfor">
+          <End Type="CheckinAppModel.RoomInfor" Role="RoomInfor" Multiplicity="1" />
+          <End Type="CheckinAppModel.CheckinInfor" Role="CheckinInfor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoomInfor">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CheckinInfor">
+              <PropertyRef Name="RoomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CheckinInfor_UserInfor">
+          <End Type="CheckinAppModel.UserInfor" Role="UserInfor" Multiplicity="1" />
+          <End Type="CheckinAppModel.CheckinInfor" Role="CheckinInfor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserInfor">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CheckinInfor">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2198,17 +2226,6 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="CheckinInforID" ColumnName="CheckinInforID" />
                 <ScalarProperty Name="Score" ColumnName="Score" />
-                <ScalarProperty Name="Datetime" ColumnName="Datetime" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AnswerRecords">
-            <EntityTypeMapping TypeName="CheckinAppModel.AnswerRecord">
-              <MappingFragment StoreEntitySet="AnswerRecord">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="AnswerID" ColumnName="AnswerID" />
-                <ScalarProperty Name="QuesionID" ColumnName="QuesionID" />
-                <ScalarProperty Name="AnswerOption" ColumnName="AnswerOption" />
                 <ScalarProperty Name="Datetime" ColumnName="Datetime" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2245,21 +2262,6 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="CheckinID" ColumnName="CheckinID" />
                 <ScalarProperty Name="ImageID" ColumnName="ImageID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CheckinInfors">
-            <EntityTypeMapping TypeName="CheckinAppModel.CheckinInfor">
-              <MappingFragment StoreEntitySet="CheckinInfor">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="RoomID" ColumnName="RoomID" />
-                <ScalarProperty Name="Signature" ColumnName="Signature" />
-                <ScalarProperty Name="IsMotivationGift" ColumnName="IsMotivationGift" />
-                <ScalarProperty Name="IsMotivationActive" ColumnName="IsMotivationActive" />
-                <ScalarProperty Name="IsDoorGift" ColumnName="IsDoorGift" />
-                <ScalarProperty Name="IsRecheckAnswer" ColumnName="IsRecheckAnswer" />
-                <ScalarProperty Name="Datetime" ColumnName="Datetime" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2522,17 +2524,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TestQuestionRecords">
-            <EntityTypeMapping TypeName="CheckinAppModel.TestQuestionRecord">
-              <MappingFragment StoreEntitySet="TestQuestionRecord">
-                <ScalarProperty Name="QuestionOrder" ColumnName="QuestionOrder" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="TestID" ColumnName="TestID" />
-                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TrainerRoomRecords">
             <EntityTypeMapping TypeName="CheckinAppModel.TrainerRoomRecord">
               <MappingFragment StoreEntitySet="TrainerRoomRecord">
@@ -2562,6 +2553,57 @@
               <MappingFragment StoreEntitySet="PermissionInfor">
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TestQuestionRecords">
+            <EntityTypeMapping TypeName="CheckinAppModel.TestQuestionRecord">
+              <MappingFragment StoreEntitySet="TestQuestionRecord">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+                <ScalarProperty Name="TestID" ColumnName="TestID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CourseQuestionProcesses">
+            <EntityTypeMapping TypeName="CheckinAppModel.CourseQuestionProcess">
+              <MappingFragment StoreEntitySet="CourseQuestionProcess">
+                <ScalarProperty Name="TimeEnd" ColumnName="TimeEnd" />
+                <ScalarProperty Name="QuestionOrder" ColumnName="QuestionOrder" />
+                <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+                <ScalarProperty Name="ProcessID" ColumnName="ProcessID" />
+                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AnswerRecords">
+            <EntityTypeMapping TypeName="CheckinAppModel.AnswerRecord">
+              <MappingFragment StoreEntitySet="AnswerRecord">
+                <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+                <ScalarProperty Name="Datetime" ColumnName="Datetime" />
+                <ScalarProperty Name="TimeScore" ColumnName="TimeScore" />
+                <ScalarProperty Name="AnswerOption" ColumnName="AnswerOption" />
+                <ScalarProperty Name="CheckinInforID" ColumnName="CheckinInforID" />
+                <ScalarProperty Name="QuesionID" ColumnName="QuesionID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CheckinInfors">
+            <EntityTypeMapping TypeName="CheckinAppModel.CheckinInfor">
+              <MappingFragment StoreEntitySet="CheckinInfor">
+                <ScalarProperty Name="CountingScore" ColumnName="CountingScore" />
+                <ScalarProperty Name="Datetime" ColumnName="Datetime" />
+                <ScalarProperty Name="IsRecheckAnswer" ColumnName="IsRecheckAnswer" />
+                <ScalarProperty Name="IsDoorGift" ColumnName="IsDoorGift" />
+                <ScalarProperty Name="IsMotivationActive" ColumnName="IsMotivationActive" />
+                <ScalarProperty Name="IsMotivationGift" ColumnName="IsMotivationGift" />
+                <ScalarProperty Name="Signature" ColumnName="Signature" />
+                <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

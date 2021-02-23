@@ -19,6 +19,7 @@ namespace CheckInApp.Controllers
     {
         private readonly dbEntities _db = new dbEntities();
         private readonly UserService _us = new UserService();
+        private DatetimeService ds = new DatetimeService();
         // GET: User
         public ActionResult Index(Guid RoomId)
         {
@@ -63,20 +64,40 @@ namespace CheckInApp.Controllers
             {
                 model.TestName = ti.Name;
             }
-            var curentquestion = _db.QuestionInfors.FirstOrDefault();
-            if (curentquestion != null)
+            var process = _db.CourseQuestionProcesses.Where(x => x.RoomID == ro.ID && x.ProcessID != (int)ProcessIDEnum.Finish).OrderBy(x => x.QuestionOrder).FirstOrDefault();
+            if (process != null)
             {
-                model.RoomId = ro.Guid;
-                model.TestId = TestId;
-                model.Time = 20;
-                model.QuestionId = curentquestion.ID;
-                model.QuestionContent = curentquestion.QuestionContent;
-                model.Choose1 = curentquestion.Choose1;
-                model.Choose2 = curentquestion.Choose2;
-                model.Choose3 = curentquestion.Choose3;
-                model.Choose4 = curentquestion.Choose4;
+                if (process.ProcessID == (int)ProcessIDEnum.Process)
+                {
+                    var curentquestion = _db.QuestionInfors.FirstOrDefault(x => x.ID == process.QuestionID);
+                    if (curentquestion != null)
+                    {
+                        var timenew = process.TimeEnd.GetValueOrDefault() - ds.ConvertToUnixTimestamp(DateTime.Now);
+                        model.RoomId = ro.Guid;
+                        model.TestId = TestId;
+                        model.Time = timenew > 0 ? timenew : 0;
+                        model.QuestionId = curentquestion.ID;
+                        model.QuestionContent = curentquestion.QuestionContent;
+                        model.Choose1 = curentquestion.Choose1;
+                        model.Choose2 = curentquestion.Choose2;
+                        model.Choose3 = curentquestion.Choose3;
+                        model.Choose4 = curentquestion.Choose4;
+                    }
+                    return PartialView(model);
+                }
+                else
+                {
+                    if (process.QuestionOrder == 1)
+                    {
+                        return null;
+                    }
+                    else // load lai bang danh sach
+                    {
+                    }
+                }
             }
-            return PartialView(model);
+
+            return null;
         }
     }
 }

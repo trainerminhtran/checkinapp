@@ -27,15 +27,15 @@
         </div>
         <div id="counters_admin">
             <span class="text-center" style="display: block; font-size: 25px; font-weight: bold">
-                0:<span class="counter" data-TargetNum="20" data-Speed="20000"
+                0:<span class="counter" data-TargetNum="@Model.Time" data-Speed="@(Model.Time * 1000)"
                         data-Direction="reverse" data-Easing="linear"></span>
             </span>
         </div>
         <div class="quiz" id="quiz" data-toggle="buttons">
-            <label class="element-animation1 btn btn-lg btn-primary btn-block ans">@Model.Choose1</label>
-            <label class="element-animation2 btn btn-lg btn-danger btn-block ans">@Model.Choose2</label>
-            <label class="element-animation3 btn btn-lg btn-warning btn-block ans">@Model.Choose3</label>
-            <label class="element-animation4 btn btn-lg btn-success btn-block ans">@Model.Choose4</label>
+            <label class="element-animation1 btn btn-lg btn-primary btn-block ans" data-ans="@(Model.ChooseTrue == "1" ? 1 : 0)">@Model.Choose1</label>
+            <label class="element-animation2 btn btn-lg btn-danger btn-block ans" data-ans="@(Model.ChooseTrue == "2" ? 1 : 0)">@Model.Choose2</label>
+            <label class="element-animation3 btn btn-lg btn-warning btn-block ans" data-ans="@(Model.ChooseTrue == "3" ? 1 : 0)">@Model.Choose3</label>
+            <label class="element-animation4 btn btn-lg btn-success btn-block ans" data-ans="@(Model.ChooseTrue == "4" ? 1 : 0)">@Model.Choose4</label>
         </div>
     </div>
     <div class="modal-footer text-muted">

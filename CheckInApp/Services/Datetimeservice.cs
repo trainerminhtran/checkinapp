@@ -26,9 +26,17 @@ namespace CheckInApp.Services
         {
             return dt.Month + "/" + dt.Day + "/" + dt.Year;
         }
-        //public DateTime ConvertToVNDate(DateTime date)
-        //{
-        //    return date
-        //}
+        public DateTime ConvertFromUnixTimestamp(double timestamp)
+        {
+            DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            return origin.AddSeconds(timestamp);
+        }
+
+        public long ConvertToUnixTimestamp(DateTime date)
+        {
+            DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            TimeSpan diff = date.ToUniversalTime() - origin;
+            return Convert.ToInt64(Math.Floor(diff.TotalSeconds));
+        }
     }
 }
