@@ -5,127 +5,64 @@
     <link href="~/Content/Quiz.css" rel="stylesheet" />
 }
 @model Checkinapp.ViewModels.QuizManagerView
-
 @if (Model != null)
 {
-    <div class="container-fluid quiz-manager">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header" style="display: block">
-                    <h4 class="text-center">@Model.TestName</h4>
-                </div>
-                <div class="modal-header">
-                    <div class="row col">
-                        <div class="col-8 text-center"></div>
-                        <div class="col-4 text-right">
-                            <button class="btn btn-primary" id="countJoin" data-count="0" type="button">
-                                0
-                            </button>
-                        </div>
+    if (Model.Process == (int)CheckInApp.Services.ProcessIDEnum.Finish)
+    {
+        <div class="container-fluid quiz-manager">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="display: block">
+                        <h4 class="text-center">@Model.TestName</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Không tìm thấy thông tin bài test</p>
                     </div>
                 </div>
-                <div class="modal-body">
-                    <header>
-                        <h4 class="text-center">Danh Sách tham gia</h4>
-                    </header>
-                    <table id="list-join-data">
-                        <thead>
-                            <tr>
-                                <th>Thứ tự</th>
-                                <th>Tên</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
-                        </tbody>
-                    </table>
-                </div>
-                <div class="modal-footer text-muted">
-                    <button type="button" class="btn btn-default" onclick="StartQuiz()">Bắt đầu</button>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="container-fluid quiz-manager">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="display: block">
+                        <h4 class="text-center">@Model.TestName</h4>
+                    </div>
+                    <div class="modal-header">
+                        <div class="row col">
+                            <div class="col-8 text-center"></div>
+                            <div class="col-4 text-right">
+                                <button class="btn btn-primary" id="countJoin" data-count="0" type="button">
+                                    0
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <header>
+                            <h4 class="text-center">Danh Sách tham gia</h4>
+                        </header>
+                        <table id="list-join-data">
+                            <thead>
+                                <tr>
+                                    <th>Thứ tự</th>
+                                    <th>Tên</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer text-muted">
+                        <button type="button" class="btn btn-default" onclick="StartQuiz()">Bắt đầu</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-}
+    }
 
-@*<div class="container-fluid" id="ranking" style="display: none">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header" style="display: block">
-                <h4 class="text-center">Tên bài kiểm tra</h4>
-            </div>
-            <div class="modal-body">
-                <header>
-                    <h4 class="text-center">Bảng điểm hiện tại</h4>
-                </header>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Thứ tự</th>
-                            <th>Tên</th>
-                            <th>Điểm</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="rank">1</td>
-                            <td class="team">Spain</td>
-                            <td class="points">1460</td>
-                        </tr>
-                        <tr>
-                            <td class="rank">2</td>
-                            <td class="team">Germany</td>
-                            <td class="points">1340</td>
-                        </tr>
-                        <tr>
-                            <td class="rank">3</td>
-                            <td class="team">Portugal</td>
-                            <td class="points">1245</td>
-                        </tr>
-                        <tr>
-                            <td class="rank">4</td>
-                            <td class="team">Brazil</td>
-                            <td class="points">1210</td>
-                        </tr>
-                        <tr>
-                            <td class="rank">5</td>
-                            <td class="team">Colombia</td>
-                            <td class="points">1186</td>
-                        </tr>
-                        <tr>
-                            <td class="rank">6</td>
-                            <td class="team">Uruguay</td>
-                            <td class="points">1181</td>
-                        </tr>
-                        <tr>
-                            <td class="rank">7</td>
-                            <td class="team">Argentina</td>
-                            <td class="points">1178</td>
-                        </tr>
-                        <tr>
-                            <td class="rank">8</td>
-                            <td class="team">Switzerland</td>
-                            <td class="points">1161</td>
-                        </tr>
-                        <tr>
-                            <td class="rank">9</td>
-                            <td class="team">Italy</td>
-                            <td class="points">1115</td>
-                        </tr>
-                        <tr>
-                            <td class="rank">10</td>
-                            <td class="team">Greece</td>
-                            <td class="points">1082</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer text-muted">
-                <button type="button" class="btn btn-default" onclick="NextQuiz()">Câu hỏi tiếp theo</button>
-            </div>
-        </div>
-    </div>
-</div>*@
+}
 
 @section Scripts{
     <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
@@ -163,7 +100,12 @@
             $.connection.hub.start(function() {
                 chat.server.group("RoomA");
             });
-            $.connection.hub.start().done(function() {});
+            $.connection.hub.start().done(function () {
+                @if (Model.Process == (int) CheckInApp.Services.ProcessIDEnum.Process)
+                {
+                   @Html.Raw("StartQuiz();")
+                }
+            });
 
         });
 
@@ -192,6 +134,41 @@
         var NextQuiz = function() {
             StartQuiz();
         }
+        var LoadTop = function() {
+            var url = "@Url.Action("_ListAns", new {TestId = Model.TestId, RoomId = Model.RoomId})";
+            url = url.replace("amp;", '')
+            $.get(url,
+                function(data) {
+                    if (data.length > 1) {
+                        $(".quiz-manager .modal-content").html(data);
+                        var StartObj = {};
+                        StartObj["TestId"] = @Model.TestId;
+                        StartObj["RoomId"] = "@Model.RoomId";
+                        var dataPush = JSON.stringify(StartObj);
+                        chat.server.group("ShowTop", dataPush);
+                    }
+                });
+        }
+        var TopResult = function() {
+            $.ajax({
+                url: '@Url.Action("ResultTop")',
+                cache: false,
+                type: "POST",
+                data: {
+                    "RoomId": '@Model.RoomId',
+                    "TestId": @Model.TestId,
+                    "QuestionId": $("#QuestionId").val(),
+                },
+                success: function(data) {
+                    LoadTop();
+                },
+                error: function(response) {
+                    bootoast.toast({
+                        message: response,
+                        type: 'danger'
+                    });
+                }
+            });
+        }
     </script>
-
 }

@@ -20,10 +20,9 @@ namespace Checkinapp.ViewModels
     public class QuizManagerView
     {
         public string TestName { get; set; }
-
         public Guid RoomId { get; set; }
-
         public int TestId { get; set; }
+        public int Process { get; set; }
     }
     public class QuizView
     {
@@ -56,5 +55,27 @@ namespace Checkinapp.ViewModels
         public int QuestionId { get; set; }
         public int Choose { get; set; }
         public int TimeAns { get; set; }
+    }
+    public class TopResult
+    {
+        public Guid RoomId { get; set; }
+        public int TestId { get; set; }
+        public int QuestionId { get; set; }
+    }
+    public class TopResultView
+    {
+        public int Top { get; set; }
+        public string FullName { get; set; }
+        public int TrueAns { get; set; }
+        public int FalseAns { get; set; }
+        public int Score { get; set; }
+    }
+    public class TopResultUseView
+    {
+        public List<TopResultView> Data { get; set; }
+        public string TestName { get; set; }
+        public string FullName { get; set; }
+        public int AnsTime { get; set; }
+        public int OrderNumber { get; set; }
     }
 }

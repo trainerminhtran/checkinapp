@@ -19,6 +19,7 @@ namespace CheckInApp.Models
         {
             this.AnswerInfors = new HashSet<AnswerInfor>();
             this.CheckinImageRecords = new HashSet<CheckinImageRecord>();
+            this.AnswerRecords = new HashSet<AnswerRecord>();
         }
     
         public long ID { get; set; }
@@ -38,5 +39,7 @@ namespace CheckInApp.Models
         public virtual ICollection<CheckinImageRecord> CheckinImageRecords { get; set; }
         public virtual RoomInfor RoomInfor { get; set; }
         public virtual UserInfor UserInfor { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AnswerRecord> AnswerRecords { get; set; }
     }
 }

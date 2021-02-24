@@ -16,13 +16,13 @@ namespace CheckInApp.Models
     {
         public int ID { get; set; }
         public int QuesionID { get; set; }
-        public Nullable<int> CheckinInforID { get; set; }
+        public Nullable<long> CheckinInforID { get; set; }
         public string AnswerOption { get; set; }
         public int TimeScore { get; set; }
         public Nullable<System.DateTime> Datetime { get; set; }
         public Nullable<int> RoomID { get; set; }
     
-        public virtual AnswerInfor AnswerInfor { get; set; }
+        public virtual CheckinInfor CheckinInfor { get; set; }
         public virtual QuestionInfor QuestionInfor { get; set; }
     }
 }

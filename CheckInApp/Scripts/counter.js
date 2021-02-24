@@ -94,7 +94,8 @@ function completeTime() {
                         $(this).addClass("btn-success");
                     }
                 });
-        },
+                $("#show-top").fadeIn();
+            },
             1000);
     }
 

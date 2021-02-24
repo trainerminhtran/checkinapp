@@ -1,0 +1,46 @@
+﻿@model Checkinapp.ViewModels.TopResultUseView
+@if (Model != null)
+{
+    <div class="modal-header" style="display: block">
+        <h4 class="text-center">@Model.TestName</h4>
+    </div>
+    <div class="modal-header">
+        <div class="row col">
+            <div class="col-4 text-center">@Model.AnsTime <br /> Vừa được</div>
+            <div class="col-4 text-center">@Model.FullName </div>
+            <div class="col-4 text-center">@Model.OrderNumber <br /> Vị thứ</div>
+        </div>
+    </div>
+    <div class="modal-body">
+        <header>
+            <h4 class="text-center">Bảng điểm hiện tại</h4>
+        </header>
+        <table>
+            <thead>
+                <tr>
+                    <th>Thứ tự</th>
+                    <th>Tên</th>
+                    <th>Điểm</th>
+                </tr>
+            </thead>
+            <tbody>
+            @if (Model.Data.Any())
+            {
+                var indexRank = 1;
+                foreach (var item in Model.Data)
+                {
+                    <tr>
+                        <td class="rank">@indexRank</td>
+                        <td class="team">@item.FullName</td>
+                        <td class="points">@item.Score</td>
+                    </tr>
+                    {
+                        indexRank++;
+
+                    }
+                }
+            }
+            </tbody>
+        </table>
+    </div>
+}

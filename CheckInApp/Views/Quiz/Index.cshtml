@@ -46,6 +46,11 @@
                     if (roominfo.TestId == "@Model.TestId" && roominfo.RoomId == "@Model.RoomId") {
                         LoadQuestion();
                     }
+                } if (name == "ShowTop") {
+                    var roominfo = JSON.parse(message);
+                    if (roominfo.TestId == "@Model.TestId" && roominfo.RoomId == "@Model.RoomId") {
+                        LoadTop();
+                    }
                 }
             };
             $.connection.hub.start(function() {
@@ -100,6 +105,16 @@
                 });
         }
         LoadQuestion();
+        var LoadTop = function() {
+            var url = "@Url.Action("_ListAns", new {TestId = Model.TestId, RoomId = Model.RoomId})";
+            url = url.replace("amp;", '')
+            $.get(url,
+                function(data) {
+                    if (data.length > 1) {
+                        $(".quiz-manager .modal-content").html(data);
+                    }
+                });
+        }
 
     </script>
     <script>
@@ -109,92 +124,3 @@
     <script src="~/Scripts/counter.js"></script>
 }
 }
-
-
-@*
-
-    <div class="container-fluid" id="ranking" style="display: none">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header" style="display: block">
-                    <h4 class="text-center">Tên bài kiểm tra</h4>
-                </div>
-                <div class="modal-header">
-                    <div class="row col">
-                        <div class="col-4 text-center">30 <br /> Vừa được</div>
-                        <div class="col-4 text-center">Tên User </div>
-                        <div class="col-4 text-center">11 <br /> Vị thứ</div>
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <header>
-                        <h4 class="text-center">Bảng điểm hiện tại</h4>
-                    </header>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Thứ tự</th>
-                                <th>Tên</th>
-                                <th>Điểm</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="rank">1</td>
-                                <td class="team">Spain</td>
-                                <td class="points">1460</td>
-                            </tr>
-                            <tr>
-                                <td class="rank">2</td>
-                                <td class="team">Germany</td>
-                                <td class="points">1340</td>
-                            </tr>
-                            <tr>
-                                <td class="rank">3</td>
-                                <td class="team">Portugal</td>
-                                <td class="points">1245</td>
-                            </tr>
-                            <tr>
-                                <td class="rank">4</td>
-                                <td class="team">Brazil</td>
-                                <td class="points">1210</td>
-                            </tr>
-                            <tr>
-                                <td class="rank">5</td>
-                                <td class="team">Colombia</td>
-                                <td class="points">1186</td>
-                            </tr>
-                            <tr>
-                                <td class="rank">6</td>
-                                <td class="team">Uruguay</td>
-                                <td class="points">1181</td>
-                            </tr>
-                            <tr>
-                                <td class="rank">7</td>
-                                <td class="team">Argentina</td>
-                                <td class="points">1178</td>
-                            </tr>
-                            <tr>
-                                <td class="rank">8</td>
-                                <td class="team">Switzerland</td>
-                                <td class="points">1161</td>
-                            </tr>
-                            <tr>
-                                <td class="rank">9</td>
-                                <td class="team">Italy</td>
-                                <td class="points">1115</td>
-                            </tr>
-                            <tr>
-                                <td class="rank">10</td>
-                                <td class="team">Greece</td>
-                                <td class="points">1082</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="modal-footer text-muted">
-                    <span id="answer" style="display: none">Hệ thống đã ghi nhận câu trả lời của bạn, vui lòng đợi câu hỏi tiếp theo.</span>
-                </div>
-            </div>
-        </div>
-    </div>*@

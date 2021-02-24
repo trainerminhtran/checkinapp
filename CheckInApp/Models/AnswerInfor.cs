@@ -14,19 +14,11 @@ namespace CheckInApp.Models
     
     public partial class AnswerInfor
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public AnswerInfor()
-        {
-            this.AnswerRecords = new HashSet<AnswerRecord>();
-        }
-    
         public int ID { get; set; }
         public long CheckinInforID { get; set; }
         public Nullable<decimal> Score { get; set; }
         public Nullable<System.DateTime> Datetime { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AnswerRecord> AnswerRecords { get; set; }
         public virtual CheckinInfor CheckinInfor { get; set; }
     }
 }

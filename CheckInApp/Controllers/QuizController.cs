@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
@@ -163,7 +164,7 @@ namespace CheckInApp.Controllers
             _db.SaveChanges();
             if (model.TimeAns > 0)
             {
-                var ci = _db.CheckinInfors.FirstOrDefault(x => x.RoomID == ro.ID && x.ID == u.Id);
+                var ci = _db.CheckinInfors.FirstOrDefault(x => x.RoomID == ro.ID && x.UserID == u.Id);
                 if (ci != null)
                 {
                     ci.CountingScore = ci.CountingScore + model.TimeAns;
@@ -172,6 +173,41 @@ namespace CheckInApp.Controllers
                 }
             }
             return new JsonResult() { Data = model, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        public ActionResult _ListAns(int TestId, Guid RoomId)
+        {
+            var model = new TopResultUseView
+            {
+                Data = new List<TopResultView>()
+            };
+            if (!(Session["UserViewModel"] is UserViewModel u))
+            {
+                return null;
+            }
+            RoomInfor ro = _db.RoomInfors.FirstOrDefault(x => x.Guid == RoomId);
+            if (ro == null)
+            {
+                return null;
+            }
+            var ti = _db.TestInfors.FirstOrDefault(x => x.ID == TestId);
+            if (ti == null)
+            {
+                return null;
+            }
+
+            model.TestName = ti.Name;
+            model.FullName = u.FullName;
+
+            List<CheckinInfor> listData = _db.CheckinInfors.Where(x => x.RoomID == ro.ID).OrderBy(x => x.CountingScore).ToList();
+            model.Data = listData.Select(x => new TopResultView
+            {
+                FalseAns = x.AnswerRecords.Count(a => a.TimeScore == 0),
+                TrueAns = x.AnswerRecords.Count(a => a.TimeScore > 0),
+                FullName = x.UserInfor.EmployeeInfor.Fullname,
+                Score = x.CountingScore.GetValueOrDefault()
+            }).OrderByDescending(e => e.Score).ToList();
+            return PartialView(model);
         }
     }
 }

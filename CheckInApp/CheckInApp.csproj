@@ -2513,6 +2513,8 @@
     <Content Include="Views\QuizManager\Index.cshtml" />
     <Content Include="Views\QuizManager\_ListQuiz.cshtml" />
     <Content Include="Views\Quiz\_ListQuiz.cshtml" />
+    <Content Include="Views\QuizManager\_ListAns.cshtml" />
+    <Content Include="Views\Quiz\_ListAns.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

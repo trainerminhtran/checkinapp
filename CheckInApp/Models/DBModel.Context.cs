@@ -60,7 +60,7 @@ namespace CheckInApp.Models
         public virtual DbSet<PermissionInfor> PermissionInfors { get; set; }
         public virtual DbSet<TestQuestionRecord> TestQuestionRecords { get; set; }
         public virtual DbSet<CourseQuestionProcess> CourseQuestionProcesses { get; set; }
-        public virtual DbSet<AnswerRecord> AnswerRecords { get; set; }
         public virtual DbSet<CheckinInfor> CheckinInfors { get; set; }
+        public virtual DbSet<AnswerRecord> AnswerRecords { get; set; }
     }
 }

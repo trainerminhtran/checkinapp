@@ -25,7 +25,7 @@
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="QuesionID" Type="int" Nullable="false" />
-    <Property Name="CheckinInforID" Type="int" />
+    <Property Name="CheckinInforID" Type="bigint" />
     <Property Name="AnswerOption" Type="char" MaxLength="10" />
     <Property Name="TimeScore" Type="int" Nullable="false" />
     <Property Name="Datetime" Type="datetime" />
@@ -262,7 +262,7 @@
     <Property Name="CatID" Type="int" Nullable="false" />
     <Property Name="LevelID" Type="int" Nullable="false" />
     <Property Name="QuestionContent" Type="nvarchar(max)" />
-    <Property Name="TrueChoose" Type="nchar" MaxLength="10" />
+    <Property Name="TrueChoose" Type="varchar" MaxLength="10" />
     <Property Name="Choose1" Type="nvarchar(max)" />
     <Property Name="Choose2" Type="nvarchar(max)" />
     <Property Name="Choose3" Type="nvarchar(max)" />
@@ -386,15 +386,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_AnswerRecord_AnswerInfor">
-    <End Role="AnswerInfor" Type="Self.AnswerInfor" Multiplicity="1" />
+  <Association Name="FK_AnswerRecord_CheckinInfor">
+    <End Role="CheckinInfor" Type="Self.CheckinInfor" Multiplicity="0..1" />
     <End Role="AnswerRecord" Type="Self.AnswerRecord" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="AnswerInfor">
+      <Principal Role="CheckinInfor">
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="AnswerRecord">
-        <PropertyRef Name="TimeScore" />
+        <PropertyRef Name="CheckinInforID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -900,8 +900,8 @@
       <End Role="CheckinInfor" EntitySet="CheckinInfor" />
       <End Role="AnswerInfor" EntitySet="AnswerInfor" />
     </AssociationSet>
-    <AssociationSet Name="FK_AnswerRecord_AnswerInfor" Association="Self.FK_AnswerRecord_AnswerInfor">
-      <End Role="AnswerInfor" EntitySet="AnswerInfor" />
+    <AssociationSet Name="FK_AnswerRecord_CheckinInfor" Association="Self.FK_AnswerRecord_CheckinInfor">
+      <End Role="CheckinInfor" EntitySet="CheckinInfor" />
       <End Role="AnswerRecord" EntitySet="AnswerRecord" />
     </AssociationSet>
     <AssociationSet Name="FK_AnswerRecord_QuestionInfor" Association="Self.FK_AnswerRecord_QuestionInfor">

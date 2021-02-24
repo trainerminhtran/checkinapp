@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Migrations;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Web;
-using System.Web.DynamicData;
-using System.Web.Mvc;
-using Checkinapp.ViewModels;
+﻿using Checkinapp.ViewModels;
 using CheckInApp.Models;
 using CheckInApp.Services;
 using CheckInApp.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace CheckInApp.Controllers
 {
@@ -23,56 +20,82 @@ namespace CheckInApp.Controllers
         // GET: User
         public ActionResult Index(Guid RoomId)
         {
-            var ro = _db.RoomInfors.FirstOrDefault(x => x.Guid == RoomId);
+            RoomInfor ro = _db.RoomInfors.FirstOrDefault(x => x.Guid == RoomId);
             if (ro == null)
             {
                 return null;
             }
-            var ct = _db.CourseTestRecords.FirstOrDefault(x => x.CourseID == ro.CourseID);
+            CourseTestRecord ct = _db.CourseTestRecords.FirstOrDefault(x => x.CourseID == ro.CourseID);
             if (ct == null)
             {
                 return null;
             }
-            var ti = _db.TestInfors.FirstOrDefault(x => x.ID == ct.TestID);
+            TestInfor ti = _db.TestInfors.FirstOrDefault(x => x.ID == ct.TestID);
             if (ti == null)
             {
                 return null;
             }
-            var model = new QuizManagerView
+            QuizManagerView model = new QuizManagerView
             {
                 TestName = ti.Name,
                 RoomId = ro.Guid,
                 TestId = ct.TestID,
+                Process = (int)ProcessIDEnum.Create,
             };
+            CourseQuestionProcess process = _db.CourseQuestionProcesses.Where(x => x.RoomID == ro.ID && x.ProcessID != (int)ProcessIDEnum.Finish).OrderBy(x => x.QuestionOrder).FirstOrDefault();
+            if (process == null)
+            {
+                model.Process = (int)ProcessIDEnum.Finish;
+            }
+            else
+            {
+                if (process.ProcessID == (int)ProcessIDEnum.Create)
+                {
+                    model.Process = (int)ProcessIDEnum.Create;
+                }
+                else
+                {
+                    long timenew = process.TimeEnd.GetValueOrDefault() - ds.ConvertToUnixTimestamp(DateTime.Now);
+                    if (timenew > 0)
+                    {
+                        model.Process = (int)ProcessIDEnum.Process;
+                    }
+                    else
+                    {
+                        model.Process = (int)ProcessIDEnum.Finish;
+                    }
+                }
+            }
+
             return View(model);
         }
         public ActionResult _ListQuiz(int TestId, Guid RoomId)
         {
-            var model = new QuizManagerListView();
-            var ro = _db.RoomInfors.FirstOrDefault(x => x.Guid == RoomId);
+            QuizManagerListView model = new QuizManagerListView();
+            RoomInfor ro = _db.RoomInfors.FirstOrDefault(x => x.Guid == RoomId);
             if (ro == null)
             {
                 return null;
             }
-            var listquestion = _db.TestQuestionRecords.Where(x=>x.TestID == TestId).ToList();
+            List<TestQuestionRecord> listquestion = _db.TestQuestionRecords.Where(x => x.TestID == TestId).ToList();
             if (listquestion.Any())
             {
                 model.Total = listquestion.Count();
             }
-            var ti = _db.TestInfors.FirstOrDefault(x => x.ID == TestId);
+            TestInfor ti = _db.TestInfors.FirstOrDefault(x => x.ID == TestId);
             if (ti != null)
             {
                 model.TestName = ti.Name;
             }
-            var process = _db.CourseQuestionProcesses.Where(x => x.RoomID == ro.ID && x.ProcessID != (int)ProcessIDEnum.Finish).OrderBy(x => x.QuestionOrder).FirstOrDefault();
+            CourseQuestionProcess process = _db.CourseQuestionProcesses.Where(x => x.RoomID == ro.ID && x.ProcessID != (int)ProcessIDEnum.Finish).OrderBy(x => x.QuestionOrder).FirstOrDefault();
             if (process != null)
             {
                 if (process.ProcessID == (int)ProcessIDEnum.Process)
                 {
-                    var curentquestion = _db.QuestionInfors.FirstOrDefault(x => x.ID == process.QuestionID);
+                    QuestionInfor curentquestion = _db.QuestionInfors.FirstOrDefault(x => x.ID == process.QuestionID);
                     if (curentquestion != null)
                     {
-                        var timenew = process.TimeEnd.GetValueOrDefault() - ds.ConvertToUnixTimestamp(DateTime.Now);
+                        long timenew = process.TimeEnd.GetValueOrDefault() - ds.ConvertToUnixTimestamp(DateTime.Now);
                         model.RoomId = ro.Guid;
                         model.TestId = TestId;
                         model.Time = timenew > 0 ? timenew : 0;
@@ -82,22 +105,77 @@ namespace CheckInApp.Controllers
                         model.Choose2 = curentquestion.Choose2;
                         model.Choose3 = curentquestion.Choose3;
                         model.Choose4 = curentquestion.Choose4;
+                        model.ChooseTrue = curentquestion.TrueChoose;
                     }
                     return PartialView(model);
                 }
                 else
                 {
-                    if (process.QuestionOrder == 1)
+                    QuestionInfor curentquestion = _db.QuestionInfors.FirstOrDefault(x => x.ID == process.QuestionID);
+                    if (curentquestion != null)
                     {
-                        return null;
+
+                        model.RoomId = ro.Guid;
+                        model.TestId = TestId;
+                        model.Time = 20;
+                        model.QuestionId = curentquestion.ID;
+                        model.QuestionContent = curentquestion.QuestionContent;
+                        model.Choose1 = curentquestion.Choose1;
+                        model.Choose2 = curentquestion.Choose2;
+                        model.Choose3 = curentquestion.Choose3;
+                        model.Choose4 = curentquestion.Choose4;
+                        model.ChooseTrue = curentquestion.TrueChoose;
                     }
-                    else // load lai bang danh sach
-                    {
-                    }
+                    return PartialView(model);
                 }
             }
 
             return null;
+        }
+        [HttpPost]
+        public JsonResult ResultTop(TopResult model)
+        {
+            if (!(Session["UserViewModel"] is UserViewModel u))
+            {
+                return null;
+            }
+            RoomInfor ro = _db.RoomInfors.FirstOrDefault(x => x.Guid == model.RoomId);
+            if (ro == null)
+            {
+                return null;
+            }
+            QuestionInfor curentquestion = _db.QuestionInfors.FirstOrDefault(x => x.ID == model.QuestionId);
+            if (curentquestion == null)
+            {
+                return null;
+            }
+            CourseQuestionProcess process = _db.CourseQuestionProcesses.Where(x => x.RoomID == ro.ID && x.QuestionID == model.QuestionId).FirstOrDefault();
+            if (process != null)
+            {
+                process.ProcessID = (int)ProcessIDEnum.Finish;
+                _db.Entry(process).State = EntityState.Modified;
+                _db.SaveChanges();
+            }
+            return new JsonResult() { Data = model, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+        public ActionResult _ListAns(int TestId, Guid RoomId)
+        {
+            List<TopResultView> model = new List<TopResultView>();
+            RoomInfor ro = _db.RoomInfors.FirstOrDefault(x => x.Guid == RoomId);
+            if (ro == null)
+            {
+                return null;
+            }
+
+            List<CheckinInfor> listData = _db.CheckinInfors.Where(x => x.RoomID == ro.ID).OrderBy(x => x.CountingScore).ToList();
+            List<TopResultView> data = listData.Select(x => new TopResultView
+            {
+                FalseAns = x.AnswerRecords.Count(a => a.TimeScore == 0),
+                TrueAns = x.AnswerRecords.Count(a => a.TimeScore > 0),
+                FullName = x.UserInfor.EmployeeInfor.Fullname,
+                Score = x.CountingScore.GetValueOrDefault()
+            }).OrderByDescending(u=>u.Score).ToList();
+            return PartialView(data);
         }
     }
 }
