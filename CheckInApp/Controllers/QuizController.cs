@@ -42,6 +42,12 @@ namespace CheckInApp.Controllers
             {
                 return null;
             }
+            var ci = _db.CheckinInfors.FirstOrDefault(x => x.RoomID == ro.ID && x.UserID == u.Id);
+            if (ci == null)
+            {
+                return null;
+            }
+
             var model = new QuizView
             {
                 TestName = ti.Name,

@@ -192,6 +192,7 @@
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\ExportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\QuizManagerController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\TrainerController.cs" />
@@ -2515,6 +2516,7 @@
     <Content Include="Views\Quiz\_ListQuiz.cshtml" />
     <Content Include="Views\QuizManager\_ListAns.cshtml" />
     <Content Include="Views\Quiz\_ListAns.cshtml" />
+    <Content Include="Views\Question\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
