@@ -72,7 +72,7 @@
                             <button type="button" id="btn@(item.Id)" class="btn btn-primary" data-toggle="modal" onclick="getModal(@item.Id)">
                                 QRCode
                             </button>
-                            <button type="button" id="btnn@(item.Id)" class="btn btn-primary" data-toggle="modal" onclick="copyRoomUrl('@item.RoomUrl')" >
+                            <button type="button" id="btnn@(item.Id)" class="btn btn-primary" data-toggle="modal" data-RoomUrl="@item.RoomUrl" onclick="copyRoomUrl(this)">
                                 Copy link
                             </button>
                         }
@@ -173,6 +173,7 @@
             $(idqr).css("border-color", "#6c757d");
 
         }
+
         function onModall(id) {
             var idqr = "#btnn" + id;
             $(idqr).attr("disabled", false);
@@ -190,12 +191,10 @@
 
         //function copy to clipboard
         function copyRoomUrl(selector) {
-            var $temp = $("<div>");
+            value = $(selector).attr('data-RoomUrl')
+            var $temp = $("<input>");
             $("body").append($temp);
-            $temp.attr("contenteditable", true)
-                .html(selector).select()
-                .on("focus", function () { document.execCommand('selectAll', false, null); })
-                .focus();
+            $temp.val(value).select();
             document.execCommand("copy");
             $temp.remove();
         }
@@ -203,11 +202,6 @@
         $(function () {
             //Money Euro
             $("#lbDatetime").inputmask('dd/MM/yyyy');
-
-            
-            $("input[data-bootstrap-switch]").each(function () {
-                $(this).bootstrapSwitch('state', $(this).prop('checked'));
-            });
             $('.table').DataTable({
                 "paging": true,
                 "lengthChange": true,
@@ -217,55 +211,118 @@
                 "autoWidth": false,
                 "responsive": true,
             });
+            if ($("table").hasClass("collapsed")) {
+                console.log(1);
+                $('.table').on('click',
+                    'tbody td:not(.child)',
+                    function (e) {
+                        $("input[data-bootstrap-switch]").each(function () {
+                            $(this).bootstrapSwitch('state', $(this).prop('checked'));
+                        });
+                        $('input[data-bootstrap-switch]').on('switchChange.bootstrapSwitch',
+                            function (e, data) {
+                                if (confirm('Bạn có muốn thay đổi trạng thái Venue không?')) {
+                                    var id = $(this).attr("contentid");
+                                    $(this).bootstrapSwitch('state', !data, true);
+                                    var $obj = $(this);
+                                    $.ajax({
+                                        type: "POST",
+                                        cache: false,
+                                        dataType: "json",
+                                        context: this,
+                                        contentType: "application/json; charset=utf-8",
+                                        data: JSON.stringify({ "id": id, "sts": data }),
+                                        url: "/api/courseinfor/RoomStatus",
+                                        success: function (response) {
+                                            if (response) {
+                                                bootoast.toast({
+                                                    message: 'Cập nhật thành công',
+                                                    type: 'success'
+                                                });
+                                                $obj.bootstrapSwitch('state', data, true);
 
-            $('input[data-bootstrap-switch]').on('switchChange.bootstrapSwitch',
-                function (e, data) {
-                    if (confirm('Bạn có muốn thay đổi trạng thái Venue không?')) {
-                        var id = $(this).attr("contentid");
-                        $(this).bootstrapSwitch('state', !data, true);
-                        var $obj = $(this);
-                        $.ajax({
-                            type: "POST",
-                            cache: false,
-                            dataType: "json",
-                            context: this,
-                            contentType: "application/json; charset=utf-8",
-                            data: JSON.stringify({ "id": id, "sts": data }),
-                            url: "/api/courseinfor/RoomStatus",
-                            success: function (response) {
-                                if (response) {
-                                    bootoast.toast({
-                                        message: 'Cập nhật thành công',
-                                        type: 'success'
+                                            } else {
+                                                bootoast.toast({
+                                                    message: 'Cập nhật thất bại',
+                                                    type: 'danger'
+                                                });
+                                            }
+                                        },
+                                        error: function (response) {
+                                            bootoast.toast({
+                                                message: response,
+                                                type: 'danger'
+                                            });
+                                        }
                                     });
-                                    $obj.bootstrapSwitch('state', data, true);
-
+                                    if (data) {
+                                        onModal(id);
+                                        onModall(id);
+                                    } else {
+                                        offModal(id);
+                                        offModall(id);
+                                    }
                                 } else {
+                                    $(this).bootstrapSwitch('state', !data, true);
+                                }
+
+                            });
+                    });
+
+            } else {
+                console.log(2)
+                $("input[data-bootstrap-switch]").each(function () {
+                    $(this).bootstrapSwitch('state', $(this).prop('checked'));
+                });
+                $('input[data-bootstrap-switch]').on('switchChange.bootstrapSwitch',
+                    function (e, data) {
+                        if (confirm('Bạn có muốn thay đổi trạng thái Venue không?')) {
+                            var id = $(this).attr("contentid");
+                            $(this).bootstrapSwitch('state', !data, true);
+                            var $obj = $(this);
+                            $.ajax({
+                                type: "POST",
+                                cache: false,
+                                dataType: "json",
+                                context: this,
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ "id": id, "sts": data }),
+                                url: "/api/courseinfor/RoomStatus",
+                                success: function (response) {
+                                    if (response) {
+                                        bootoast.toast({
+                                            message: 'Cập nhật thành công',
+                                            type: 'success'
+                                        });
+                                        $obj.bootstrapSwitch('state', data, true);
+
+                                    } else {
+                                        bootoast.toast({
+                                            message: 'Cập nhật thất bại',
+                                            type: 'danger'
+                                        });
+                                    }
+                                },
+                                error: function (response) {
                                     bootoast.toast({
-                                        message: 'Cập nhật thất bại',
+                                        message: response,
                                         type: 'danger'
                                     });
                                 }
-                            },
-                            error: function (response) {
-                                bootoast.toast({
-                                    message: response,
-                                    type: 'danger'
-                                });
+                            });
+                            if (data) {
+                                onModal(id);
+                                onModall(id);
+                            } else {
+                                offModal(id);
+                                offModall(id);
                             }
-                        });
-                        if (data) {
-                            onModal(id);
-                            onModall(id);
                         } else {
-                            offModal(id);
-                            offModall(id);
+                            $(this).bootstrapSwitch('state', !data, true);
                         }
-                    } else {
-                        $(this).bootstrapSwitch('state', !data, true);
-                    }
 
-                });
+                    });
+            }
         });
     </script>
 }
