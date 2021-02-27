@@ -203,6 +203,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\BaseImporter.cs" />
     <Compile Include="Models\AccountInfor.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
@@ -337,6 +338,7 @@
     <Compile Include="Services\RoomEnum.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\QuestionModel.cs" />
     <Compile Include="ViewModels\QuizModel.cs" />
     <Compile Include="ViewModels\Config.cs" />
     <Compile Include="ViewModels\CourseViewModel.cs" />
@@ -2446,6 +2448,7 @@
     <Content Include="plugins\bootstrap-datepicker-1.9.0-dist\css\bootstrap-datepicker.standalone.css.map" />
     <Content Include="plugins\bootstrap-datepicker-1.9.0-dist\css\bootstrap-datepicker3.css.map" />
     <Content Include="plugins\bootstrap-datepicker-1.9.0-dist\css\bootstrap-datepicker3.standalone.css.map" />
+    <Content Include="Content\Template\TemplateImportQuestion.xlsx" />
     <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -2517,9 +2520,11 @@
     <Content Include="Views\QuizManager\_ListAns.cshtml" />
     <Content Include="Views\Quiz\_ListAns.cshtml" />
     <Content Include="Views\Question\Index.cshtml" />
+    <Content Include="Views\Question\Create.cshtml" />
+    <Content Include="Views\Question\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\FileUploads\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Checkin\" />
     <Folder Include="Views\Export\" />

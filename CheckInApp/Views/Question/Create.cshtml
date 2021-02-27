@@ -1,6 +1,5 @@
-﻿@model Checkinapp.ViewModels.CreateCourseViewModel
-@{
-    ViewBag.Title = "Thêm hội trường";
+﻿@{
+    ViewBag.Title = "Thêm câu hỏi";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section Styles{
@@ -10,7 +9,7 @@
     <link rel="stylesheet" href="../../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
     <!-- Bootstrap4 Duallistbox -->
     <link rel="stylesheet" href="../../plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
-    <!-- daterange picker -->
+
 }
 <div class="container-fluid">
     <div class="row">
@@ -19,83 +18,52 @@
             <!-- general form elements -->
             <div class="card card-primary">
                 <div class="card-header">
-                    <h3 class="card-title">Thêm Venue</h3>
+                    <h3 class="card-title">Thêm bài học</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                @using (Html.BeginForm("Create", "Venue", FormMethod.Post, new { enctype = "multipart/form-data", @id = "formID" }))
+                @using (Html.BeginForm("Create", "Question", FormMethod.Post, new { enctype = "multipart/form-data", @id = "formID" }))
                 {
                     @Html.AntiForgeryToken()
-                    <div class="card-body">
-                        @if (TempData["Success"] != null)
-                        {
-                            @Html.ValidationSummary(false, "", new { @class = "text-success" })
+                <div class="card-body">
+                    @if (TempData["Success"] != null)
+                    {
+                        @Html.ValidationSummary(false, "", new { @class = "text-success" })
 
-                        }
-                        else
-                        {
-                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                    }
+                    else
+                    {
+                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
-                        }
-                        <div class="form-group">
-                            <label>Hình thức training:</label> 
-                            <select id="ddlplatform" class="form-control select2" name="platformID"  onchange="GetProvinces()"  required style="width: 100%;">
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Đối tượng:</label>
-                            <input type="text" name="Name" class="form-control " required />
-                        </div>
-                        <div class="form-group">
-                            <label>Tỉnh thành:</label>
-                            <select id="ddlprovince" class="form-control select2" name="provinceID" onchange="GetAllDistrict()" required style="width: 100%;">
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Quận/huyện:</label>
-                            <select id="ddldistrict" class="form-control select2" name="districtID" required style="width: 100%;">
-                            </select>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label>Address:</label>
-                            <input type="text" name="Address" class="form-control " required />
-                        </div>
-                        <div class="form-group">
-                            <label>Tên nhân viên Khách Sạn:</label>
-                            <input type="text" name="ContactName" class="form-control "  />
-                        </div>
-
-                        <div class="form-group">
-                            <label>Số điện thoại nhân viên khách sạn:</label>
-
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                                </div>
-
-                                <input type="text" class="form-control" name="ContactTel" data-inputmask='"mask": "(999) 999-9999"' data-mask>
+                    }
+                    <div class="form-group">
+                        <label for="exampleInputFile">Upload bộ câu hỏi</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" name="file" class="custom-file-input" id="exampleInputFile" accept=".xlsx">
+                                <label class="custom-file-label" for="exampleInputFile">Chọn file</label>
                             </div>
-                            <!-- /.input group -->
                         </div>
-
-
                     </div>
-                    <!-- /.card-body -->
+                    <div class="form-group">
+                        <div class="input-group">
+                            @Html.ActionLink("File mẫu", "DownloadFileTemplates", "Question")
+                        </div>
+                    </div>
 
+                </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 }
             </div>
-            <!-- /.card -->
         </div>
     </div>
 </div>
 @section Scripts{
 
 
+    <script src="../../plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
     <!-- Select2 -->
     <script src="../../plugins/select2/js/select2.full.min.js"></script>
     <!-- Bootstrap4 Duallistbox -->
@@ -103,138 +71,54 @@
     <!-- InputMask -->
     <script src="../../plugins/moment/moment.min.js"></script>
     <script src="../../plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
-    <script src="../../dist/bootoast.min.js"></script>
-
-    <!-- date-range-picker -->
     <script>
         $(function () {
             //Initialize Select2 Elements
-            $('#ddlplatform').select2({ placeholder: 'Chọn một hình thức' });
-
-            $('#ddlprovince').select2({ placeholder: 'Chọn một Tỉnh/Thành' });
-            $('#ddldistrict').select2({ placeholder: 'Chọn một Quận/Huyện' });
-            GetPlatform();
-            GetProvinces();
-            //GetAllDistrict();
-            GetAllInitDistrict();
-            //Money Euro
-            $('[data-mask]').inputmask();
+            $('#ddlModel').select2({ placeholder: 'Chọn một/nhiều sản phẩm' });
+            $('#ddlCat').select2({ placeholder: 'Chọn một Cat' });
 
         })
     </script>
-    <script>
+    <script language="javascript" type="text/javascript">
+        $(document).ready(function () {
+            GetCat();
+            GetModel(1);
+            bsCustomFileInput.init();
+        });
 
-        function GetPlatform() {
-
-            var url = "/api/platforminfor/GetPlatformInfors/";
-            var markup = "";
-
+        function GetCat() {
+            var url = "/api/courseinfor/GetCatId/";
             $.ajax({
                 url: url,
                 cache: false,
                 success: function (data) {
+                    var markup = "";
                     for (var x = 0; x < data.length; x++) {
                         markup += "<option value=" + data[x].Id + ">" + data[x].Name + "</option>";
                     }
-                    $("#ddlplatform").html(markup).show();
+                    $("#ddlCat").html(markup).show();
                 },
-                error: function (response) {
-                    bootoast.toast({
-                        message: response,
-                        type: 'danger'
-                    });
-                }
-            });
-        }
-        function GetPositions() {
-            var url = "/api/userinfor/GetAllPosition/";
-            var markup = "";
-
-            $.ajax({
-                url: url,
-                cache: false,
-                success: function (data) {
-                    for (var x = 0; x < data.length; x++) {
-                        markup += "<option value=" + data[x].ID + ">" + data[x].Name + "</option>";
-                    }
-                    $("#ddlposition").html(markup).show();
-                },
-                error: function (response) {
-                    bootoast.toast({
-                        message: response,
-                        type: 'danger'
-                    });
+                error: function (reponse) {
+                    alert("error : " + reponse);
                 }
             });
         }
 
-        function GetProvinces() {
-
-            var url = "/api/storeinfor/GetAllProvince/";
-            var markup = "";
-
+        function GetModel(_catId) {
+            var url = "/api/courseinfor/GetModelByCatId/";
             $.ajax({
                 url: url,
+                data: { catID: _catId },
                 cache: false,
                 success: function (data) {
-                    markup= "<option value='1'>Khác</option>";
+                    var markup = "";
                     for (var x = 0; x < data.length; x++) {
                         markup += "<option value=" + data[x].Id + ">" + data[x].Name + "</option>";
                     }
-                    $("#ddlprovince").html(markup).show();
+                    $("#ddlModel").html(markup).show();
                 },
-                error: function (response) {
-                    bootoast.toast({
-                        message: response,
-                        type: 'danger'
-                    });
-                }
-            });
-        }
-
-        function GetAllInitDistrict() {
-            var url = "/api/storeinfor/GetAllDistrict/";
-            var markup = "";
-
-            $.ajax({
-                url: url,
-                cache: false,
-                data: { "provinceId": 1 },
-                success: function (data) {
-                    for (var x = 0; x < data.length; x++) {
-                        markup += "<option value=" + data[x].Id + ">" + data[x].Name + "</option>";
-                    }
-                    $("#ddldistrict").html(markup).show();
-                },
-                error: function (response) {
-                    bootoast.toast({
-                        message: response,
-                        type: 'danger'
-                    });
-                }
-            });
-        }
-        function GetAllDistrict() {
-            var value = $('#ddlisstore').val();
-            var provinceID = $('#ddlprovince').val();
-            var url = "/api/storeinfor/GetAllDistrict/";
-            var markup = "";
-
-            $.ajax({
-                url: url,
-                cache: false,
-                data: { "provinceId": provinceID },
-                success: function (data) {
-                    for (var x = 0; x < data.length; x++) {
-                        markup += "<option value=" + data[x].Id + ">" + data[x].Name + "</option>";
-                    }
-                    $("#ddldistrict").html(markup).show();
-                },
-                error: function (response) {
-                    bootoast.toast({
-                        message: response,
-                        type: 'danger'
-                    });
+                error: function (reponse) {
+                    alert("error : " + reponse);
                 }
             });
         }

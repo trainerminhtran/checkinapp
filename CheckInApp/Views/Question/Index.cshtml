@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CheckInApp.ViewModels.VenueViewModel>
+﻿@model List<CheckInApp.ViewModels.QuestionViewModel>
 
 @{
     ViewBag.Title = "Danh sách Hội trường";
@@ -11,32 +11,28 @@
     <link href="../../dist/bootoast.min.css" rel="stylesheet" type="text/css">
 
 }
-
-<p>
-    @*@Html.ActionLink("Create New", "Create")*@
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Nội Dung
             </th>
            
             <th>
-                @Html.DisplayNameFor(model => model.Province)
+                Đáp án 1
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address)
+                Đáp án 2
             </th>
               <th>
-                @Html.DisplayNameFor(model => model.ContactName)
+                Đáp án 3
             </th>
               <th>
-                @Html.DisplayNameFor(model => model.ContactTel)
+                Đáp án 4
             </th>
           
             <th>
-                @Html.DisplayNameFor(model => model.Sts)
+                Đáp án đúng
             </th>
             <th>Action</th>
         </tr>
@@ -46,38 +42,25 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    @item.QuestionContent
                 </td>
                 <td>
-                    @Html.DisplayFor(model => item.Province.Name)
+                    @item.Choose1
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Address)
+                    @item.Choose2
                 </td>
                  <td>
-                    @Html.DisplayFor(modelItem => item.ContactName)
+                     @item.Choose3
                 </td>
                  <td>
-                    @Html.DisplayFor(modelItem => item.ContactTel)
+                     @item.Choose4
                 </td>
+                 <td>
+                     @item.TrueChoose
+                 </td>
                 <td>
-                    @{
-                        var sts = item.Sts;
-                        if (sts)
-                        {
-                            <input type="checkbox" name="my-checkbox" checked data-bootstrap-switch data-off-color="danger" contentid="@item.Id" data-on-color="success">
-                        }
-                        else
-                        {
-                            <input type="checkbox" name="my-checkbox" data-bootstrap-switch data-off-color="danger" data-on-color="success" contentid="@item.Id">
-                        }
-                    }
-                </td>
-                <td>
-                    @*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |*@
-
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
                 </td>
             </tr>
         }
