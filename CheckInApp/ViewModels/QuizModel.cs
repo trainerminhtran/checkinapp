@@ -47,6 +47,7 @@ namespace Checkinapp.ViewModels
         public string Choose4 { get; set; }
         public string ChooseTrue { get; set; }
         public int AnsTime { get; set; }
+        public int OrderNumber { get; set; }
     }
     public class Ansewr
     {
@@ -67,7 +68,7 @@ namespace Checkinapp.ViewModels
         public int Top { get; set; }
         public string FullName { get; set; }
         public int TrueAns { get; set; }
-        public int FalseAns { get; set; }
+        public int Total { get; set; }
         public int Score { get; set; }
     }
     public class TopResultUseView

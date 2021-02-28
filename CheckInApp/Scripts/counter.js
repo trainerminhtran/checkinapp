@@ -50,6 +50,7 @@ function doCount(num, index, speed, groupClass, direction, easing) {
         duration: +speed,
         easing: easing,
             step: function (now) {
+                $(".update-point").html(parseInt((num - Math.floor(now)) * 5) + " Point");
                 $("#AnsTime").val(num - Math.floor(now));
             if (direction == 'reverse') {
                 if (num - Math.floor(now) < 10) {

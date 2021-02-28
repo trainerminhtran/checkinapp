@@ -55,15 +55,7 @@ namespace CheckInApp.Controllers
                 }
                 else
                 {
-                    long timenew = process.TimeEnd.GetValueOrDefault() - ds.ConvertToUnixTimestamp(DateTime.Now);
-                    if (timenew > 0)
-                    {
-                        model.Process = (int)ProcessIDEnum.Process;
-                    }
-                    else
-                    {
-                        model.Process = (int)ProcessIDEnum.Finish;
-                    }
+                    model.Process = (int)ProcessIDEnum.Process;
                 }
             }
 
@@ -106,6 +98,7 @@ namespace CheckInApp.Controllers
                         model.Choose3 = curentquestion.Choose3;
                         model.Choose4 = curentquestion.Choose4;
                         model.ChooseTrue = curentquestion.TrueChoose;
+                        model.OrderNumber = process.QuestionOrder;
                     }
                     return PartialView(model);
                 }
@@ -125,6 +118,7 @@ namespace CheckInApp.Controllers
                         model.Choose3 = curentquestion.Choose3;
                         model.Choose4 = curentquestion.Choose4;
                         model.ChooseTrue = curentquestion.TrueChoose;
+                        model.OrderNumber = process.QuestionOrder;
                     }
                     return PartialView(model);
                 }
@@ -166,11 +160,12 @@ namespace CheckInApp.Controllers
             {
                 return null;
             }
-
-            List<CheckinInfor> listData = _db.CheckinInfors.Where(x => x.RoomID == ro.ID).OrderBy(x => x.CountingScore).ToList();
+            var listData = _db.CheckinInfors.Where(x => x.RoomID == ro.ID).OrderByDescending(x => x.CountingScore).ToList();
+            var tqp = _db.TestQuestionRecords.Where(x => x.TestID == TestId).ToList();
+            var totalCount = tqp.Count;
             List<TopResultView> data = listData.Select(x => new TopResultView
             {
-                FalseAns = x.AnswerRecords.Count(a => a.TimeScore == 0),
+                Total = totalCount,
                 TrueAns = x.AnswerRecords.Count(a => a.TimeScore > 0),
                 FullName = x.UserInfor.EmployeeInfor.Fullname,
                 Score = x.CountingScore.GetValueOrDefault()

@@ -13,7 +13,6 @@ using Newtonsoft.Json;
 namespace CheckInApp.Controllers
 {
     [CustomAuthenticationFilter]
-
     public class QuizController : BaseController
     {
         private readonly dbEntities _db = new dbEntities();
@@ -119,6 +118,7 @@ namespace CheckInApp.Controllers
                         model.Choose2 = curentquestion.Choose2;
                         model.Choose3 = curentquestion.Choose3;
                         model.Choose4 = curentquestion.Choose4;
+                        model.OrderNumber = process.QuestionOrder;
                     }
                     return PartialView(model);
                 }
@@ -148,6 +148,12 @@ namespace CheckInApp.Controllers
             {
                 return null;
             }
+
+            var checkinfo = _db.CheckinInfors.FirstOrDefault(x => x.UserID == u.Id);
+            if(checkinfo == null)
+            {
+                return null;
+            }
             var curentquestion = _db.QuestionInfors.FirstOrDefault(x => x.ID == model.QuestionId);
             if (curentquestion == null)
             {
@@ -158,13 +164,19 @@ namespace CheckInApp.Controllers
             {
                 model.TimeAns = 0;
             }
+            else
+            {
+                model.TimeAns = model.TimeAns * 5;
+            }
+
             var ar = new AnswerRecord()
             {
                 QuesionID = model.QuestionId,
-                CheckinInforID = u.Id,
+                CheckinInforID = checkinfo.ID,
                 AnswerOption = model.Choose.ToString(),
                 TimeScore = model.TimeAns,
                 RoomID = ro.ID,
+                Datetime = DateTime.Today
             };
             _db.AnswerRecords.Add(ar);
             _db.SaveChanges();
@@ -173,7 +185,7 @@ namespace CheckInApp.Controllers
                 var ci = _db.CheckinInfors.FirstOrDefault(x => x.RoomID == ro.ID && x.UserID == u.Id);
                 if (ci != null)
                 {
-                    ci.CountingScore = ci.CountingScore + model.TimeAns;
+                    ci.CountingScore = ci.CountingScore.GetValueOrDefault() + model.TimeAns;
                     _db.Entry(ci).State = EntityState.Modified;
                     _db.SaveChanges();
                 }
@@ -196,23 +208,40 @@ namespace CheckInApp.Controllers
             {
                 return null;
             }
+            var checkin = _db.CheckinInfors.FirstOrDefault(x => x.UserID == u.Id);
+            if (checkin == null)
+            {
+                return null;
+            }
             var ti = _db.TestInfors.FirstOrDefault(x => x.ID == TestId);
             if (ti == null)
             {
                 return null;
             }
-
             model.TestName = ti.Name;
             model.FullName = u.FullName;
-
-            List<CheckinInfor> listData = _db.CheckinInfors.Where(x => x.RoomID == ro.ID).OrderBy(x => x.CountingScore).ToList();
+            var ordernum = 0;
+             var listData = _db.CheckinInfors.Where(x => x.RoomID == ro.ID).OrderByDescending(x => x.CountingScore).ToList();
+            foreach (var item in listData)
+            {
+                if (item.UserID == u.Id)
+                {
+                    break;
+                }
+                ordernum++;
+            }
+            model.OrderNumber = ordernum + 1;
+            var tqp = _db.TestQuestionRecords.Where(x => x.TestID == TestId).ToList();
+            var totalCount = tqp.Count;
+            var at = _db.AnswerRecords.Where(x => x.CheckinInforID == checkin.ID).ToList();
+            model.AnsTime = at.OrderByDescending(x => x.ID).FirstOrDefault().TimeScore;
             model.Data = listData.Select(x => new TopResultView
             {
-                FalseAns = x.AnswerRecords.Count(a => a.TimeScore == 0),
+                Total = totalCount,
                 TrueAns = x.AnswerRecords.Count(a => a.TimeScore > 0),
                 FullName = x.UserInfor.EmployeeInfor.Fullname,
                 Score = x.CountingScore.GetValueOrDefault()
-            }).OrderByDescending(e => e.Score).ToList();
+            }).OrderByDescending(e => e.Score).Take(10).ToList();
             return PartialView(model);
         }
     }

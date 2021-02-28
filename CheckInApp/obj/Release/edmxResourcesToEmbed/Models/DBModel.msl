@@ -22,17 +22,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="AnswerRecords">
-      <EntityTypeMapping TypeName="CheckinAppModel.AnswerRecord">
-        <MappingFragment StoreEntitySet="AnswerRecord">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="AnswerID" ColumnName="AnswerID" />
-          <ScalarProperty Name="QuesionID" ColumnName="QuesionID" />
-          <ScalarProperty Name="AnswerOption" ColumnName="AnswerOption" />
-          <ScalarProperty Name="Datetime" ColumnName="Datetime" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="AreaInfors">
       <EntityTypeMapping TypeName="CheckinAppModel.AreaInfor">
         <MappingFragment StoreEntitySet="AreaInfor">
@@ -65,21 +54,6 @@
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="CheckinID" ColumnName="CheckinID" />
           <ScalarProperty Name="ImageID" ColumnName="ImageID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="CheckinInfors">
-      <EntityTypeMapping TypeName="CheckinAppModel.CheckinInfor">
-        <MappingFragment StoreEntitySet="CheckinInfor">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
-          <ScalarProperty Name="RoomID" ColumnName="RoomID" />
-          <ScalarProperty Name="Signature" ColumnName="Signature" />
-          <ScalarProperty Name="IsMotivationGift" ColumnName="IsMotivationGift" />
-          <ScalarProperty Name="IsMotivationActive" ColumnName="IsMotivationActive" />
-          <ScalarProperty Name="IsDoorGift" ColumnName="IsDoorGift" />
-          <ScalarProperty Name="IsRecheckAnswer" ColumnName="IsRecheckAnswer" />
-          <ScalarProperty Name="Datetime" ColumnName="Datetime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -231,15 +205,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="PermissionInfors">
-      <EntityTypeMapping TypeName="CheckinAppModel.PermissionInfor">
-        <MappingFragment StoreEntitySet="PermissionInfor">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Status" ColumnName="Status" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="PlatformInfors">
       <EntityTypeMapping TypeName="CheckinAppModel.PlatformInfor">
         <MappingFragment StoreEntitySet="PlatformInfor">
@@ -351,16 +316,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="TestQuestionRecords">
-      <EntityTypeMapping TypeName="CheckinAppModel.TestQuestionRecord">
-        <MappingFragment StoreEntitySet="TestQuestionRecord">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="TestID" ColumnName="TestID" />
-          <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
-          <ScalarProperty Name="Status" ColumnName="Status" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="TrainerRoomRecords">
       <EntityTypeMapping TypeName="CheckinAppModel.TrainerRoomRecord">
         <MappingFragment StoreEntitySet="TrainerRoomRecord">
@@ -382,6 +337,67 @@
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
           <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PermissionInfors">
+      <EntityTypeMapping TypeName="CheckinAppModel.PermissionInfor">
+        <MappingFragment StoreEntitySet="PermissionInfor">
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CourseQuestionProcesses">
+      <EntityTypeMapping TypeName="CheckinAppModel.CourseQuestionProcess">
+        <MappingFragment StoreEntitySet="CourseQuestionProcess">
+          <ScalarProperty Name="TimeEnd" ColumnName="TimeEnd" />
+          <ScalarProperty Name="QuestionOrder" ColumnName="QuestionOrder" />
+          <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+          <ScalarProperty Name="ProcessID" ColumnName="ProcessID" />
+          <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CheckinInfors">
+      <EntityTypeMapping TypeName="CheckinAppModel.CheckinInfor">
+        <MappingFragment StoreEntitySet="CheckinInfor">
+          <ScalarProperty Name="CountingScore" ColumnName="CountingScore" />
+          <ScalarProperty Name="Datetime" ColumnName="Datetime" />
+          <ScalarProperty Name="IsRecheckAnswer" ColumnName="IsRecheckAnswer" />
+          <ScalarProperty Name="IsDoorGift" ColumnName="IsDoorGift" />
+          <ScalarProperty Name="IsMotivationActive" ColumnName="IsMotivationActive" />
+          <ScalarProperty Name="IsMotivationGift" ColumnName="IsMotivationGift" />
+          <ScalarProperty Name="Signature" ColumnName="Signature" />
+          <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AnswerRecords">
+      <EntityTypeMapping TypeName="CheckinAppModel.AnswerRecord">
+        <MappingFragment StoreEntitySet="AnswerRecord">
+          <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+          <ScalarProperty Name="Datetime" ColumnName="Datetime" />
+          <ScalarProperty Name="TimeScore" ColumnName="TimeScore" />
+          <ScalarProperty Name="AnswerOption" ColumnName="AnswerOption" />
+          <ScalarProperty Name="CheckinInforID" ColumnName="CheckinInforID" />
+          <ScalarProperty Name="QuesionID" ColumnName="QuesionID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TestQuestionRecords">
+      <EntityTypeMapping TypeName="CheckinAppModel.TestQuestionRecord">
+        <MappingFragment StoreEntitySet="TestQuestionRecord">
+          <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+          <ScalarProperty Name="TestID" ColumnName="TestID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
