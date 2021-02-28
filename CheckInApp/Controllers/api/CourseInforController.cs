@@ -40,6 +40,29 @@ namespace CheckInApp.Controllers
 
             return Ok(listModel);
         }
+        [HttpGet]
+        //Get Model by CatID
+        public IHttpActionResult GetTestInfo()
+        {
+            var models = _db.TestInfors.ToList();
+            if (models.Count() == 0)
+            {
+                return BadRequest();
+            }
+
+            var listModel = new List<ModelViewModel>();
+
+            foreach (var m in models)
+            {
+                listModel.Add(new ModelViewModel
+                {
+                    Id = m.ID,
+                    Name = m.Name
+                });
+            }
+
+            return Ok(listModel);
+        }
 
         [HttpGet]
         public IHttpActionResult GetCatId()

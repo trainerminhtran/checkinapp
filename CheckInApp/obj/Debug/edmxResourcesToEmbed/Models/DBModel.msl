@@ -349,16 +349,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="TestQuestionRecords">
-      <EntityTypeMapping TypeName="CheckinAppModel.TestQuestionRecord">
-        <MappingFragment StoreEntitySet="TestQuestionRecord">
-          <ScalarProperty Name="Status" ColumnName="Status" />
-          <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
-          <ScalarProperty Name="TestID" ColumnName="TestID" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="CourseQuestionProcesses">
       <EntityTypeMapping TypeName="CheckinAppModel.CourseQuestionProcess">
         <MappingFragment StoreEntitySet="CourseQuestionProcess">
@@ -396,6 +386,17 @@
           <ScalarProperty Name="AnswerOption" ColumnName="AnswerOption" />
           <ScalarProperty Name="CheckinInforID" ColumnName="CheckinInforID" />
           <ScalarProperty Name="QuesionID" ColumnName="QuesionID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TestQuestionRecords">
+      <EntityTypeMapping TypeName="CheckinAppModel.TestQuestionRecord">
+        <MappingFragment StoreEntitySet="TestQuestionRecord">
+          <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+          <ScalarProperty Name="TestID" ColumnName="TestID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>

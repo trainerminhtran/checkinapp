@@ -2,6 +2,7 @@
     ViewBag.Title = "Thêm câu hỏi";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model CheckInApp.ViewModels.TestInfoCreateModel
 @section Styles{
 
     <link rel="stylesheet" href="../../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
@@ -50,22 +51,22 @@
             border-radius: 4px;
         }
 
-            .input-group-addon:first-child {
-                border-right: 0;
+            .input-group-addon:first-child, .border-none-right {
+                border-right: 0 !important;
             }
 
-            .input-group-addon:first-child {
-                border-top-right-radius: 0;
-                border-bottom-right-radius: 0;
+            .input-group-addon:first-child, .border-none-right {
+                border-top-right-radius: 0 !important;
+                border-bottom-right-radius: 0 !important;
             }
 
-            .input-group-addon:last-child {
-                border-left: 0;
+            .input-group-addon:last-child, .border-none-left {
+                border-left: 0 !important;
             }
 
-            .input-group-addon:last-child {
-                border-top-left-radius: 0;
-                border-bottom-left-radius: 0;
+            .input-group-addon:last-child, .border-none-left {
+                border-top-left-radius: 0 !important;
+                border-bottom-left-radius: 0 !important;
             }
 
         .badgebox {
@@ -74,7 +75,7 @@
 
             .badgebox + .badge {
                 text-indent: -999999px;
-                width: 27px;
+                width: 13px;
             }
 
             .badgebox:focus + .badge {
@@ -84,6 +85,7 @@
             .badgebox:checked + .badge {
                 text-indent: 0;
             }
+
         .btn {
             display: inline-block;
             padding: 6px 12px;
@@ -105,124 +107,275 @@
             border: 1px solid transparent;
             border-radius: 4px;
         }
-        .btn-success .badge {
+
+        .btn-default .badge {
             color: #5cb85c;
             background-color: #fff;
+            border: solid 1px #555;
+            margin-left: -15px;
+            margin-top: 4px;
+            padding-right: 10px;
         }
+
+        [draggable], #columns {
+            -moz-user-select: none;
+            -khtml-user-select: none;
+            -webkit-user-select: none;
+            user-select: none;
+            -khtml-user-drag: element;
+            -webkit-user-drag: element;
+        }
+
+        #columns {
+            list-style-type: none;
+        }
+
+        .column {
+            padding-bottom: 5px;
+            padding-top: 5px;
+            text-align: center;
+            cursor: move;
+        }
+
+            .column a {
+                height: 20px;
+                width: 150px;
+                color: black;
+                background-color: #ccc;
+                padding: 5px;
+                border-bottom: 1px solid #ddd;
+                border-radius: 10px;
+                border: 2px solid #666666;
+            }
+
+            .column.dragElem {
+                opacity: 0.4;
+            }
+
+            .column.over {
+                //border: 2px dashed #000;
+                border-top: 2px solid blue;
+            }
     </style>
 
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
 }
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="container">
-                <br />
-                <div class="row">
-                    <div class="dual-list list-left col-md-5">
-                        <div class="well text-right">
-                            <div class="row">
-                                <div class="col-md-10">
-                                    <div class="input-group">
-                                        <span class="input-group-addon fa fa-search"></span>
-                                        <input type="text" name="SearchDualList" class="form-control" placeholder="search" />
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="btn-group">
-                                        <label for="success" class="btn btn-success">Tất cả <input type="checkbox" id="success" class="badgebox selector"><span class="badge">&check;</span></label>
-                                    </div>
-                                </div>
-                            </div>
-                            <ul class="list-group">
-                                <li class="list-group-item">bootstrap-duallist <a href="https://github.com/bbilginn/bootstrap-duallist" target="_blank">github</a></li>
-                                <li class="list-group-item">Dapibus ac facilisis in</li>
-                                <li class="list-group-item">Morbi leo risus</li>
-                                <li class="list-group-item">Porta ac consectetur ac</li>
-                                <li class="list-group-item">Vestibulum at eros</li>
-                            </ul>
+@if (Model.DataQuestion.Any())
+{
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Thêm bài test</h3>
+        </div>
+        @using (Html.BeginForm("Create", "TestInfo", FormMethod.Post, new { enctype = "multipart/form-data", @id = "formID" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="card-body">
+               
+                <div class="container-fluid">
+                    <div class="row">
+                        @if (TempData["Success"] != null)
+                        {
+                            @Html.ValidationSummary(false, "", new { @class = "text-success" })
+
+                        }
+                        else
+                        {
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+                        }
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label>Tên Bài Test:</label>
+                            <input type="text" name="Name" class="form-control " required/>
                         </div>
                     </div>
-                    <div class="list-arrows col-md-1 text-center">
-                        <button class="btn btn-default btn-sm move-left">
-                            <span class="glyphicon glyphicon-chevron-left"></span>
-                        </button>
-                        <button class="btn btn-default btn-sm move-right">
-                            <span class="glyphicon glyphicon-chevron-right"></span>
-                        </button>
-                    </div>
-                    <div class="dual-list list-right col-md-5">
-                        <div class="well">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <div class="btn-group">
-                                        <a class="btn btn-default selector" title="select all"><i class="glyphicon glyphicon-unchecked"></i></a>
+                    <div class="row">
+                        <div class="form-group">
+                            <label>Nội dung câu hỏi:</label>
+                            <div class="container">
+                                <br/>
+                                <div class="row">
+                                    <div class="dual-list list-left col-md-5">
+                                        <div class="well text-right">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon fa fa-search"></span>
+                                                        <input type="text" name="SearchDualList" class="form-control" placeholder="search"/>
+                                                        <div class="btn-group border-none-left">
+                                                            <label for="check-left" class="btn btn-default border-none-left">
+                                                                <input type="checkbox" id="check-left" class="badgebox selector"><span class="badge">&check;</span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <ul class="list-group">
+                                                @foreach (var item in Model.DataQuestion)
+                                                {
+                                                    <li class="list-group-item" data-questId="@item.ID">@item.QuestionContent</li>
+                                                }
+
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-10">
-                                    <div class="input-group">
-                                        <input type="text" name="SearchDualList" class="form-control" placeholder="search" />
-                                        <span class="input-group-addon fa fa-search"></span>
+                                    <div class="list-arrows col-md-1 text-center">
+                                        <button type="button" class="btn btn-default btn-sm move-left">
+                                            <span class="fa fa-chevron-left"></span>
+                                        </button>
+                                        <button type="button" class="btn btn-default btn-sm move-right">
+                                            <span class="fa fa-chevron-right"></span>
+                                        </button>
+                                    </div>
+                                    <div class="dual-list list-right col-md-5">
+                                        <div class="well">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="input-group">
+                                                        <div class="btn-group border-none-right">
+                                                            <label for="check-right" class="btn btn-default border-none-right">
+                                                                <input type="checkbox" id="check-right" class="badgebox selector"><span class="badge">&check;</span>
+                                                            </label>
+                                                        </div>
+                                                        <input type="text" name="SearchDualList" class="form-control" placeholder="search"/>
+                                                        <span class="input-group-addon fa fa-search"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <ul class="list-group" id="columns"></ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <ul class="list-group">
-                                <li class="list-group-item">Cras justo odio</li>
-                                <li class="list-group-item">Dapibus ac facilisis in</li>
-                                <li class="list-group-item">Morbi leo risus</li>
-                                <li class="list-group-item">Porta ac consectetur ac</li>
-                                <li class="list-group-item">Vestibulum at eros</li>
-                            </ul>
                         </div>
                     </div>
                 </div>
+
             </div>
-        </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            @Html.HiddenFor(m=>m.IdQuestion)
+        }
+        
     </div>
-</div>
-@section Scripts{
-    <script>
-        $(function () {
+    
+    @section Scripts{
+        <script>
+            $(function () {
 
-            $('body').on('click', '.list-group .list-group-item', function () {
-                $(this).toggleClass('active');
-            });
-            $('.list-arrows button').click(function () {
-                var $button = $(this), actives = '';
-                if ($button.hasClass('move-left')) {
-                    actives = $('.list-right ul li.active');
-                    actives.clone().appendTo('.list-left ul');
-                    actives.remove();
-                } else if ($button.hasClass('move-right')) {
-                    actives = $('.list-left ul li.active');
-                    actives.clone().appendTo('.list-right ul');
-                    actives.remove();
-                }
-            });
-            $('.dual-list .selector').click(function () {
-                var $checkBox = $(this);
-                if (!$checkBox.hasClass('selected')) {
-                    $checkBox.addClass('selected').closest('.well').find('ul li:not(.active)').addClass('active');
-                    $checkBox.children('i').removeClass('glyphicon-unchecked').addClass('glyphicon-check');
-                } else {
-                    $checkBox.removeClass('selected').closest('.well').find('ul li.active').removeClass('active');
-                    $checkBox.children('i').removeClass('glyphicon-check').addClass('glyphicon-unchecked');
-                }
-            });
-            $('[name="SearchDualList"]').keyup(function (e) {
-                var code = e.keyCode || e.which;
-                if (code == '9') return;
-                if (code == '27') $(this).val(null);
-                var $rows = $(this).closest('.dual-list').find('.list-group li');
-                var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
-                $rows.show().filter(function () {
-                    var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-                    return !~text.indexOf(val);
-                }).hide();
-            });
+                $('body').on('click', '.list-group .list-group-item', function () {
+                    $(this).toggleClass('active');
+                });
+                $('.list-arrows button').click(function () {
+                    var $button = $(this), actives = '';
+                    if ($button.hasClass('move-left')) {
+                        actives = $('.list-right ul li.active');
+                        actives.clone().appendTo('.list-left ul');
+                        actives.remove();
+                    } else if ($button.hasClass('move-right')) {
+                        actives = $('.list-left ul li.active');
+                        actives = actives.attr("draggable", true)
+                        actives = actives.addClass("column")
+                        actives.clone().appendTo('.list-right ul');
 
-        });
-    </script>
+                        actives.remove();
+                    }
+                    var cols = document.querySelectorAll('#columns .column');
+                    [].forEach.call(cols, addDnDHandlers);
+                    var idqs = "";
+                    $('#columns li').each(function() {
+                        idqs += $(this).attr("data-questId") + ","
+                    });
+                    $("#IdQuestion").val(idqs);
+                });
+                $('.dual-list .selector').each(function (index, tr) {
+                    console.log(index);
+                    console.log(tr);
+                });
+                $('.dual-list .selector').click(function () {
+                    console.log($(this).attr('id'));
+                    var $checkBox = $(this);
+                    if (!$checkBox.hasClass('selected')) {
+                        $checkBox.addClass('selected').closest('.well').find('ul li:not(.active)').addClass('active');
+                        $checkBox.children('i').removeClass('glyphicon-unchecked').addClass('glyphicon-check');
+                    } else {
+                        $checkBox.removeClass('selected').closest('.well').find('ul li.active').removeClass('active');
+                        $checkBox.children('i').removeClass('glyphicon-check').addClass('glyphicon-unchecked');
+                    }
+                });
+                $('[name="SearchDualList"]').keyup(function (e) {
+                    var code = e.keyCode || e.which;
+                    if (code == '9') return;
+                    if (code == '27') $(this).val(null);
+                    var $rows = $(this).closest('.dual-list').find('.list-group li');
+                    var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+                    $rows.show().filter(function () {
+                        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+                        return !~text.indexOf(val);
+                    }).hide();
+                });
+
+            });
+            var dragSrcEl = null;
+            function handleDragStart(e) {
+                dragSrcEl = this;
+                e.dataTransfer.effectAllowed = 'move';
+                e.dataTransfer.setData('text/html', this.outerHTML);
+                this.classList.add('dragElem');
+            }
+            function handleDragOver(e) {
+                if (e.preventDefault) {
+                    e.preventDefault();
+                }
+                this.classList.add('over');
+                e.dataTransfer.dropEffect = 'move';
+                return false;
+            }
+
+            function handleDragEnter(e) {
+            }
+
+            function handleDragLeave(e) {
+                this.classList.remove('over');
+            }
+
+            function handleDrop(e) {
+                if (e.stopPropagation) {
+                    e.stopPropagation();
+                }
+                if (dragSrcEl != this) {
+                    this.parentNode.removeChild(dragSrcEl);
+                    var dropHTML = e.dataTransfer.getData('text/html');
+                    this.insertAdjacentHTML('beforebegin', dropHTML);
+                    var dropElem = this.previousSibling;
+                    addDnDHandlers(dropElem);
+
+                }
+                this.classList.remove('over');
+                return false;
+            }
+            function handleDragEnd(e) {
+                this.classList.remove('over');
+            }
+            function addDnDHandlers(elem) {
+                elem.addEventListener('dragstart', handleDragStart, false);
+                elem.addEventListener('dragenter', handleDragEnter, false)
+                elem.addEventListener('dragover', handleDragOver, false);
+                elem.addEventListener('dragleave', handleDragLeave, false);
+                elem.addEventListener('drop', handleDrop, false);
+                elem.addEventListener('dragend', handleDragEnd, false);
+
+            }
+            var cols = document.querySelectorAll('#columns .column');
+            [].forEach.call(cols, addDnDHandlers);
+        </script>
+    }
 }
+else
+{
+    <div>không tìm thấy thông tin câu hỏi</div>
+}
+

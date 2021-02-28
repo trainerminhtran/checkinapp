@@ -1,4 +1,4 @@
-﻿@model CheckInApp.Models.QuestionInfor
+﻿@model CheckInApp.Models.TestInfor
 
 @{
     ViewBag.Title = "Xóa câu hỏi";
@@ -6,12 +6,12 @@
 }
 
 
-<h3>Bạn có muốn xóa câu hỏi này không?</h3>
+<h3>Bạn có muốn xóa bài test này không?</h3>
 <div>
     @Html.ValidationSummary(false, "", new {@class = "text-danger"})
     <dl class="dl-horizontal">
         <dt>
-           @Model.QuestionContent
+           @Model.Name
         </dt>
     </dl>
     @using (Html.BeginForm())
@@ -19,7 +19,7 @@
         @Html.AntiForgeryToken()
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default"/> |
-            @Html.ActionLink("Back to List", "Index","Question")
+            @Html.ActionLink("Back to List", "Index","TestInfo")
         </div>
     }
 </div>

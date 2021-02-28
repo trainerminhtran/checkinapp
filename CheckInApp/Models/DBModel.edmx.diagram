@@ -71,9 +71,6 @@
         <AssociationConnector Association="CheckinAppModel.FK_RoomTrainerRecord_UserInfor" ManuallyRouted="false" />
         <EntityTypeShape EntityType="CheckinAppModel.PermissionInfor" Width="1.5" PointX="10.375" PointY="0.875" />
         <AssociationConnector Association="CheckinAppModel.FK_UserInfor_PermissionInfor" />
-        <EntityTypeShape EntityType="CheckinAppModel.TestQuestionRecord" Width="1.5" PointX="15.25" PointY="16.375" />
-        <AssociationConnector Association="CheckinAppModel.FK_TestQuestionRecord_QuestionInfor" />
-        <AssociationConnector Association="CheckinAppModel.FK_TestQuestionRecord_TestInfor" />
         <EntityTypeShape EntityType="CheckinAppModel.CourseQuestionProcess" Width="1.5" PointX="12.375" PointY="0.75" />
         <EntityTypeShape EntityType="CheckinAppModel.CheckinInfor" Width="1.5" PointX="10.75" PointY="10.5" />
         <AssociationConnector Association="CheckinAppModel.FK_AnswerInfor_CheckinInfor" />
@@ -83,6 +80,9 @@
         <EntityTypeShape EntityType="CheckinAppModel.AnswerRecord" Width="1.5" PointX="15.25" PointY="12.625" />
         <AssociationConnector Association="CheckinAppModel.FK_AnswerRecord_CheckinInfor" />
         <AssociationConnector Association="CheckinAppModel.FK_AnswerRecord_QuestionInfor" />
+        <EntityTypeShape EntityType="CheckinAppModel.TestQuestionRecord" Width="1.5" PointX="15.25" PointY="16.25" />
+        <AssociationConnector Association="CheckinAppModel.FK_TestQuestionRecord_QuestionInfor" />
+        <AssociationConnector Association="CheckinAppModel.FK_TestQuestionRecord_TestInfor" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

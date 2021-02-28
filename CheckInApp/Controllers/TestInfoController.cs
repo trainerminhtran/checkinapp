@@ -20,76 +20,73 @@ namespace CheckInApp.Controllers
         // GET: Question
         public ActionResult Index()
         {
-            var qi = db.QuestionInfors.Where(x=>x.Status == true).ToList();
-            List<QuestionViewModel> tvm = qi.Select(t => new QuestionViewModel()
+            var qi = db.TestInfors.ToList();
+            List<TestInfoListModel> tvm = qi.Select(t => new TestInfoListModel()
             {
                 ID = t.ID,
-                QuestionContent = t.QuestionContent,
-                Choose1 = t.Choose1,
-                Choose2 = t.Choose2,
-                Choose3 = t.Choose3,
-                Choose4 = t.Choose4,
-                TrueChoose = t.TrueChoose,
-                Datetime = t.Datetime.GetValueOrDefault()
+                Name = t.Name,
+                CountQuestion = t.TestQuestionRecords.Count(),
             }).ToList();
             return View(tvm);
         }
         [HttpGet]
         public ActionResult Create()
         {
-            return View("create");
+            var model = new TestInfoCreateModel();
+            var qi = db.QuestionInfors.Where(x => x.Status == true).ToList();
+            model.DataQuestion = qi;
+            return View(model);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CreateQuestionModel tcvm)
+        public ActionResult Create(TestInfoCreateRequestModel tcvm)
         {
+            var model = new TestInfoCreateModel();
+            var qi = db.QuestionInfors.Where(x => x.Status == true).ToList();
+            model.DataQuestion = qi;
             if (ModelState.IsValid)
             {
                 try
                 {
-                    if (tcvm.file != null)
+                    var ti = new TestInfor
                     {
-                        BaseImporter baseImport = new BaseImporter();
-                        List<QuestionImportModel> list = baseImport.ToList(UploadFileToServer(tcvm.file, true), true).ToList();
-                        List<QuestionImportModel> ListDataExport = new List<QuestionImportModel>();
-                        IList<QuestionInfor> QuestionList = new List<QuestionInfor>();
-                        foreach (QuestionImportModel item in list)
+                        Name = tcvm.Name,
+                        Score = 100,
+                        datetime = DateTime.Today
+                    };
+                    db.TestInfors.Add(ti);
+                    db.SaveChanges();
+                    var questionIds = tcvm.IdQuestion.Remove(tcvm.IdQuestion.Length - 1, 1).Split(',').Select(Int32.Parse).ToList();
+                    var ltqr = new List<TestQuestionRecord>();
+                    var orderIndex = 1;
+                    foreach (var item in questionIds)
+                    {
+                        ltqr.Add(new TestQuestionRecord
                         {
-                            QuestionList.Add(new QuestionInfor
-                            {
-                                CatID = 1,
-                                LevelID = 1,
-                                QuestionContent = item.QuestionContent,
-                                TrueChoose = item.TrueChoose,
-                                Choose1 = item.Choose1,
-                                Choose2 = item.Choose2,
-                                Choose3 = item.Choose3,
-                                Choose4 = item.Choose4,
-                                Datetime = DateTime.Today,
-                                Status = true,
-                            });
-                        }
-                        db.QuestionInfors.AddRange(QuestionList);
+                            QuestionID = item,
+                            TestID = ti.ID,
+                            Status = true,
+                            OrderNumber = orderIndex,
+                        });
+                        orderIndex++;
+                    }
+                    if (ltqr.Any())
+                    {
+                        db.TestQuestionRecords.AddRange(ltqr);
                         db.SaveChanges();
                     }
-                    else
-                    {
-                        ModelState.AddModelError("message", "Tải file câu hỏi !!");
-                        return View();
-                    }
-
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    ModelState.AddModelError("message", "Import câu hỏi thất bại !!");
+                    ModelState.AddModelError("message", "Thêm bài test thất bại !!");
                     return View();
                 }
-                ModelState.AddModelError("message", "Import câu hỏi thành công!!");
+                ModelState.AddModelError("message", "Thêm bài test thành công!!");
 
                 TempData["Success"] = "Added Successfully!";
-                return View();
+                return View(model);
             }
-            return View();
+            return View(model);
         }
 
         public ActionResult Delete(int? id)
@@ -98,7 +95,7 @@ namespace CheckInApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var t = db.QuestionInfors.Find(id);
+            var t = db.TestInfors.Find(id);
             if (t == null)
             {
                 return HttpNotFound();
@@ -111,8 +108,10 @@ namespace CheckInApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            var ccrecord = db.QuestionInfors.FirstOrDefault(x => x.ID == id);
-            db.QuestionInfors.Remove(ccrecord);
+            db.TestQuestionRecords.RemoveRange(db.TestQuestionRecords.Where(x => x.TestID == id));
+            db.SaveChanges();
+            var ccrecord = db.TestInfors.FirstOrDefault(x => x.ID == id);
+            db.TestInfors.Remove(ccrecord);
             db.SaveChanges();
 
             return RedirectToAction("Index");

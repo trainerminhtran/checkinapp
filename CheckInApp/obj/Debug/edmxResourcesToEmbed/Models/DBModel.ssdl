@@ -339,6 +339,7 @@
     <Property Name="TestID" Type="int" Nullable="false" />
     <Property Name="QuestionID" Type="int" Nullable="false" />
     <Property Name="Status" Type="bit" />
+    <Property Name="OrderNumber" Type="int" />
   </EntityType>
   <EntityType Name="TrainerRoomRecord">
     <Key>

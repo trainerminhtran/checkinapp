@@ -1,5 +1,5 @@
 ﻿
-@model List<CheckInApp.ViewModels.QuestionViewModel>
+@model List<CheckInApp.ViewModels.TestInfoListModel>
 
 @{
     ViewBag.Title = "Danh sách Hội trường";
@@ -16,24 +16,11 @@
     <thead>
         <tr>
             <th>
-                Nội Dung
+                Tên bài test
             </th>
 
             <th>
-                Đáp án 1
-            </th>
-            <th>
-                Đáp án 2
-            </th>
-            <th>
-                Đáp án 3
-            </th>
-            <th>
-                Đáp án 4
-            </th>
-
-            <th>
-                Đáp án đúng
+                Tổng câu hỏi
             </th>
             <th>Action</th>
         </tr>
@@ -43,22 +30,10 @@
         {
             <tr>
                 <td>
-                    @item.QuestionContent
+                    @item.Name
                 </td>
                 <td>
-                    @item.Choose1
-                </td>
-                <td>
-                    @item.Choose2
-                </td>
-                <td>
-                    @item.Choose3
-                </td>
-                <td>
-                    @item.Choose4
-                </td>
-                <td>
-                    @item.TrueChoose
+                    @item.CountQuestion
                 </td>
                 <td>
                     @Html.ActionLink("Delete", "Delete", new { id = item.ID })
@@ -94,10 +69,6 @@
                 "autoWidth": false,
                 "responsive": true,
             });
-            $("input[data-bootstrap-switch]").each(function () {
-                $(this).bootstrapSwitch('state', $(this).prop('checked'));
-            });
-
         });
     </script>
 }

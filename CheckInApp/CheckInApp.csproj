@@ -339,6 +339,7 @@
     <Compile Include="Services\RoomEnum.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\TestInfoModel.cs" />
     <Compile Include="ViewModels\QuestionModel.cs" />
     <Compile Include="ViewModels\QuizModel.cs" />
     <Compile Include="ViewModels\Config.cs" />
