@@ -169,25 +169,30 @@ namespace CheckInApp.Controllers
                 model.TimeAns = model.TimeAns * 5;
             }
 
-            var ar = new AnswerRecord()
+            var asr = _db.AnswerRecords.FirstOrDefault(x =>
+                x.QuesionID == model.QuestionId && x.CheckinInforID == checkinfo.ID && x.RoomID == ro.ID);
+            if (asr == null)
             {
-                QuesionID = model.QuestionId,
-                CheckinInforID = checkinfo.ID,
-                AnswerOption = model.Choose.ToString(),
-                TimeScore = model.TimeAns,
-                RoomID = ro.ID,
-                Datetime = DateTime.Today
-            };
-            _db.AnswerRecords.Add(ar);
-            _db.SaveChanges();
-            if (model.TimeAns > 0)
-            {
-                var ci = _db.CheckinInfors.FirstOrDefault(x => x.RoomID == ro.ID && x.UserID == u.Id);
-                if (ci != null)
+                var ar = new AnswerRecord()
                 {
-                    ci.CountingScore = ci.CountingScore.GetValueOrDefault() + model.TimeAns;
-                    _db.Entry(ci).State = EntityState.Modified;
-                    _db.SaveChanges();
+                    QuesionID = model.QuestionId,
+                    CheckinInforID = checkinfo.ID,
+                    AnswerOption = model.Choose.ToString(),
+                    TimeScore = model.TimeAns,
+                    RoomID = ro.ID,
+                    Datetime = DateTime.Today
+                };
+                _db.AnswerRecords.Add(ar);
+                _db.SaveChanges();
+                if (model.TimeAns > 0)
+                {
+                    var ci = _db.CheckinInfors.FirstOrDefault(x => x.RoomID == ro.ID && x.UserID == u.Id);
+                    if (ci != null)
+                    {
+                        ci.CountingScore = ci.CountingScore.GetValueOrDefault() + model.TimeAns;
+                        _db.Entry(ci).State = EntityState.Modified;
+                        _db.SaveChanges();
+                    }
                 }
             }
             return new JsonResult() { Data = model, JsonRequestBehavior = JsonRequestBehavior.AllowGet };

@@ -86,6 +86,7 @@ function completeTime() {
             }
         },
             1000);
+        ChooseAns();
     } else {
         setTimeout(function () {
             $(".quiz .ans").removeClass("btn-primary btn-danger btn-warning btn-warning btn-success")

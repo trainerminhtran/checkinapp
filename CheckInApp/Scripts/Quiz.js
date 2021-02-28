@@ -13,8 +13,9 @@
     showload();
 });	
 var i = 0;
+var timerProgress;
 function makeProgress() {
-    var timerProgress = 0;
+    console.log("i" + i);
     if (i < 100) {
         i = i + 1;
         $(".progress-time").css("width", i + "%");
@@ -29,9 +30,19 @@ function makeProgress() {
         }
     }
     if (i == 100) {
-        clearTimeout(timerProgress);
+        console.log("clear")
+        clearInterval(timerProgress);
     }
-    timerProgress = setTimeout("makeProgress()", parseInt((parseInt($(".counter").attr("data-TargetNum")) * 10)));
+    var timeinterval = parseInt((parseInt($(".counter").attr("data-TargetNum")) * 10));
+    console.log("counter " + (parseInt($(".counter").attr("data-TargetNum"))))
+    console.log("timeinterval " + timeinterval)
+    if (timeinterval == 0) {
+        i = 99;
+        makeProgress();
+    } else {
+        timerProgress = setInterval("makeProgress()", timeinterval);
+    }
+    console.log(timerProgress);
 };
 
 var textready;

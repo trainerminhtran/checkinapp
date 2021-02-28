@@ -103,6 +103,7 @@ namespace CheckInApp.Controllers
                     QuestionID = x.QuestionID,
                     QuestionOrder = x.OrderNumber.GetValueOrDefault(),
                     RoomID = ro.ID,
+                    TimeEnd = 0,
                 }).ToList();
 
                 _db.CourseQuestionProcesses.AddRange(listQP);
@@ -204,6 +205,7 @@ namespace CheckInApp.Controllers
                     QuestionID = x.QuestionID,
                     QuestionOrder = x.OrderNumber.GetValueOrDefault(),
                     RoomID = GetRoomById.ID,
+                    TimeEnd = 0,
                 }).ToList();
 
                 _db.CourseQuestionProcesses.AddRange(listQP);
