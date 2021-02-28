@@ -192,6 +192,7 @@
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\ExportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TestInfoController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\QuizManagerController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
@@ -2522,6 +2523,9 @@
     <Content Include="Views\Question\Index.cshtml" />
     <Content Include="Views\Question\Create.cshtml" />
     <Content Include="Views\Question\Delete.cshtml" />
+    <Content Include="Views\TestInfo\Index.cshtml" />
+    <Content Include="Views\TestInfo\Create.cshtml" />
+    <Content Include="Views\TestInfo\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\FileUploads\" />

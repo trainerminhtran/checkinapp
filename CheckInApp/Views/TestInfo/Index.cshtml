@@ -1,4 +1,5 @@
-﻿@model List<CheckInApp.ViewModels.QuestionViewModel>
+﻿
+@model List<CheckInApp.ViewModels.QuestionViewModel>
 
 @{
     ViewBag.Title = "Danh sách Hội trường";
@@ -17,20 +18,20 @@
             <th>
                 Nội Dung
             </th>
-           
+
             <th>
                 Đáp án 1
             </th>
             <th>
                 Đáp án 2
             </th>
-              <th>
+            <th>
                 Đáp án 3
             </th>
-              <th>
+            <th>
                 Đáp án 4
             </th>
-          
+
             <th>
                 Đáp án đúng
             </th>
@@ -50,15 +51,15 @@
                 <td>
                     @item.Choose2
                 </td>
-                 <td>
-                     @item.Choose3
+                <td>
+                    @item.Choose3
                 </td>
-                 <td>
-                     @item.Choose4
+                <td>
+                    @item.Choose4
                 </td>
-                 <td>
-                     @item.TrueChoose
-                 </td>
+                <td>
+                    @item.TrueChoose
+                </td>
                 <td>
                     @Html.ActionLink("Delete", "Delete", new { id = item.ID })
                 </td>
@@ -80,8 +81,6 @@
     <script src="../../dist/bootoast.min.js"></script>
 
     <script>
-
-
         $(function () {
             //Money Euro
             $("#lbDatetime").inputmask('dd/MM/yyyy');
@@ -95,6 +94,10 @@
                 "autoWidth": false,
                 "responsive": true,
             });
+            $("input[data-bootstrap-switch]").each(function () {
+                $(this).bootstrapSwitch('state', $(this).prop('checked'));
+            });
+
         });
     </script>
 }
