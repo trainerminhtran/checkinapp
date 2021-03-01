@@ -85,5 +85,7 @@ namespace CheckInApp.ViewModels
         public string FullName { get; set; }
         public int AnsTime { get; set; }
         public int OrderNumber { get; set; }
+        public bool FinishTest { get; set; }
+        public string CheckinUrl { get; set; }
     }
 }

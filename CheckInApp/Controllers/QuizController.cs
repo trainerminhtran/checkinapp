@@ -18,6 +18,7 @@ namespace CheckInApp.Controllers
         private readonly dbEntities _db = new dbEntities();
         private readonly UserService _us = new UserService();
         private DatetimeService ds = new DatetimeService();
+        private readonly QRCodeService _qr = new QRCodeService();
         // GET: User
         public ActionResult Index(Guid RoomId)
         {
@@ -207,7 +208,8 @@ namespace CheckInApp.Controllers
         {
             var model = new TopResultUseView
             {
-                Data = new List<TopResultView>()
+                Data = new List<TopResultView>(),
+                FinishTest = false,
             };
             if (!(Session["UserViewModel"] is UserViewModel u))
             {
@@ -252,6 +254,14 @@ namespace CheckInApp.Controllers
                 FullName = x.UserInfor.EmployeeInfor.Fullname,
                 Score = x.CountingScore.GetValueOrDefault()
             }).OrderByDescending(e => e.Score).Take(10).ToList();
+
+            var lP = _db.CourseQuestionProcesses
+                .Where(x => x.RoomID == ro.ID && x.ProcessID != (int) ProcessIDEnum.Finish).ToList();
+            if (!lP.Any())
+            {
+                model.FinishTest = true;
+                model.CheckinUrl = _qr.GetRoomPath(RoomId);
+            }
             return PartialView(model);
         }
     }

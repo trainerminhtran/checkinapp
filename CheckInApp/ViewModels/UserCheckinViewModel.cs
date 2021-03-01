@@ -23,5 +23,8 @@ namespace CheckInApp.ViewModels
         public string Date { get; set; }
         public byte[] Signature{ get; set; }
         public Guid RoomGuid { get; set; }
+        public int TrueAns { get; set; }
+        public int TotalAns { get; set; }
+        public bool DoTest { get; set; }
     } 
 }
