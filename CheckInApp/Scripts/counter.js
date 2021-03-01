@@ -50,7 +50,20 @@ function doCount(num, index, speed, groupClass, direction, easing) {
         duration: +speed,
         easing: easing,
             step: function (now) {
+                var i = (20 - (num - Math.floor(now))) * 5
+                console.log("Progress: " +i)
+                $(".progress-time").css("width", i + "%");
+                if (i <= 20) {
+                    $(".progress-time").addClass("bg-info");
+                } else if (i <= 40) {
+                    $(".progress-time").addClass("bg-success");
+                } else if (i <= 80) {
+                    $(".progress-time").addClass("bg-warning");
+                } else {
+                    $(".progress-time").addClass("bg-danger");
+                }
                 $(".update-point").html(parseInt((num - Math.floor(now)) * 5) + " Point");
+                console.log("math :" + (num - Math.floor(now)));
                 $("#AnsTime").val(num - Math.floor(now));
             if (direction == 'reverse') {
                 if (num - Math.floor(now) < 10) {
@@ -58,7 +71,6 @@ function doCount(num, index, speed, groupClass, direction, easing) {
                 } else {
                     $(this).html(num - Math.floor(now));
                 }
-
             } else {
                 $(this).text(Math.floor(now));
             }

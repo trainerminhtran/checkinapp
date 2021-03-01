@@ -23,6 +23,7 @@ namespace CheckInApp.Services
     {
         Create = 1,
         Process = 2,
-        Finish = 3
+        Finish = 3,
+        NextQuestion = 4,
     }
 }

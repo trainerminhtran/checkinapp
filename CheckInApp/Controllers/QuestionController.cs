@@ -79,9 +79,9 @@ namespace CheckInApp.Controllers
                     }
 
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    ModelState.AddModelError("message", "Import câu hỏi thất bại !!");
+                    ModelState.AddModelError("message", "Import câu hỏi thất bại !!" + e.Message);
                     return View();
                 }
                 ModelState.AddModelError("message", "Import câu hỏi thành công!!");

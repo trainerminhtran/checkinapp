@@ -52,7 +52,7 @@ namespace CheckInApp.Controllers
                 TestName = ti.Name,
                 RoomId = ro.Guid,
                 TestId = ct.TestID,
-                Process = false
+                Process = (int)ProcessIDEnum.Create,
             };
             var process = _db.CourseQuestionProcesses.Where(x => x.RoomID == ro.ID && x.ProcessID != (int)ProcessIDEnum.Finish).OrderBy(x=>x.QuestionOrder).FirstOrDefault();
             if (process != null)
@@ -69,17 +69,22 @@ namespace CheckInApp.Controllers
                     context.Clients.All.addNewMessageToGroup("JoinRoom", JsonConvert.SerializeObject(JoinRoom));
                     return View(model);
                 }
+                else if(process.ProcessID == (int)ProcessIDEnum.Create)
+                {
+                    model.Process = (int)ProcessIDEnum.NextQuestion;
+                    return View(model);
+                }
                 else
                 {
-                    model.Process = true;
-                    return View(model);
+                    model.Process = (int)ProcessIDEnum.Process;
                 }
             }
             else
             {
-                model.Process = true;
+                model.Process = (int)ProcessIDEnum.Finish;
                 return View(model);
             }
+            return View(model);
         }
 
         public ActionResult _ListQuiz(int TestId, Guid RoomId)

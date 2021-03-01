@@ -4,7 +4,7 @@
 @section Styles{
     <link href="~/Content/Quiz.css" rel="stylesheet" />
 }
-@model Checkinapp.ViewModels.QuizManagerView
+@model CheckInApp.ViewModels.QuizManagerView
 @if (Model != null)
 {
     if (Model.Process == (int)CheckInApp.Services.ProcessIDEnum.Finish)
@@ -173,6 +173,9 @@
         @if (Model.Process == (int) CheckInApp.Services.ProcessIDEnum.Process)
         {
             @Html.Raw("StartQuiz();")
+        }else if (Model.Process == (int)CheckInApp.Services.ProcessIDEnum.NextQuestion)
+        {
+            @Html.Raw("LoadTop();")
         }
     </script>
 

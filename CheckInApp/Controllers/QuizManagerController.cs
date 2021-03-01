@@ -1,5 +1,4 @@
-﻿using Checkinapp.ViewModels;
-using CheckInApp.Models;
+﻿using CheckInApp.Models;
 using CheckInApp.Services;
 using CheckInApp.ViewModels;
 using System;
@@ -51,7 +50,14 @@ namespace CheckInApp.Controllers
             {
                 if (process.ProcessID == (int)ProcessIDEnum.Create)
                 {
-                    model.Process = (int)ProcessIDEnum.Create;
+                    if (process.QuestionOrder != 1)
+                    {
+                        model.Process = (int)ProcessIDEnum.NextQuestion;
+                    }
+                    else
+                    {
+                        model.Process = (int)ProcessIDEnum.Create;
+                    }
                 }
                 else
                 {
@@ -154,7 +160,11 @@ namespace CheckInApp.Controllers
         }
         public ActionResult _ListAns(int TestId, Guid RoomId)
         {
-            List<TopResultView> model = new List<TopResultView>();
+            var model = new ListAnsManager
+            {
+                Data = new List<TopResultView>(),
+                EndProcess = 0,
+            };
             RoomInfor ro = _db.RoomInfors.FirstOrDefault(x => x.Guid == RoomId);
             if (ro == null)
             {
@@ -163,14 +173,19 @@ namespace CheckInApp.Controllers
             var listData = _db.CheckinInfors.Where(x => x.RoomID == ro.ID).OrderByDescending(x => x.CountingScore).ToList();
             var tqp = _db.TestQuestionRecords.Where(x => x.TestID == TestId).ToList();
             var totalCount = tqp.Count;
-            List<TopResultView> data = listData.Select(x => new TopResultView
+            var lastsans = _db.CourseQuestionProcesses.FirstOrDefault(x => x.ProcessID != (int) ProcessIDEnum.Finish && x.RoomID == ro.ID);
+            if (lastsans == null)
+            {
+                model.EndProcess = 1;
+            }
+            model.Data= listData.Select(x => new TopResultView
             {
                 Total = totalCount,
                 TrueAns = x.AnswerRecords.Count(a => a.TimeScore > 0),
                 FullName = x.UserInfor.EmployeeInfor.Fullname,
                 Score = x.CountingScore.GetValueOrDefault()
             }).OrderByDescending(u=>u.Score).ToList();
-            return PartialView(data);
+            return PartialView(model);
         }
     }
 }

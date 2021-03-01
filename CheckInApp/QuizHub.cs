@@ -1,5 +1,4 @@
 ﻿using System;
-using Checkinapp.ViewModels;
 using CheckInApp.Models;
 using CheckInApp.Services;
 using Microsoft.AspNet.SignalR;
@@ -7,6 +6,7 @@ using Microsoft.AspNet.SignalR.Hubs;
 using Newtonsoft.Json;
 using System.Data.Entity;
 using System.Linq;
+using CheckInApp.ViewModels;
 
 namespace CheckInApp
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Checkinapp.ViewModels
+namespace CheckInApp.ViewModels
 {
     public class JoinRoom
     {
@@ -29,7 +29,7 @@ namespace Checkinapp.ViewModels
         public string TestName { get; set; }
         public Guid RoomId { get; set; }
         public int TestId { get; set; }
-        public bool Process { get; set; }
+        public int Process { get; set; }
     }
 
     public class QuizManagerListView
@@ -71,6 +71,13 @@ namespace Checkinapp.ViewModels
         public int Total { get; set; }
         public int Score { get; set; }
     }
+
+    public class ListAnsManager
+    {
+        public List<TopResultView> Data { get; set;}
+        public int EndProcess { get; set; }
+    }
+
     public class TopResultUseView
     {
         public List<TopResultView> Data { get; set; }
