@@ -26,7 +26,7 @@ namespace CheckInApp.Controllers
         {
             var rvm = new List<RoomViewModel>();
 
-            var room = _db.RoomInfors;
+            var room = _db.RoomInfors.Where(x=>x.IsDisable!= true);
 
             foreach (var r in room)
             {

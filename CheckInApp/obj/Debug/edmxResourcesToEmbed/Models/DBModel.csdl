@@ -114,6 +114,7 @@
     <NavigationProperty Name="CourseTestRecords" Relationship="Self.FK_CourseTestRecord_CourseInfor" FromRole="CourseInfor" ToRole="CourseTestRecord" />
     <NavigationProperty Name="GiftCourseRecords" Relationship="Self.FK_GiftCourseRecord_CourseInfor" FromRole="CourseInfor" ToRole="GiftCourseRecord" />
     <NavigationProperty Name="RoomInfors" Relationship="Self.FK_RoomInfor_CourseInfor" FromRole="CourseInfor" ToRole="RoomInfor" />
+    <Property Name="IsDisable" Type="Boolean" />
   </EntityType>
   <EntityType Name="CourseTestRecord">
     <Key>
@@ -304,6 +305,7 @@
     <NavigationProperty Name="StoreInfor" Relationship="Self.FK_RoomInfor_StoreInfor" FromRole="RoomInfor" ToRole="StoreInfor" />
     <NavigationProperty Name="TrainerRoomRecords" Relationship="Self.FK_RoomTrainerRecord_RoomInfor" FromRole="RoomInfor" ToRole="TrainerRoomRecord" />
     <NavigationProperty Name="CheckinInfors" Relationship="CheckinAppModel.FK_CheckinInfor_RoomInfor" FromRole="RoomInfor" ToRole="CheckinInfor" />
+    <Property Name="IsDisable" Type="Boolean" />
   </EntityType>
   <EntityType Name="StoreInfor">
     <Key>

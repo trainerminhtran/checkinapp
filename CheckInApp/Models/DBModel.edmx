@@ -125,6 +125,7 @@
           <Property Name="PlatformID" Type="int" Nullable="false" />
           <Property Name="Datetime" Type="datetime" Nullable="false" />
           <Property Name="Status" Type="bit" />
+          <Property Name="IsDisable" Type="bit" />
         </EntityType>
         <EntityType Name="CourseQuestionProcess">
           <Key>
@@ -300,6 +301,7 @@
           <Property Name="NoDaysGetGift" Type="int" />
           <Property Name="Datetime" Type="datetime" Nullable="false" />
           <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IsDisable" Type="bit" />
         </EntityType>
         <EntityType Name="StoreInfor">
           <Key>
@@ -1181,6 +1183,7 @@
           <NavigationProperty Name="CourseTestRecords" Relationship="Self.FK_CourseTestRecord_CourseInfor" FromRole="CourseInfor" ToRole="CourseTestRecord" />
           <NavigationProperty Name="GiftCourseRecords" Relationship="Self.FK_GiftCourseRecord_CourseInfor" FromRole="CourseInfor" ToRole="GiftCourseRecord" />
           <NavigationProperty Name="RoomInfors" Relationship="Self.FK_RoomInfor_CourseInfor" FromRole="CourseInfor" ToRole="RoomInfor" />
+          <Property Name="IsDisable" Type="Boolean" />
         </EntityType>
         <EntityType Name="CourseTestRecord">
           <Key>
@@ -1371,6 +1374,7 @@
           <NavigationProperty Name="StoreInfor" Relationship="Self.FK_RoomInfor_StoreInfor" FromRole="RoomInfor" ToRole="StoreInfor" />
           <NavigationProperty Name="TrainerRoomRecords" Relationship="Self.FK_RoomTrainerRecord_RoomInfor" FromRole="RoomInfor" ToRole="TrainerRoomRecord" />
           <NavigationProperty Name="CheckinInfors" Relationship="CheckinAppModel.FK_CheckinInfor_RoomInfor" FromRole="RoomInfor" ToRole="CheckinInfor" />
+          <Property Name="IsDisable" Type="Boolean" />
         </EntityType>
         <EntityType Name="StoreInfor">
           <Key>
@@ -2308,6 +2312,7 @@
           <EntitySetMapping Name="CourseInfors">
             <EntityTypeMapping TypeName="CheckinAppModel.CourseInfor">
               <MappingFragment StoreEntitySet="CourseInfor">
+                <ScalarProperty Name="IsDisable" ColumnName="IsDisable" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="PlatformID" ColumnName="PlatformID" />
@@ -2473,6 +2478,7 @@
           <EntitySetMapping Name="RoomInfors">
             <EntityTypeMapping TypeName="CheckinAppModel.RoomInfor">
               <MappingFragment StoreEntitySet="RoomInfor">
+                <ScalarProperty Name="IsDisable" ColumnName="IsDisable" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="CourseID" ColumnName="CourseID" />
                 <ScalarProperty Name="VenueID" ColumnName="VenueID" />

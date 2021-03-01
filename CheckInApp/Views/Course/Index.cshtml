@@ -28,6 +28,7 @@
                 @Html.DisplayNameFor(model => model.Status)
             </th>
             <th>Action</th>
+            <th>Ẩn</th>
         </tr>
     </thead>
     <tbody>
@@ -45,18 +46,32 @@
                         var sts = item.Status.GetValueOrDefault(false);
                         if (sts)
                         {
-                            <input type="checkbox" name="my-checkbox" checked data-bootstrap-switch data-off-color="danger" contentid="@item.ID" data-on-color="success">
+                            <input type="checkbox" class="statusClass" name="my-checkbox" checked data-bootstrap-switch data-off-color="danger" contentid="@item.ID" data-on-color="success">
                         }
                         else
                         {
-                            <input type="checkbox" name="my-checkbox" data-bootstrap-switch data-off-color="danger" data-on-color="success" contentid="@item.ID">
+                            <input type="checkbox" class="statusClass" name="my-checkbox" data-bootstrap-switch data-off-color="danger" data-on-color="success" contentid="@item.ID">
                         }
                     }
                 </td>
                 <td>
                     @*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |*@
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
+
+                </td>
+                <td>
+                    @{
+                        var isDisable = item.IsDisable.GetValueOrDefault(false);
+                        if (isDisable)
+                        {
+                            <input type="checkbox" class="disableClass" name="my-checkboxDis" checked data-bootstrap-switch data-off-color="danger" contentid="@item.ID" data-on-color="success">
+                        }
+                        else
+                        {
+                            <input type="checkbox" class="disableClass" name="my-checkboxDis" data-bootstrap-switch data-off-color="danger" data-on-color="success" contentid="@item.ID">
+                        }
+                    }
                 </td>
             </tr>
         }
@@ -93,7 +108,7 @@
                 $(this).bootstrapSwitch('state', $(this).prop('checked'));
             });
 
-            $('input[data-bootstrap-switch]').on('switchChange.bootstrapSwitch',
+            $('.statusClass').on('switchChange.bootstrapSwitch',
                 function(e, data) {
                     if (confirm('Bạn có muốn thay đổi trạng thái khóa học không?')) {
                         var id = $(this).attr("contentid");
@@ -122,6 +137,46 @@
                                 }
                             },
                             error: function(response) {
+                                bootoast.toast({
+                                    message: response,
+                                    type: 'danger'
+                                });
+                            }
+                        });
+                    } else {
+                        $(this).bootstrapSwitch('state', !data, true);
+                    }
+                });
+
+            $('.disableClass').on('switchChange.bootstrapSwitch',
+                function (e, data) {
+                    if (confirm('Bạn có muốn thay đổi trạng thái khóa học không?')) {
+                        var id = $(this).attr("contentid");
+                        $(this).bootstrapSwitch('state', !data, true);
+                        var $obj = $(this);
+                        $.ajax({
+                            type: "POST",
+                            cache: false,
+                            dataType: "json",
+                            context: this,
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify({ "id": id, "sts": data }),
+                            url: "/api/courseinfor/courseDisable",
+                            success: function (response) {
+                                if (response) {
+                                    bootoast.toast({
+                                        message: 'Cập nhật thành công',
+                                        type: 'success'
+                                    });
+                                    $obj.bootstrapSwitch('state', data, true);
+                                } else {
+                                    bootoast.toast({
+                                        message: 'Cập nhật thất bại',
+                                        type: 'danger'
+                                    });
+                                }
+                            },
+                            error: function (response) {
                                 bootoast.toast({
                                     message: response,
                                     type: 'danger'
