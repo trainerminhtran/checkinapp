@@ -29,10 +29,16 @@
             <li class="list-group-item">
                 <b>Tại: </b> <a class="float-right" style="width: 70%; text-align: right;">@Model.Venue</a>
             </li>
-            @if (ViewBag.isCheckin)
+            @if (ViewBag.isCheckin && !Model.DoTest)
             {
                 <li class="list-group-item">
                     <b>Làm bài tập: </b> <div class="float-right" style="width: 70%; text-align: right;"><a href="@Url.Action("Index","Quiz",new {RoomId = Model.RoomGuid})" class="float-right" style="background-color: aqua;cursor: pointer;padding: 5px 8px;color: white;border-radius: 5px;">Vào làm</a></div>
+                </li>
+            }
+            else
+            {
+                <li class="list-group-item">
+                    <b>Làm bài tập: </b> <div class="float-right" style="width: 70%; text-align: right;"><a class="float-right" style="background-color: #007bff;cursor: pointer;padding: 5px 8px;color: white;border-radius: 5px;">@Model.TrueAns/@Model.TotalAns</a></div>
                 </li>
             }
 

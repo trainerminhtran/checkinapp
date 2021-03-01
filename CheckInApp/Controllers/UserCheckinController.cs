@@ -51,14 +51,22 @@ namespace CheckInApp.Controllers
                 Date = _dt.GetVNDateString(ro.Datetime),
                 IsMotivationGift = false,
                 RoomGuid = ro.Guid,
+                DoTest = false,
             };
-
+            
             var ischeckin = _db.CheckinInfors.FirstOrDefault(x => x.RoomInfor.Guid == id && x.UserInfor.ID == u.Id);
             if (ischeckin != null)
             {
                 ViewBag.isCheckin = true;
                 uvm.checkinId = ischeckin.ID;
                 uvm.IsMotivationGift = ischeckin.IsMotivationGift.GetValueOrDefault();
+                var ans = _db.AnswerRecords.Where(x => x.CheckinInforID == ischeckin.ID).ToList();
+                if (ans.Any())
+                {
+                    uvm.DoTest = true;
+                    uvm.TrueAns = ans.Count(x => x.TimeScore > 0);
+                    uvm.TotalAns = ans.Count;
+                }
             }
             else
             {

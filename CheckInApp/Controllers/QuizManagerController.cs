@@ -4,6 +4,7 @@ using CheckInApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -186,6 +187,36 @@ namespace CheckInApp.Controllers
                 Score = x.CountingScore.GetValueOrDefault()
             }).OrderByDescending(u=>u.Score).ToList();
             return PartialView(model);
+        }
+
+        [HttpPost]
+        public JsonResult FinishTest(int TestId, Guid RoomId)
+        {
+            if (!(Session["UserViewModel"] is UserViewModel u))
+            {
+                return null;
+            }
+            RoomInfor ro = _db.RoomInfors.FirstOrDefault(x => x.Guid == RoomId);
+            if (ro == null)
+            {
+                return null;
+            }
+
+            var update = _db.CourseQuestionProcesses.Where(x => x.RoomID == ro.ID).ToList().Select(x=>new CourseQuestionProcess
+            {
+                ID = x.ID,
+                QuestionOrder = x.QuestionOrder,
+                ProcessID = (int)ProcessIDEnum.Create,
+                RoomID = x.RoomID,
+                QuestionID = x.QuestionID,
+                TimeEnd = 0,
+            }).ToList();
+            foreach (var item in update)
+            {
+                _db.CourseQuestionProcesses.AddOrUpdate(item);
+            }
+            _db.SaveChanges();
+            return new JsonResult() { Data = RoomId, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
     }
 }

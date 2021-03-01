@@ -311,3 +311,4 @@ D:\Freelance\SamSung\QAA\checkinapp\CheckInApp\obj\Debug\CheckInApp.csproj.CoreC
 D:\Freelance\SamSung\QAA\checkinapp\CheckInApp\obj\Debug\CheckInApp.csproj.CopyComplete
 D:\Freelance\SamSung\QAA\checkinapp\CheckInApp\obj\Debug\CheckInApp.dll
 D:\Freelance\SamSung\QAA\checkinapp\CheckInApp\obj\Debug\CheckInApp.pdb
+D:\Freelance\SamSung\QAA\checkinapp\CheckInApp\obj\Debug\CheckInApp.csprojAssemblyReference.cache
