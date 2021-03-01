@@ -22,7 +22,7 @@ namespace CheckInApp.Controllers
         // GET: Course
         public ActionResult Index()
         {
-            return View(db.CourseInfors.ToList());
+            return View(db.CourseInfors.Where(x=>x.IsDisable != true).ToList());
         }
 
         // GET: Course/Details/5
@@ -60,7 +60,7 @@ namespace CheckInApp.Controllers
                     var date = new DatetimeService().CreateEnDateTimeFromVNdate(courseInfor.Datetime);
                     //insert course
                     var cou = new CourseInfor();
-                    cou.Name = ((RoomEnum)courseInfor.platformID).ToString() + courseInfor.Datetime.Replace("/",".");
+                    cou.Name = courseInfor.courseName+"."+((RoomEnum)courseInfor.platformID).ToString() + courseInfor.Datetime.Replace("/",".");
                     cou.PlatformID = courseInfor.platformID;
                     cou.Datetime = date;
                     cou.Status = true;
@@ -151,12 +151,43 @@ namespace CheckInApp.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             var ccrecord = db.ContentCourseRecords.Where(x => x.CourseID == id);
-            db.ContentCourseRecords.RemoveRange(ccrecord);
-            db.SaveChanges();
+            if (ccrecord.FirstOrDefault() != null)
+            {
+                db.ContentCourseRecords.RemoveRange(ccrecord);
+                db.SaveChanges();
+            }
+            var ctrecord = db.CourseTestRecords.Where(m => m.CourseID == id);
+            if (ctrecord.FirstOrDefault() != null)
+            {
+                db.CourseTestRecords.RemoveRange(ctrecord);
+                db.SaveChanges();
+            }
 
+            
+            var croom = db.RoomInfors.Where(i => i.CourseID == id);
+
+            if (croom.FirstOrDefault() != null)
+            {
+                foreach (var cro in croom)
+                {
+                    var cqp = db.CourseQuestionProcesses.Where(l => l.RoomID == cro.ID);
+                    if (cqp.FirstOrDefault() != null)
+                    {
+                        db.CourseQuestionProcesses.RemoveRange(cqp);
+                        db.SaveChanges();
+                    }
+                }
+                //remove coursequestionprocess
+                
+                db.RoomInfors.RemoveRange(croom);
+                db.SaveChanges();
+            }
             var courseInfor = db.CourseInfors.Find(id);
-            db.CourseInfors.Remove(courseInfor);
-            db.SaveChanges();
+            if (courseInfor != null)
+            {
+                db.CourseInfors.Remove(courseInfor);
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 

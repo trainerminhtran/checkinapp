@@ -18,6 +18,7 @@ namespace CheckInApp.ViewModels
         public string QRCode{ get; set; }
         public string RoomUrl{ get; set; }
         public Guid RoomGuid { get; set; }
+        public bool IsDisable { get; set; }
     }
 
 

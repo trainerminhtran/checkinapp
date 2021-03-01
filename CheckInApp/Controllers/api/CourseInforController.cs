@@ -90,7 +90,7 @@ namespace CheckInApp.Controllers
         [HttpGet]
         public IHttpActionResult GetCourses()
         {
-           var cou = _db.CourseInfors.Select(x=> new {Id = x.ID, Name = x.Name}).ToList();
+           var cou = _db.CourseInfors.Where(x=>x.IsDisable != true).Select(x=> new {Id = x.ID, Name = x.Name}).ToList();
             if (cou.Count == 0)
             {
                 return BadRequest();
@@ -169,7 +169,23 @@ namespace CheckInApp.Controllers
             }
 
         }
-        
+        [HttpPost]
+        [ActionName("courseDisable")]
+        public bool UpdateCourseDisable([FromBody] UpdateStatus ucs)
+        {
+            try
+            {
+                var content = _db.CourseInfors.Where(x => x.ID == ucs.id).FirstOrDefault();
+                content.IsDisable = ucs.sts;
+                _db.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
+        }
         [HttpPost]
         public bool VenueStatus([FromBody] UpdateStatus ucs)
         {
@@ -194,6 +210,23 @@ namespace CheckInApp.Controllers
             {
                 var room = _db.RoomInfors.Where(x => x.ID == ucs.id).FirstOrDefault();
                 room.Status = ucs.sts;
+                _db.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+
+        [HttpPost]
+        public bool RoomDisable([FromBody] UpdateStatus ucs)
+        {
+            try
+            {
+                var room = _db.RoomInfors.Where(x => x.ID == ucs.id).FirstOrDefault();
+                room.IsDisable = ucs.sts;
                 _db.SaveChanges();
                 return true;
             }

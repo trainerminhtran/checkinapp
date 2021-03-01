@@ -10,6 +10,7 @@ namespace Checkinapp.ViewModels
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string courseName { get; set; }
         public string Datetime { get; set; }
         public int platformID { get; set; }
         public int TestId { get; set; }

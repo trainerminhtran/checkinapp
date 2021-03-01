@@ -311,3 +311,16 @@ D:\Freelance\SamSung\QAA\checkinapp\CheckInApp\obj\Debug\CheckInApp.csproj.CoreC
 D:\Freelance\SamSung\QAA\checkinapp\CheckInApp\obj\Debug\CheckInApp.csproj.CopyComplete
 D:\Freelance\SamSung\QAA\checkinapp\CheckInApp\obj\Debug\CheckInApp.dll
 D:\Freelance\SamSung\QAA\checkinapp\CheckInApp\obj\Debug\CheckInApp.pdb
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\Microsoft.Owin.dll
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\Microsoft.Owin.Security.dll
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\Owin.dll
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\Microsoft.AspNet.SignalR.Core.pdb
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\Microsoft.AspNet.SignalR.SystemWeb.pdb
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\Microsoft.Owin.xml
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\Microsoft.Owin.Security.xml

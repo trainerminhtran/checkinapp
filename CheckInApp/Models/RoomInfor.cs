@@ -33,6 +33,7 @@ namespace CheckInApp.Models
         public Nullable<int> NoDaysGetGift { get; set; }
         public System.DateTime Datetime { get; set; }
         public System.Guid Guid { get; set; }
+        public Nullable<bool> IsDisable { get; set; }
     
         public virtual CourseInfor CourseInfor { get; set; }
         public virtual StoreInfor StoreInfor { get; set; }
