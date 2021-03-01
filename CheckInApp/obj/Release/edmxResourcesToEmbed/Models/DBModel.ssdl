@@ -24,10 +24,12 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="AnswerID" Type="int" Nullable="false" />
     <Property Name="QuesionID" Type="int" Nullable="false" />
+    <Property Name="CheckinInforID" Type="bigint" />
     <Property Name="AnswerOption" Type="char" MaxLength="10" />
+    <Property Name="TimeScore" Type="int" Nullable="false" />
     <Property Name="Datetime" Type="datetime" />
+    <Property Name="RoomID" Type="int" />
   </EntityType>
   <EntityType Name="AreaInfor">
     <Key>
@@ -73,6 +75,7 @@
     <Property Name="IsDoorGift" Type="bit" />
     <Property Name="IsRecheckAnswer" Type="bit" />
     <Property Name="Datetime" Type="datetime" Nullable="false" />
+    <Property Name="CountingScore" Type="int" />
   </EntityType>
   <EntityType Name="CityRuralInfor">
     <Key>
@@ -117,6 +120,17 @@
     <Property Name="PlatformID" Type="int" Nullable="false" />
     <Property Name="Datetime" Type="datetime" Nullable="false" />
     <Property Name="Status" Type="bit" />
+  </EntityType>
+  <EntityType Name="CourseQuestionProcess">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="QuestionID" Type="int" Nullable="false" />
+    <Property Name="ProcessID" Type="int" Nullable="false" />
+    <Property Name="RoomID" Type="int" Nullable="false" />
+    <Property Name="QuestionOrder" Type="int" Nullable="false" />
+    <Property Name="TimeEnd" Type="bigint" />
   </EntityType>
   <EntityType Name="CourseTestRecord">
     <Key>
@@ -248,7 +262,7 @@
     <Property Name="CatID" Type="int" Nullable="false" />
     <Property Name="LevelID" Type="int" Nullable="false" />
     <Property Name="QuestionContent" Type="nvarchar(max)" />
-    <Property Name="TrueChoose" Type="nchar" MaxLength="10" />
+    <Property Name="TrueChoose" Type="varchar" MaxLength="10" />
     <Property Name="Choose1" Type="nvarchar(max)" />
     <Property Name="Choose2" Type="nvarchar(max)" />
     <Property Name="Choose3" Type="nvarchar(max)" />
@@ -325,6 +339,7 @@
     <Property Name="TestID" Type="int" Nullable="false" />
     <Property Name="QuestionID" Type="int" Nullable="false" />
     <Property Name="Status" Type="bit" />
+    <Property Name="OrderNumber" Type="int" />
   </EntityType>
   <EntityType Name="TrainerRoomRecord">
     <Key>
@@ -346,7 +361,7 @@
     <Property Name="Status" Type="bit" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" />
     <Property Name="EmployeeID" Type="int" Nullable="false" />
-    <Property Name="PermissionID" Type="int" />
+    <Property Name="PermissionID" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="FK_AccountInfor_ChannelInfor">
     <End Role="ChannelInfor" Type="Self.ChannelInfor" Multiplicity="1" />
@@ -372,15 +387,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_AnswerRecord_AnswerInfor">
-    <End Role="AnswerInfor" Type="Self.AnswerInfor" Multiplicity="1" />
+  <Association Name="FK_AnswerRecord_CheckinInfor">
+    <End Role="CheckinInfor" Type="Self.CheckinInfor" Multiplicity="0..1" />
     <End Role="AnswerRecord" Type="Self.AnswerRecord" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="AnswerInfor">
+      <Principal Role="CheckinInfor">
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="AnswerRecord">
-        <PropertyRef Name="AnswerID" />
+        <PropertyRef Name="CheckinInforID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -817,7 +832,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_UserInfor_PermissionInfor">
-    <End Role="PermissionInfor" Type="Self.PermissionInfor" Multiplicity="0..1" />
+    <End Role="PermissionInfor" Type="Self.PermissionInfor" Multiplicity="1" />
     <End Role="UserInfor" Type="Self.UserInfor" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PermissionInfor">
@@ -854,6 +869,7 @@
     <EntitySet Name="ContentInfor" EntityType="Self.ContentInfor" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ContentModelRecord" EntityType="Self.ContentModelRecord" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CourseInfor" EntityType="Self.CourseInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CourseQuestionProcess" EntityType="Self.CourseQuestionProcess" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CourseTestRecord" EntityType="Self.CourseTestRecord" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DistrictInfor" EntityType="Self.DistrictInfor" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EmployeeInfor" EntityType="Self.EmployeeInfor" Schema="dbo" store:Type="Tables" />
@@ -885,8 +901,8 @@
       <End Role="CheckinInfor" EntitySet="CheckinInfor" />
       <End Role="AnswerInfor" EntitySet="AnswerInfor" />
     </AssociationSet>
-    <AssociationSet Name="FK_AnswerRecord_AnswerInfor" Association="Self.FK_AnswerRecord_AnswerInfor">
-      <End Role="AnswerInfor" EntitySet="AnswerInfor" />
+    <AssociationSet Name="FK_AnswerRecord_CheckinInfor" Association="Self.FK_AnswerRecord_CheckinInfor">
+      <End Role="CheckinInfor" EntitySet="CheckinInfor" />
       <End Role="AnswerRecord" EntitySet="AnswerRecord" />
     </AssociationSet>
     <AssociationSet Name="FK_AnswerRecord_QuestionInfor" Association="Self.FK_AnswerRecord_QuestionInfor">

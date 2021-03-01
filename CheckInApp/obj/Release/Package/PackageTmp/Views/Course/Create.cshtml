@@ -60,6 +60,11 @@
                             <select id="ddlContent" class="form-control select2" name="contentIDs" multiple required style="width: 100%;">
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label>Bài test:</label>
+                            <select id="ddltestId" class="form-control" name="TestId" required style="width: 100%;">
+                            </select>
+                        </div>
                     </div>
                     <!-- /.card-body -->
 
@@ -104,9 +109,30 @@
         $(document).ready(function () {
             GetPlatform();
             GetContents();
+            GetTestInfo();
         });
 
+        function GetTestInfo() {
 
+            var url = "/api/courseinfor/GetTestInfo";
+            var markup = "";
+            $.ajax({
+                url: url,
+                cache: false,
+                success: function (data) {
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Id + ">" + data[x].Name + "</option>";
+                    }
+                    $("#ddltestId").html(markup).show();
+                },
+                error: function (response) {
+                    bootoast.toast({
+                        message: response,
+                        type: 'danger'
+                    });
+                }
+            });
+        }
 
         function GetPlatform() {
 

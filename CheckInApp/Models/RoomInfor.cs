@@ -17,8 +17,8 @@ namespace CheckInApp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public RoomInfor()
         {
-            this.CheckinInfors = new HashSet<CheckinInfor>();
             this.TrainerRoomRecords = new HashSet<TrainerRoomRecord>();
+            this.CheckinInfors = new HashSet<CheckinInfor>();
         }
     
         public int ID { get; set; }
@@ -34,11 +34,11 @@ namespace CheckInApp.Models
         public System.DateTime Datetime { get; set; }
         public System.Guid Guid { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CheckinInfor> CheckinInfors { get; set; }
         public virtual CourseInfor CourseInfor { get; set; }
         public virtual StoreInfor StoreInfor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TrainerRoomRecord> TrainerRoomRecords { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CheckinInfor> CheckinInfors { get; set; }
     }
 }

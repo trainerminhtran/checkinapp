@@ -33,10 +33,10 @@ namespace CheckInApp.Models
         public Nullable<System.DateTime> Datetime { get; set; }
         public Nullable<bool> Status { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AnswerRecord> AnswerRecords { get; set; }
         public virtual CatInfor CatInfor { get; set; }
         public virtual LevelInfor LevelInfor { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AnswerRecord> AnswerRecords { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TestQuestionRecord> TestQuestionRecords { get; set; }
     }

@@ -17,6 +17,7 @@ namespace CheckInApp.ViewModels
         public bool Status { get; set; }
         public string QRCode{ get; set; }
         public string RoomUrl{ get; set; }
+        public Guid RoomGuid { get; set; }
     }
 
 

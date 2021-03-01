@@ -60,7 +60,25 @@
     <Reference Include="EPPlus, Version=5.4.2.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>packages\EPPlus.5.4.2\lib\net45\EPPlus.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.SignalR.Core.2.4.1\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.SignalR.SystemWeb.2.4.1\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Owin.Host.SystemWeb.2.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="QRCoder, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
@@ -174,14 +192,19 @@
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\ExportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TestInfoController.cs" />
+    <Compile Include="Controllers\QuestionController.cs" />
+    <Compile Include="Controllers\QuizManagerController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\TrainerController.cs" />
     <Compile Include="Controllers\UserCheckinController.cs" />
+    <Compile Include="Controllers\QuizController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VenueController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\BaseImporter.cs" />
     <Compile Include="Models\AccountInfor.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
@@ -219,6 +242,9 @@
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CourseInfor.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CourseQuestionProcess.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CourseTestRecord.cs">
@@ -306,11 +332,16 @@
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuizHub.cs" />
     <Compile Include="Services\CustomSercurity.cs" />
     <Compile Include="Services\Datetimeservice.cs" />
     <Compile Include="Services\qrcodeservice.cs" />
     <Compile Include="Services\RoomEnum.cs" />
     <Compile Include="Services\UserService.cs" />
+    <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\TestInfoModel.cs" />
+    <Compile Include="ViewModels\QuestionModel.cs" />
+    <Compile Include="ViewModels\QuizModel.cs" />
     <Compile Include="ViewModels\Config.cs" />
     <Compile Include="ViewModels\CourseViewModel.cs" />
     <Compile Include="ViewModels\ContentViewModel.cs" />
@@ -329,6 +360,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Quiz.css" />
     <Content Include="dist\bootoast.min.css" />
     <Content Include="dist\bootoast.min.js" />
     <Content Include="dist\css\adminlte.css" />
@@ -2418,6 +2450,7 @@
     <Content Include="plugins\bootstrap-datepicker-1.9.0-dist\css\bootstrap-datepicker.standalone.css.map" />
     <Content Include="plugins\bootstrap-datepicker-1.9.0-dist\css\bootstrap-datepicker3.css.map" />
     <Content Include="plugins\bootstrap-datepicker-1.9.0-dist\css\bootstrap-datepicker3.standalone.css.map" />
+    <Content Include="Content\Template\TemplateImportQuestion.xlsx" />
     <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -2425,11 +2458,15 @@
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.signalR-2.4.1.js" />
+    <Content Include="Scripts\jquery.signalR-2.4.1.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\counter.js" />
+    <Content Include="Scripts\Quiz.js" />
     <Content Include="UploadedFiles\DatabaseModeling.v.1.4.jpeg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -2478,9 +2515,21 @@
     <Content Include="Views\User\UnAuthorized.cshtml" />
     <Content Include="Views\Room\Detailprint.cshtml" />
     <Content Include="Views\Room\Edit.cshtml" />
+    <Content Include="Views\Quiz\Index.cshtml" />
+    <Content Include="Views\QuizManager\Index.cshtml" />
+    <Content Include="Views\QuizManager\_ListQuiz.cshtml" />
+    <Content Include="Views\Quiz\_ListQuiz.cshtml" />
+    <Content Include="Views\QuizManager\_ListAns.cshtml" />
+    <Content Include="Views\Quiz\_ListAns.cshtml" />
+    <Content Include="Views\Question\Index.cshtml" />
+    <Content Include="Views\Question\Create.cshtml" />
+    <Content Include="Views\Question\Delete.cshtml" />
+    <Content Include="Views\TestInfo\Index.cshtml" />
+    <Content Include="Views\TestInfo\Create.cshtml" />
+    <Content Include="Views\TestInfo\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\FileUploads\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Checkin\" />
     <Folder Include="Views\Export\" />

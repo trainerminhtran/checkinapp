@@ -77,6 +77,14 @@ namespace CheckInApp.Controllers
                     }
 
                     db.SaveChanges();
+
+                    db.CourseTestRecords.Add(new CourseTestRecord
+                    {
+                        TestID = courseInfor.TestId,
+                        CourseID = cou.ID,
+                        Status = true,
+                    });
+                    db.SaveChanges();
                 }
                 catch (Exception e)
                 {

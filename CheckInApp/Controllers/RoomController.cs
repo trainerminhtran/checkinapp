@@ -37,7 +37,8 @@ namespace CheckInApp.Controllers
                     Name = r.Name,
                     QRCode = _qr.QRCodeView(_qr.GetQRCode(_qr.GetUrlByRoomurl(r.RoomUrl))),
                     TrainerName = _userService.GetTrainerString(r.TrainerRoomRecords.Select(x => x.UserInfor.EmployeeInfor.Fullname)),
-                    RoomUrl = _qr.GetUrlByRoomurl(r.RoomUrl)
+                    RoomUrl = _qr.GetUrlByRoomurl(r.RoomUrl),
+                    RoomGuid = r.Guid
                 };
 
                 var sto = _db.StoreInfors.FirstOrDefault(x => x.ID == r.VenueID);
@@ -92,6 +93,22 @@ namespace CheckInApp.Controllers
                 var trr = tcvm.TrainerID.Select(tc => new TrainerRoomRecord { RoomID = ro.ID, TrainerID = tc }).ToList();
                 _db.TrainerRoomRecords.AddRange(trr);
                 _db.SaveChanges();
+
+                #region gen sắn bộ test
+                var ct = _db.CourseTestRecords.FirstOrDefault(x => x.CourseID == cour.ID);
+                var tqr = _db.TestQuestionRecords.Where(x => x.TestID == ct.TestID).ToList();
+                var listQP = tqr.Select(x => new CourseQuestionProcess
+                {
+                    ProcessID = (int)ProcessIDEnum.Create,
+                    QuestionID = x.QuestionID,
+                    QuestionOrder = x.OrderNumber.GetValueOrDefault(),
+                    RoomID = ro.ID,
+                    TimeEnd = 0,
+                }).ToList();
+
+                _db.CourseQuestionProcesses.AddRange(listQP);
+                _db.SaveChanges();
+                #endregion
             }
             catch (Exception ex)
             {
@@ -177,6 +194,23 @@ namespace CheckInApp.Controllers
                 }
 
                 _db.SaveChanges();
+
+                #region gen sắn bộ test
+                _db.CourseQuestionProcesses.RemoveRange(_db.CourseQuestionProcesses.Where(x=>x.RoomID == GetRoomById.ID));
+                var ct = _db.CourseTestRecords.FirstOrDefault(x => x.CourseID == tcvm.CourseID);
+                var tqr = _db.TestQuestionRecords.Where(x => x.TestID == ct.TestID).ToList();
+                var listQP = tqr.Select(x => new CourseQuestionProcess
+                {
+                    ProcessID = (int)ProcessIDEnum.Create,
+                    QuestionID = x.QuestionID,
+                    QuestionOrder = x.OrderNumber.GetValueOrDefault(),
+                    RoomID = GetRoomById.ID,
+                    TimeEnd = 0,
+                }).ToList();
+
+                _db.CourseQuestionProcesses.AddRange(listQP);
+                _db.SaveChanges();
+                #endregion
 
             }
             catch (Exception ex)

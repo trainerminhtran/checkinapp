@@ -585,7 +585,7 @@
       var button = buttons[i];
       var input = button.querySelector(Selector$1.INPUT);
 
-      if (input.checked || input.hasAttribute('checked')) {
+      if (input.checked) {
         button.classList.add(ClassName$1.ACTIVE);
       } else {
         button.classList.remove(ClassName$1.ACTIVE);
