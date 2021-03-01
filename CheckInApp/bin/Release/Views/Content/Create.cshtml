@@ -1,0 +1,137 @@
+﻿@model Checkinapp.ViewModels.UploadContentViewModel
+@{
+    ViewBag.Title = "Thêm bài học";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Styles{
+    <link rel="stylesheet" href="../../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="../../plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="../../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <!-- Bootstrap4 Duallistbox -->
+    <link rel="stylesheet" href="../../plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+
+}
+<div class="container-fluid">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-6">
+            <!-- general form elements -->
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Thêm bài học</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                @using (Html.BeginForm("Create", "Content", FormMethod.Post, new { enctype = "multipart/form-data",@id = "formID" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="card-body">
+                        @if (TempData["Success"] != null)
+                        {
+                            @Html.ValidationSummary(false, "", new {@class = "text-success" })
+
+                        }
+                        else
+                        {
+                            @Html.ValidationSummary(false, "", new {@class = "text-danger"})
+
+                        }
+                        <div class="form-group">
+                            <label>Nhóm sản phẩm</label>
+                            <select id="ddlCat" class="form-control select2" name="catID" onchange="javascript:GetModel(this.value)" required style="width: 100%;">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Sản phẩm</label>
+                            <select id="ddlModel" class="form-control select2" name="modelIds" multiple required style="width: 100%;">
+                            </select>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputFile">File bài học</label>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" name="file" class="custom-file-input" id="exampleInputFile">
+                                    <label class="custom-file-label" for="exampleInputFile">Chọn file</label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                }
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+</div>
+@section Scripts{
+
+
+    <script src="../../plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+    <!-- Select2 -->
+    <script src="../../plugins/select2/js/select2.full.min.js"></script>
+    <!-- Bootstrap4 Duallistbox -->
+    <script src="../../plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+    <!-- InputMask -->
+    <script src="../../plugins/moment/moment.min.js"></script>
+    <script src="../../plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+    <script>
+        $(function() {
+            //Initialize Select2 Elements
+            $('#ddlModel').select2({ placeholder: 'Chọn một/nhiều sản phẩm' });
+            $('#ddlCat').select2({ placeholder: 'Chọn một Cat' });
+          
+        })
+    </script>
+    <script language="javascript" type="text/javascript">
+        $(document).ready(function () {
+            GetCat();
+            GetModel(1);
+            bsCustomFileInput.init();
+        });
+
+        function GetCat() {
+            var url = "/api/courseinfor/GetCatId/";
+            $.ajax({
+                url: url,
+                cache: false,
+                success: function (data) {
+                    var markup = "";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Id + ">" + data[x].Name + "</option>";
+                    }
+                    $("#ddlCat").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+        }
+
+        function GetModel(_catId) {
+            var url = "/api/courseinfor/GetModelByCatId/";
+            $.ajax({
+                url: url,
+                data: { catID: _catId },
+                cache: false,
+                success: function (data) {
+                    var markup = "";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Id + ">" + data[x].Name + "</option>";
+                    }
+                    $("#ddlModel").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+        }
+    </script>
+}

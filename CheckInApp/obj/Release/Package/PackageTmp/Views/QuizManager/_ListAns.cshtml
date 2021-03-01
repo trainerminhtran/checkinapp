@@ -1,0 +1,39 @@
+﻿@model List<Checkinapp.ViewModels.TopResultView>
+<div class="modal-body">
+    <header>
+        <h4 class="text-center">Bảng điểm hiện tại</h4>
+    </header>
+    <table>
+        <thead>
+            <tr>
+                <th>Thứ tự</th>
+                <th>Tên</th>
+                <th>Đúng/All</th>
+                <th>Điểm</th>
+            </tr>
+        </thead>
+        <tbody>
+        @if (Model.Any())
+        {
+            var indexRank = 1;
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td class="rank">@indexRank</td>
+                    <td class="team">@item.FullName</td>
+                    <td class="points">@item.TrueAns/@item.Total</td>
+                    <td class="points">@item.Score</td>
+                </tr>
+               {
+                    indexRank++;
+
+                }
+                
+            }
+        }
+        </tbody>
+    </table>
+</div>
+<div class="modal-footer text-muted">
+    <button type="button" class="btn btn-default" onclick="NextQuiz()">Câu hỏi tiếp theo</button>
+</div>

@@ -1,0 +1,179 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Styles{
+    <link href="~/Content/Quiz.css" rel="stylesheet" />
+}
+@model Checkinapp.ViewModels.QuizManagerView
+@if (Model != null)
+{
+    if (Model.Process == (int)CheckInApp.Services.ProcessIDEnum.Finish)
+    {
+        <div class="container-fluid quiz-manager">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="display: block">
+                        <h4 class="text-center">@Model.TestName</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Không tìm thấy thông tin bài test</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="container-fluid quiz-manager">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="display: block">
+                        <h4 class="text-center">@Model.TestName</h4>
+                    </div>
+                    <div class="modal-header">
+                        <div class="row col">
+                            <div class="col-8 text-center"></div>
+                            <div class="col-4 text-right">
+                                <button class="btn btn-primary" id="countJoin" data-count="0" type="button">
+                                    0
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <header>
+                            <h4 class="text-center">Danh Sách tham gia</h4>
+                        </header>
+                        <table id="list-join-data">
+                            <thead>
+                                <tr>
+                                    <th>Thứ tự</th>
+                                    <th>Tên</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer text-muted">
+                        <button type="button" class="btn btn-default" onclick="StartQuiz()">Bắt đầu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+}
+
+@section Scripts{
+    <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script>
+        var chat = $.connection.quizHub;
+        $(function() {
+            chat.client.addNewMessageToGroup = function(name, message) {
+                if (name == "JoinRoom") {
+                    var roominfo = JSON.parse(message);
+                    if (roominfo.RoomId == "@Model.RoomId") {
+                        var added = 0;
+                        $("#list-join-data > tbody > tr").each(function() {
+                            if (parseInt($(this).attr("data-user")) == parseInt(roominfo.UserId)) {
+                                added = 1;
+                            }
+                        });
+                        if (added == 0) {
+                            var curent = $("#countJoin").attr("data-count");
+                            var next = parseInt(parseInt(curent) + 1);
+                            $("#countJoin").attr("data-count", next);
+                            $("#countJoin").html(next);
+                            var html = "<tr data-user='" +
+                                roominfo.UserId +
+                                "'><td class='rank'>" +
+                                next +
+                                "</td><td class='team'>" +
+                                roominfo.FullName +
+                                "</td></tr>";
+                            $("#list-join-data tbody").append(html);
+                        }
+                    }
+                }
+            };
+            $.connection.hub.start(function() {
+                chat.server.group("RoomA");
+            });
+            $.connection.hub.start().done(function() {
+                @if (Model.Process == (int) CheckInApp.Services.ProcessIDEnum.Process)
+                {
+                    @Html.Raw("StartQuiz();")
+                }
+            });
+
+        });
+
+    </script>
+    <script>
+        let pageId = 2;
+    </script>
+    <script src="~/Scripts/counter.js"></script>
+    <script>
+        var StartQuiz = function() {
+            var url = "@Url.Action("_ListQuiz", new {TestId = Model.TestId, RoomId = Model.RoomId})";
+            url = url.replace("amp;", '')
+            $.get(url,
+                function(data) {
+                    if (data.length > 1) {
+                        $(".quiz-manager .modal-content").html(data);
+                        var StartObj = {};
+                        StartObj["TestId"] = @Model.TestId;
+                        StartObj["RoomId"] = "@Model.RoomId";
+                        var dataPush = JSON.stringify(StartObj);
+                        chat.server.group("Start", dataPush);
+                        counter_init("#counters_admin");
+                    }
+                });
+        }
+        var NextQuiz = function() {
+            StartQuiz();
+        }
+        var LoadTop = function() {
+            var url = "@Url.Action("_ListAns", new {TestId = Model.TestId, RoomId = Model.RoomId})";
+            url = url.replace("amp;", '')
+            $.get(url,
+                function(data) {
+                    if (data.length > 1) {
+                        $(".quiz-manager .modal-content").html(data);
+                        var StartObj = {};
+                        StartObj["TestId"] = @Model.TestId;
+                        StartObj["RoomId"] = "@Model.RoomId";
+                        var dataPush = JSON.stringify(StartObj);
+                        chat.server.group("ShowTop", dataPush);
+                    }
+                });
+        }
+        var TopResult = function() {
+            $.ajax({
+                url: '@Url.Action("ResultTop")',
+                cache: false,
+                type: "POST",
+                data: {
+                    "RoomId": '@Model.RoomId',
+                    "TestId": @Model.TestId,
+                    "QuestionId": $("#QuestionId").val(),
+                },
+                success: function(data) {
+                    LoadTop();
+                },
+                error: function(response) {
+                    bootoast.toast({
+                        message: response,
+                        type: 'danger'
+                    });
+                }
+            });
+        }
+        @if (Model.Process == (int) CheckInApp.Services.ProcessIDEnum.Process)
+        {
+            @Html.Raw("StartQuiz();")
+        }
+    </script>
+
+}

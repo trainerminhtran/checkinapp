@@ -1,0 +1,25 @@
+﻿@model CheckInApp.Models.QuestionInfor
+
+@{
+    ViewBag.Title = "Xóa câu hỏi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h3>Bạn có muốn xóa câu hỏi này không?</h3>
+<div>
+    @Html.ValidationSummary(false, "", new {@class = "text-danger"})
+    <dl class="dl-horizontal">
+        <dt>
+           @Model.QuestionContent
+        </dt>
+    </dl>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default"/> |
+            @Html.ActionLink("Back to List", "Index","Question")
+        </div>
+    }
+</div>
