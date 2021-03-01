@@ -1,0 +1,35 @@
+﻿@model CheckInApp.Models.VenueInfor
+
+@{
+    ViewBag.Title = "Xóa hội trường";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h3>Bạn có muốn xóa khóa học này không?</h3>
+<div>
+    @Html.ValidationSummary(false, "", new {@class = "text-danger"})
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProvinceInfor.NameVN)
+        </dd>   
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default"/> |
+            @Html.ActionLink("Back to List", "Index","Venue")
+        </div>
+    }
+</div>

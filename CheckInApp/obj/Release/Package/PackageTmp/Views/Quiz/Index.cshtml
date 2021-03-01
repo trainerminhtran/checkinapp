@@ -1,0 +1,126 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Styles{
+    <link href="~/Content/Quiz.css" rel="stylesheet" />
+}
+@model Checkinapp.ViewModels.QuizView
+@if (Model != null)
+{
+    <div class="container-fluid quiz-manager">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="loadbar">
+                        <div id="circle">
+                            <div class="loader">
+                                <div class="loader">
+                                    <div class="loader">
+                                        <div class="loader">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-dack">
+                            <div class="animate one">
+                                <span>C</span><span>h</span><span>u</span><span>ẩ</span><span>n</span> &nbsp;
+                                <span>b</span><span>ị</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@section Scripts{
+    <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script>
+        $(function() {
+            var chat = $.connection.quizHub;
+            chat.client.addNewMessageToGroup = function(name, message) {
+                if (name == "Start") {
+                    var roominfo = JSON.parse(message);
+                    if (roominfo.TestId == "@Model.TestId" && roominfo.RoomId == "@Model.RoomId") {
+                        LoadQuestion();
+                    }
+                } if (name == "ShowTop") {
+                    var roominfo = JSON.parse(message);
+                    if (roominfo.TestId == "@Model.TestId" && roominfo.RoomId == "@Model.RoomId") {
+                        LoadTop();
+                    }
+                }
+            };
+            $.connection.hub.start(function() {
+                chat.server.group("RoomA");
+            });
+            $.connection.hub.start().done(function() {
+                //chat.server.group("RoomA", "Join");
+            });
+        });
+        var ChooseAns = function (el) {
+            $('#loadbar').show();
+            $(".quiz .ans").each(function() {
+                if (parseInt($(this).attr("data-choose")) == el) {
+                    $(this).addClass("btn-dark");
+                } else {
+                    $(this).removeClass("btn-primary btn-danger btn-warning btn-success").addClass("btn-secondary");
+                }
+            });
+            $('#answer').fadeIn();
+            $.ajax({
+                url: '@Url.Action("Ansewr")',
+                cache: false,
+                type: "POST",
+                data: {
+                    "RoomId": '@Model.RoomId',
+                    "TestId": @Model.TestId,
+                    "QuestionId": $("#QuestionId").val(),
+                    "Choose": el,
+                    "TimeAns": $("#AnsTime").val()
+                },
+                success: function(data) {
+                    console.log(data);
+                },
+                error: function(response) {
+                    bootoast.toast({
+                        message: response,
+                        type: 'danger'
+                    });
+                }
+            });
+        }
+        var LoadQuestion = function() {
+            var url = "@Url.Action("_ListQuiz", new {TestId = Model.TestId, RoomId = Model.RoomId})";
+            url = url.replace("amp;", '')
+            $.get(url,
+                function(data) {
+                    if (data.length > 1) {
+                        $(".quiz-manager .modal-content").html(data);
+                        counter_init("#counters_1");
+                        //makeProgress();
+                    }
+                });
+        }
+        LoadQuestion();
+        var LoadTop = function() {
+            var url = "@Url.Action("_ListAns", new {TestId = Model.TestId, RoomId = Model.RoomId})";
+            url = url.replace("amp;", '')
+            $.get(url,
+                function(data) {
+                    if (data.length > 1) {
+                        $(".quiz-manager .modal-content").html(data);
+                    }
+                });
+        }
+
+    </script>
+    <script>
+        let pageId = 1;
+    </script>
+    <script src="~/Scripts/Quiz.js"></script>
+    <script src="~/Scripts/counter.js"></script>
+}
+}

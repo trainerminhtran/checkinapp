@@ -1,0 +1,204 @@
+﻿@model CheckInApp.ViewModels.UserCheckinViewModel
+
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml"; ;
+}
+<!-- Profile Image -->
+<div class="card card-primary card-outline col-lg-5 col-md-7">
+    <div class="card-body box-profile">
+
+        <input type="hidden" value="@Model.message" id="message" />
+        <h3 class="profile-username text-center">@Model.FullName</h3>
+
+        <p class="text-muted text-center" style="margin-bottom: 0px;">@Model.PositionName</p>
+        <p class="text-muted text-center">@Model.UserTel</p>
+
+        <ul class=" card-primary  card-outline list-group list-group-unbordered mb-3">
+
+            <li class="list-group-item">
+                <b>Khóa học: </b> <a class="float-right" style="width: 70%; text-align: right;">@Model.CourseName</a>
+            </li>
+
+            <li class="list-group-item">
+                <b>Ngày: </b> <a class="float-right" style="width: 70%; text-align: right;">@Model.Date</a>
+            </li>
+            <li class="list-group-item">
+                <b>Trainer: </b> <a class="float-right" style="width: 70%; text-align: right;">@Model.TrainerName</a>
+            </li>
+
+            <li class="list-group-item">
+                <b>Tại: </b> <a class="float-right" style="width: 70%; text-align: right;">@Model.Venue</a>
+            </li>
+            @if (ViewBag.isCheckin)
+            {
+                <li class="list-group-item">
+                    <b>Làm bài tập: </b> <div class="float-right" style="width: 70%; text-align: right;"><a href="@Url.Action("Index","Quiz",new {RoomId = Model.RoomGuid})" class="float-right" style="background-color: aqua;cursor: pointer;padding: 5px 8px;color: white;border-radius: 5px;">Vào làm</a></div>
+                </li>
+            }
+
+            <li class="list-group-item">
+                <b>Nhận quà tặng xuất sắc:</b>
+                <a class="float-right" style="width: 40%; text-align: right;">
+                    @if (Model.IsMotivationGift)
+                    {
+                        <input type="checkbox" name="my-checkbox" checked data-bootstrap-switch data-off-color="danger" checkinId="@Model.checkinId" data-on-color="success" data-on-text="Đã nhận" data-off-text="No">
+                    }
+                    else
+                    {
+                        <input type="checkbox" name="my-checkbox" data-bootstrap-switch data-off-color="danger" checkinId="@Model.checkinId" data-on-color="success" data-on-text="Đã nhận" data-off-text="No">
+
+                    }
+                </a>
+            </li>
+            <li class="list-group-item">
+                @if (!ViewBag.isCheckin)
+                {
+                    using (Html.BeginForm(actionName: "Index", controllerName: "UserCheckin", method: FormMethod.Post, htmlAttributes: new { enctype = "multipart/form-data", @id = "formID" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="UserId" value="@Model.Id" class="output">
+                        <input type="hidden" name="RoomId" value="@Model.RoomId" class="output">
+                        <div class="form-group" id="smoothed">
+
+                            <ul class="sigNav">
+                                <li class="drawIt"><a style="background-color: #58a9ff;" href="#draw-it">Điểm danh:</a></li>
+                                <li class="clearButton"><a href="#clear">Clear</a></li>
+                            </ul>
+                            <div class="sig sigWrapper" style="height: auto; display: block;">
+                                <div class="typed"></div>
+                                <canvas id="canvas" class="pad" width="100" height="150px"></canvas>
+                                <input type="hidden" name="Signature" id="canvassign" class="">
+                                <img src="" id="tempImg" />
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+
+                        <div class="social-auth-links text-center mb-3">
+
+                            <input id="submit_button" class="btn btn-block btn-primary" type="button" value="Ký tên" />
+                        </div>
+                        <!-- /.social-auth-links -->
+                    }
+                }
+            </li>
+        </ul>
+    </div>
+    <!-- /.card-body -->
+</div>
+<!-- /.card -->
+<!-- /.login-box -->
+@section Scripts{
+    <script>
+        $(function() {
+            const api = $('#smoothed').signaturePad({
+                drawOnly: true,
+                drawBezierCurves: true,
+                lineTop: 200,
+                variableStrokeWidth: true,
+                penWidth: 4
+            });
+            $("#submit_button").click(function() {
+                if (api.validateForm()) {
+
+                    let image = document.getElementById("canvas").toDataURL("image/png");
+                    //$('#tempImg').attr('src', image);
+
+                    image = image.replace('data:image/png;base64,', '');
+                    $('#canvassign').val(image);
+                    $('form#formID').submit();
+
+                }
+                return false;
+            });
+
+            const mes = $('#message').val();
+            if (mes.length > 0) {
+                if (mes.indexOf("công") != -1) {
+                    bootoast.toast({
+                        message: mes,
+                        type: 'success'
+                    });
+                    $("#submit_button").prop("disabled", true);
+                } else {
+                    bootoast.toast({
+                        message: mes,
+                        type: 'danger'
+                    });
+                }
+            }
+
+            $("input[data-bootstrap-switch]").each(function() {
+                $(this).bootstrapSwitch('state', $(this).prop('checked'));
+            });
+
+
+        });
+
+        $('input[data-bootstrap-switch]').on('switchChange.bootstrapSwitch',
+            function(e, data) {
+                if (confirm('Bạn xác nhận có nhận quà này?')) {
+                    var id = $(this).attr("checkinId");
+                    $(this).bootstrapSwitch('state', !data, true);
+                    var $obj = $(this);
+                    $.ajax({
+                        type: "POST",
+                        cache: false,
+                        dataType: "json",
+                        context: this,
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify({ "id": id, "sts": data }),
+                        url: "/api/UserInfor/UpdateMotivationGiftStatus",
+                        success: function(response) {
+                            if (response) {
+                                bootoast.toast({
+                                    message: 'Cập nhật thành công',
+                                    type: 'success'
+                                });
+                                $obj.bootstrapSwitch('state', data, true);
+                            } else {
+                                bootoast.toast({
+                                    message: 'Cập nhật thất bại',
+                                    type: 'danger'
+                                });
+                            }
+                        },
+                        error: function(response) {
+                            bootoast.toast({
+                                message: response,
+                                type: 'danger'
+                            });
+                        }
+                    });
+                } else {
+                    $(this).bootstrapSwitch('state', !data, true);
+                }
+            });
+        (function() {
+            var canvas = document.getElementById('canvas'),
+                context = canvas.getContext('2d');
+
+            // resize the canvas to fill browser window dynamically
+            window.addEventListener('resize', resizeCanvas, false);
+
+            function resizeCanvas() {
+                var winwidth = window.innerWidth;
+                if (winwidth >= 650) {
+                    canvas.width = window.innerWidth * 0.35;
+                } else {
+                    canvas.width = window.innerWidth * 0.8;
+                }
+                /**
+                 * Your drawings need to be inside this function otherwise they will be reset when
+                 * you resize the browser window and the canvas goes will be cleared.
+                 */
+                drawStuff();
+            }
+
+            resizeCanvas();
+
+            function drawStuff() {
+                // do your drawing stuff here
+            }
+        })();
+    </script>
+}
