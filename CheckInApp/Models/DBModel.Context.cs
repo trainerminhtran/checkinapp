@@ -49,7 +49,6 @@ namespace CheckInApp.Models
         public virtual DbSet<PlatformInfor> PlatformInfors { get; set; }
         public virtual DbSet<PositionInfor> PositionInfors { get; set; }
         public virtual DbSet<ProvinceInfor> ProvinceInfors { get; set; }
-        public virtual DbSet<QuestionInfor> QuestionInfors { get; set; }
         public virtual DbSet<RegionInfor> RegionInfors { get; set; }
         public virtual DbSet<RoomInfor> RoomInfors { get; set; }
         public virtual DbSet<StoreInfor> StoreInfors { get; set; }
@@ -62,5 +61,6 @@ namespace CheckInApp.Models
         public virtual DbSet<CheckinInfor> CheckinInfors { get; set; }
         public virtual DbSet<AnswerRecord> AnswerRecords { get; set; }
         public virtual DbSet<TestQuestionRecord> TestQuestionRecords { get; set; }
+        public virtual DbSet<QuestionInfor> QuestionInfors { get; set; }
     }
 }

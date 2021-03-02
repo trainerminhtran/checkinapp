@@ -234,23 +234,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="QuestionInfors">
-      <EntityTypeMapping TypeName="CheckinAppModel.QuestionInfor">
-        <MappingFragment StoreEntitySet="QuestionInfor">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="CatID" ColumnName="CatID" />
-          <ScalarProperty Name="LevelID" ColumnName="LevelID" />
-          <ScalarProperty Name="QuestionContent" ColumnName="QuestionContent" />
-          <ScalarProperty Name="TrueChoose" ColumnName="TrueChoose" />
-          <ScalarProperty Name="Choose1" ColumnName="Choose1" />
-          <ScalarProperty Name="Choose2" ColumnName="Choose2" />
-          <ScalarProperty Name="Choose3" ColumnName="Choose3" />
-          <ScalarProperty Name="Choose4" ColumnName="Choose4" />
-          <ScalarProperty Name="Datetime" ColumnName="Datetime" />
-          <ScalarProperty Name="Status" ColumnName="Status" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="RegionInfors">
       <EntityTypeMapping TypeName="CheckinAppModel.RegionInfor">
         <MappingFragment StoreEntitySet="RegionInfor">
@@ -399,6 +382,24 @@
           <ScalarProperty Name="Status" ColumnName="Status" />
           <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
           <ScalarProperty Name="TestID" ColumnName="TestID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QuestionInfors">
+      <EntityTypeMapping TypeName="CheckinAppModel.QuestionInfor">
+        <MappingFragment StoreEntitySet="QuestionInfor">
+          <ScalarProperty Name="QuestionCode" ColumnName="QuestionCode" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Datetime" ColumnName="Datetime" />
+          <ScalarProperty Name="Choose4" ColumnName="Choose4" />
+          <ScalarProperty Name="Choose3" ColumnName="Choose3" />
+          <ScalarProperty Name="Choose2" ColumnName="Choose2" />
+          <ScalarProperty Name="Choose1" ColumnName="Choose1" />
+          <ScalarProperty Name="TrueChoose" ColumnName="TrueChoose" />
+          <ScalarProperty Name="QuestionContent" ColumnName="QuestionContent" />
+          <ScalarProperty Name="LevelID" ColumnName="LevelID" />
+          <ScalarProperty Name="CatID" ColumnName="CatID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>

@@ -126,8 +126,8 @@
             -webkit-user-drag: element;
         }
 
-        #columns {
-            list-style-type: none;
+        #columns, #columns li {
+            list-style-type: decimal;
         }
 
         .column {
@@ -215,7 +215,7 @@
                                             <ul class="list-group">
                                                 @foreach (var item in Model.DataQuestion)
                                                 {
-                                                    <li class="list-group-item" data-questId="@item.ID">@item.QuestionContent</li>
+                                                    <li class="list-group-item" data-questId="@item.ID">@item.QuestionCode - @item.QuestionContent</li>
                                                 }
 
                                             </ul>
@@ -244,7 +244,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <ul class="list-group" id="columns"></ul>
+                                            <ol type="1" class="list-group" id="columns"></ol>
                                         </div>
                                     </div>
                                 </div>
@@ -272,14 +272,14 @@
                 $('.list-arrows button').click(function () {
                     var $button = $(this), actives = '';
                     if ($button.hasClass('move-left')) {
-                        actives = $('.list-right ul li.active');
+                        actives = $('.list-right ul li.active'); 
                         actives.clone().appendTo('.list-left ul');
                         actives.remove();
                     } else if ($button.hasClass('move-right')) {
                         actives = $('.list-left ul li.active');
                         actives = actives.attr("draggable", true)
                         actives = actives.addClass("column")
-                        actives.clone().appendTo('.list-right ul');
+                        actives.clone().appendTo('.list-right ol');
 
                         actives.remove();
                     }

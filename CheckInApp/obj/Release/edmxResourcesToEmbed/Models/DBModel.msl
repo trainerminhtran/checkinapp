@@ -98,6 +98,7 @@
     <EntitySetMapping Name="CourseInfors">
       <EntityTypeMapping TypeName="CheckinAppModel.CourseInfor">
         <MappingFragment StoreEntitySet="CourseInfor">
+          <ScalarProperty Name="IsDisable" ColumnName="IsDisable" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="PlatformID" ColumnName="PlatformID" />
@@ -263,6 +264,7 @@
     <EntitySetMapping Name="RoomInfors">
       <EntityTypeMapping TypeName="CheckinAppModel.RoomInfor">
         <MappingFragment StoreEntitySet="RoomInfor">
+          <ScalarProperty Name="IsDisable" ColumnName="IsDisable" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="CourseID" ColumnName="CourseID" />
           <ScalarProperty Name="VenueID" ColumnName="VenueID" />

@@ -275,6 +275,7 @@
           <Property Name="Choose4" Type="nvarchar(max)" />
           <Property Name="Datetime" Type="datetime" />
           <Property Name="Status" Type="bit" />
+          <Property Name="QuestionCode" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="RegionInfor">
           <Key>
@@ -1108,7 +1109,7 @@
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="Boolean" />
           <NavigationProperty Name="ModelInfors" Relationship="Self.FK_ModelInfor_CatInfor" FromRole="CatInfor" ToRole="ModelInfor" />
-          <NavigationProperty Name="QuestionInfors" Relationship="Self.FK_QuestionInfor_CatInfor" FromRole="CatInfor" ToRole="QuestionInfor" />
+          <NavigationProperty Name="QuestionInfors" Relationship="CheckinAppModel.FK_QuestionInfor_CatInfor" FromRole="CatInfor" ToRole="QuestionInfor" />
         </EntityType>
         <EntityType Name="ChannelInfor">
           <Key>
@@ -1268,7 +1269,7 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="QuestionInfors" Relationship="Self.FK_QuestionInfor_LevelInfor" FromRole="LevelInfor" ToRole="QuestionInfor" />
+          <NavigationProperty Name="QuestionInfors" Relationship="CheckinAppModel.FK_QuestionInfor_LevelInfor" FromRole="LevelInfor" ToRole="QuestionInfor" />
         </EntityType>
         <EntityType Name="LoginInfor">
           <Key>
@@ -1322,26 +1323,6 @@
           <NavigationProperty Name="CityRuralInfor" Relationship="Self.FK_ProvinceInfor_CityRuralInfor" FromRole="ProvinceInfor" ToRole="CityRuralInfor" />
           <NavigationProperty Name="DistrictInfors" Relationship="Self.FK_DistrictInfor_ProvinceInfor" FromRole="ProvinceInfor" ToRole="DistrictInfor" />
           <NavigationProperty Name="RegionInfor" Relationship="Self.FK_ProvinceInfor_RegionInfor" FromRole="ProvinceInfor" ToRole="RegionInfor" />
-        </EntityType>
-        <EntityType Name="QuestionInfor">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CatID" Type="Int32" Nullable="false" />
-          <Property Name="LevelID" Type="Int32" Nullable="false" />
-          <Property Name="QuestionContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="TrueChoose" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Choose1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Choose2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Choose3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Choose4" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Datetime" Type="DateTime" Precision="3" />
-          <Property Name="Status" Type="Boolean" />
-          <NavigationProperty Name="CatInfor" Relationship="Self.FK_QuestionInfor_CatInfor" FromRole="QuestionInfor" ToRole="CatInfor" />
-          <NavigationProperty Name="LevelInfor" Relationship="Self.FK_QuestionInfor_LevelInfor" FromRole="QuestionInfor" ToRole="LevelInfor" />
-          <NavigationProperty Name="AnswerRecords" Relationship="CheckinAppModel.FK_AnswerRecord_QuestionInfor" FromRole="QuestionInfor" ToRole="AnswerRecord" />
-          <NavigationProperty Name="TestQuestionRecords" Relationship="CheckinAppModel.FK_TestQuestionRecord_QuestionInfor" FromRole="QuestionInfor" ToRole="TestQuestionRecord" />
         </EntityType>
         <EntityType Name="RegionInfor">
           <Key>
@@ -1492,18 +1473,6 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="ModelInfor">
-              <PropertyRef Name="CatID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_QuestionInfor_CatInfor">
-          <End Role="CatInfor" Type="Self.CatInfor" Multiplicity="1" />
-          <End Role="QuestionInfor" Type="Self.QuestionInfor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CatInfor">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="QuestionInfor">
               <PropertyRef Name="CatID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1736,18 +1705,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_QuestionInfor_LevelInfor">
-          <End Role="LevelInfor" Type="Self.LevelInfor" Multiplicity="1" />
-          <End Role="QuestionInfor" Type="Self.QuestionInfor" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LevelInfor">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="QuestionInfor">
-              <PropertyRef Name="LevelID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_LoginInfor_UserInfor">
           <End Role="UserInfor" Type="Self.UserInfor" Multiplicity="1" />
           <End Role="LoginInfor" Type="Self.LoginInfor" Multiplicity="*" />
@@ -1857,7 +1814,6 @@
           <EntitySet Name="PlatformInfors" EntityType="Self.PlatformInfor" />
           <EntitySet Name="PositionInfors" EntityType="Self.PositionInfor" />
           <EntitySet Name="ProvinceInfors" EntityType="Self.ProvinceInfor" />
-          <EntitySet Name="QuestionInfors" EntityType="Self.QuestionInfor" />
           <EntitySet Name="RegionInfors" EntityType="Self.RegionInfor" />
           <EntitySet Name="RoomInfors" EntityType="Self.RoomInfor" />
           <EntitySet Name="StoreInfors" EntityType="Self.StoreInfor" />
@@ -1880,10 +1836,6 @@
           <AssociationSet Name="FK_ModelInfor_CatInfor" Association="Self.FK_ModelInfor_CatInfor">
             <End Role="CatInfor" EntitySet="CatInfors" />
             <End Role="ModelInfor" EntitySet="ModelInfors" />
-          </AssociationSet>
-          <AssociationSet Name="FK_QuestionInfor_CatInfor" Association="Self.FK_QuestionInfor_CatInfor">
-            <End Role="CatInfor" EntitySet="CatInfors" />
-            <End Role="QuestionInfor" EntitySet="QuestionInfors" />
           </AssociationSet>
           <AssociationSet Name="FK_CheckinImageRecord_ImageInfor" Association="Self.FK_CheckinImageRecord_ImageInfor">
             <End Role="ImageInfor" EntitySet="ImageInfors" />
@@ -1961,10 +1913,6 @@
             <End Role="ImageInfor" EntitySet="ImageInfors" />
             <End Role="GiftInfor" EntitySet="GiftInfors" />
           </AssociationSet>
-          <AssociationSet Name="FK_QuestionInfor_LevelInfor" Association="Self.FK_QuestionInfor_LevelInfor">
-            <End Role="LevelInfor" EntitySet="LevelInfors" />
-            <End Role="QuestionInfor" EntitySet="QuestionInfors" />
-          </AssociationSet>
           <AssociationSet Name="FK_LoginInfor_UserInfor" Association="Self.FK_LoginInfor_UserInfor">
             <End Role="UserInfor" EntitySet="UserInfors" />
             <End Role="LoginInfor" EntitySet="LoginInfors" />
@@ -2021,17 +1969,26 @@
             <End Role="CheckinInfor" EntitySet="CheckinInfors" />
             <End Role="AnswerRecord" EntitySet="AnswerRecords" />
           </AssociationSet>
+          <EntitySet Name="TestQuestionRecords" EntityType="CheckinAppModel.TestQuestionRecord" />
+          <AssociationSet Name="FK_TestQuestionRecord_TestInfor" Association="CheckinAppModel.FK_TestQuestionRecord_TestInfor">
+            <End Role="TestInfor" EntitySet="TestInfors" />
+            <End Role="TestQuestionRecord" EntitySet="TestQuestionRecords" />
+          </AssociationSet>
+          <EntitySet Name="QuestionInfors" EntityType="CheckinAppModel.QuestionInfor" />
           <AssociationSet Name="FK_AnswerRecord_QuestionInfor" Association="CheckinAppModel.FK_AnswerRecord_QuestionInfor">
             <End Role="QuestionInfor" EntitySet="QuestionInfors" />
             <End Role="AnswerRecord" EntitySet="AnswerRecords" />
           </AssociationSet>
-          <EntitySet Name="TestQuestionRecords" EntityType="CheckinAppModel.TestQuestionRecord" />
+          <AssociationSet Name="FK_QuestionInfor_CatInfor" Association="CheckinAppModel.FK_QuestionInfor_CatInfor">
+            <End Role="CatInfor" EntitySet="CatInfors" />
+            <End Role="QuestionInfor" EntitySet="QuestionInfors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuestionInfor_LevelInfor" Association="CheckinAppModel.FK_QuestionInfor_LevelInfor">
+            <End Role="LevelInfor" EntitySet="LevelInfors" />
+            <End Role="QuestionInfor" EntitySet="QuestionInfors" />
+          </AssociationSet>
           <AssociationSet Name="FK_TestQuestionRecord_QuestionInfor" Association="CheckinAppModel.FK_TestQuestionRecord_QuestionInfor">
             <End Role="QuestionInfor" EntitySet="QuestionInfors" />
-            <End Role="TestQuestionRecord" EntitySet="TestQuestionRecords" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TestQuestionRecord_TestInfor" Association="CheckinAppModel.FK_TestQuestionRecord_TestInfor">
-            <End Role="TestInfor" EntitySet="TestInfors" />
             <End Role="TestQuestionRecord" EntitySet="TestQuestionRecords" />
           </AssociationSet>
         </EntityContainer>
@@ -2161,6 +2118,51 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="TestQuestionRecord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TestID" Type="Int32" Nullable="false" />
+          <Property Name="QuestionID" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="OrderNumber" Type="Int32" />
+          <NavigationProperty Name="TestInfor" Relationship="CheckinAppModel.FK_TestQuestionRecord_TestInfor" FromRole="TestQuestionRecord" ToRole="TestInfor" />
+          <NavigationProperty Name="QuestionInfor" Relationship="CheckinAppModel.FK_TestQuestionRecord_QuestionInfor" FromRole="TestQuestionRecord" ToRole="QuestionInfor" />
+        </EntityType>
+        <Association Name="FK_TestQuestionRecord_TestInfor">
+          <End Type="CheckinAppModel.TestInfor" Role="TestInfor" Multiplicity="1" />
+          <End Type="CheckinAppModel.TestQuestionRecord" Role="TestQuestionRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestInfor">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TestQuestionRecord">
+              <PropertyRef Name="TestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="QuestionInfor">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CatID" Type="Int32" Nullable="false" />
+          <Property Name="LevelID" Type="Int32" Nullable="false" />
+          <Property Name="QuestionContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TrueChoose" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Choose1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Choose2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Choose3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Choose4" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Datetime" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="QuestionCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AnswerRecords" Relationship="CheckinAppModel.FK_AnswerRecord_QuestionInfor" FromRole="QuestionInfor" ToRole="AnswerRecord" />
+          <NavigationProperty Name="CatInfor" Relationship="CheckinAppModel.FK_QuestionInfor_CatInfor" FromRole="QuestionInfor" ToRole="CatInfor" />
+          <NavigationProperty Name="LevelInfor" Relationship="CheckinAppModel.FK_QuestionInfor_LevelInfor" FromRole="QuestionInfor" ToRole="LevelInfor" />
+          <NavigationProperty Name="TestQuestionRecords" Relationship="CheckinAppModel.FK_TestQuestionRecord_QuestionInfor" FromRole="QuestionInfor" ToRole="TestQuestionRecord" />
+        </EntityType>
         <Association Name="FK_AnswerRecord_QuestionInfor">
           <End Type="CheckinAppModel.QuestionInfor" Role="QuestionInfor" Multiplicity="1" />
           <End Type="CheckinAppModel.AnswerRecord" Role="AnswerRecord" Multiplicity="*" />
@@ -2173,18 +2175,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="TestQuestionRecord">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TestID" Type="Int32" Nullable="false" />
-          <Property Name="QuestionID" Type="Int32" Nullable="false" />
-          <Property Name="Status" Type="Boolean" />
-          <Property Name="OrderNumber" Type="Int32" />
-          <NavigationProperty Name="QuestionInfor" Relationship="CheckinAppModel.FK_TestQuestionRecord_QuestionInfor" FromRole="TestQuestionRecord" ToRole="QuestionInfor" />
-          <NavigationProperty Name="TestInfor" Relationship="CheckinAppModel.FK_TestQuestionRecord_TestInfor" FromRole="TestQuestionRecord" ToRole="TestInfor" />
-        </EntityType>
+        <Association Name="FK_QuestionInfor_CatInfor">
+          <End Type="CheckinAppModel.CatInfor" Role="CatInfor" Multiplicity="1" />
+          <End Type="CheckinAppModel.QuestionInfor" Role="QuestionInfor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CatInfor">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QuestionInfor">
+              <PropertyRef Name="CatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuestionInfor_LevelInfor">
+          <End Type="CheckinAppModel.LevelInfor" Role="LevelInfor" Multiplicity="1" />
+          <End Type="CheckinAppModel.QuestionInfor" Role="QuestionInfor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LevelInfor">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QuestionInfor">
+              <PropertyRef Name="LevelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TestQuestionRecord_QuestionInfor">
           <End Type="CheckinAppModel.QuestionInfor" Role="QuestionInfor" Multiplicity="1" />
           <End Type="CheckinAppModel.TestQuestionRecord" Role="TestQuestionRecord" Multiplicity="*" />
@@ -2194,18 +2208,6 @@
             </Principal>
             <Dependent Role="TestQuestionRecord">
               <PropertyRef Name="QuestionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TestQuestionRecord_TestInfor">
-          <End Type="CheckinAppModel.TestInfor" Role="TestInfor" Multiplicity="1" />
-          <End Type="CheckinAppModel.TestQuestionRecord" Role="TestQuestionRecord" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TestInfor">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="TestQuestionRecord">
-              <PropertyRef Name="TestID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2448,23 +2450,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="QuestionInfors">
-            <EntityTypeMapping TypeName="CheckinAppModel.QuestionInfor">
-              <MappingFragment StoreEntitySet="QuestionInfor">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="CatID" ColumnName="CatID" />
-                <ScalarProperty Name="LevelID" ColumnName="LevelID" />
-                <ScalarProperty Name="QuestionContent" ColumnName="QuestionContent" />
-                <ScalarProperty Name="TrueChoose" ColumnName="TrueChoose" />
-                <ScalarProperty Name="Choose1" ColumnName="Choose1" />
-                <ScalarProperty Name="Choose2" ColumnName="Choose2" />
-                <ScalarProperty Name="Choose3" ColumnName="Choose3" />
-                <ScalarProperty Name="Choose4" ColumnName="Choose4" />
-                <ScalarProperty Name="Datetime" ColumnName="Datetime" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="RegionInfors">
             <EntityTypeMapping TypeName="CheckinAppModel.RegionInfor">
               <MappingFragment StoreEntitySet="RegionInfor">
@@ -2613,6 +2598,24 @@
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
                 <ScalarProperty Name="TestID" ColumnName="TestID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuestionInfors">
+            <EntityTypeMapping TypeName="CheckinAppModel.QuestionInfor">
+              <MappingFragment StoreEntitySet="QuestionInfor">
+                <ScalarProperty Name="QuestionCode" ColumnName="QuestionCode" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Datetime" ColumnName="Datetime" />
+                <ScalarProperty Name="Choose4" ColumnName="Choose4" />
+                <ScalarProperty Name="Choose3" ColumnName="Choose3" />
+                <ScalarProperty Name="Choose2" ColumnName="Choose2" />
+                <ScalarProperty Name="Choose1" ColumnName="Choose1" />
+                <ScalarProperty Name="TrueChoose" ColumnName="TrueChoose" />
+                <ScalarProperty Name="QuestionContent" ColumnName="QuestionContent" />
+                <ScalarProperty Name="LevelID" ColumnName="LevelID" />
+                <ScalarProperty Name="CatID" ColumnName="CatID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

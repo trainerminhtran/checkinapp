@@ -120,6 +120,7 @@
     <Property Name="PlatformID" Type="int" Nullable="false" />
     <Property Name="Datetime" Type="datetime" Nullable="false" />
     <Property Name="Status" Type="bit" />
+    <Property Name="IsDisable" Type="bit" />
   </EntityType>
   <EntityType Name="CourseQuestionProcess">
     <Key>
@@ -295,6 +296,7 @@
     <Property Name="NoDaysGetGift" Type="int" />
     <Property Name="Datetime" Type="datetime" Nullable="false" />
     <Property Name="Guid" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="IsDisable" Type="bit" />
   </EntityType>
   <EntityType Name="StoreInfor">
     <Key>

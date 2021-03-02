@@ -27,45 +27,48 @@
                 @using (Html.BeginForm("Create", "Course", FormMethod.Post, new { enctype = "multipart/form-data", @id = "formID" }))
                 {
                     @Html.AntiForgeryToken()
-                    <div class="card-body">
-                        @if (TempData["Success"] != null)
-                        {
-                            @Html.ValidationSummary(false, "", new { @class = "text-success" })
+            <div class="card-body">
+                @if (TempData["Success"] != null)
+                {
+                    @Html.ValidationSummary(false, "", new { @class = "text-success" })
 
-                        }
-                        else
-                        {
-                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                }
+                else
+                {
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
-                        }
-                      
-                        <div class="form-group">
-                            <label>Hình thức training:</label>
-                            <select id="ddlplatform" class="form-control select2" name="platformID" required style="width: 100%;">
-                            </select>
-                        </div>
-                        <!-- Date -->
-                        <div class="form-group">
-                            <label>Ngày bắt đầu::</label>
-                            <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                <input type="text" name="Datetime" class="form-control datetimepicker-input" data-target="#reservationdate" />
-                                <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                      
-                        <div class="form-group">
-                            <label>Nội dung:</label>
-                            <select id="ddlContent" class="form-control select2" name="contentIDs" multiple required style="width: 100%;">
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Bài test:</label>
-                            <select id="ddltestId" class="form-control" name="TestId" required style="width: 100%;">
-                            </select>
+                }
+                <div class="form-group">
+                    <label>Ghi chú:</label>
+                    <input type="text" id="txtName" class="form-control" name="courseName" required style="width: 100%;"/>
+                </div>
+                <div class="form-group">
+                    <label>Hình thức training:</label>
+                    <select id="ddlplatform" class="form-control select2" name="platformID" required style="width: 100%;">
+                    </select>
+                </div>
+                <!-- Date -->
+                <div class="form-group">
+                    <label>Ngày bắt đầu::</label>
+                    <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                        <input type="text" name="Datetime" class="form-control datetimepicker-input" data-target="#reservationdate" />
+                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
                     </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Nội dung:</label>
+                    <select id="ddlContent" class="form-control select2" name="contentIDs" multiple required style="width: 100%;">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Bài test:</label>
+                    <select id="ddltestId" class="form-control" name="TestId" required style="width: 100%;">
+                    </select>
+                </div>
+            </div>
                     <!-- /.card-body -->
 
                     <div class="card-footer">

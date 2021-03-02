@@ -28,12 +28,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.TrainerName)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.VenueName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.VenueAddress)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.QRCode)
 
@@ -43,79 +43,93 @@
                 @Html.DisplayNameFor(model => model.Status)
             </th>
             <th>Action</th>
+            <th>Ẩn</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => item.Datetime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TrainerName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.VenueName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.VenueAddress)
-                </td>
-                <td>
-                    @{
-                        var sts = item.Status;
-                        if (sts)
-                        {
-                            <button type="button" id="btn@(item.Id)" class="btn btn-primary" data-toggle="modal" onclick="getModal(@item.Id)">
-                                QRCode
-                            </button>
-                            <button type="button" id="btnn@(item.Id)" class="btn btn-primary" data-toggle="modal" data-RoomUrl="@item.RoomUrl" onclick="copyRoomUrl(this)">
-                                Copy link
-                            </button>
-                        }
-                        else
-                        {
-                            <button type="button" id="btn@(item.Id)" class="btn btn-secondary" data-toggle="modal" onclick="getModal(@item.Id)" disabled="">
-                                QRCode
-                            </button>
-                            <button type="button" id="btnn@(item.Id)" class="btn btn-secondary" data-toggle="modal" onclick="copyRoomUrl('@item.RoomUrl')" disabled="">
-                                Copy link
-                            </button>
-                        }
-                    }
-                    <input type="hidden" id="name@(item.Id)" value="@item.Name" />
-                    <input type="hidden" id="qr@(item.Id)" value="@item.QRCode" />
-                </td>
-
-                <td>
-                    @{
-
-                        if (sts)
-                        {
-                            <input type="checkbox" name="my-checkbox" checked data-bootstrap-switch data-off-color="danger" contentid="@item.Id" data-on-color="success">
-                        }
-                        else
-                        {
-                            <input type="checkbox" name="my-checkbox" data-bootstrap-switch data-off-color="danger" data-on-color="success" contentid="@item.Id">
-                        }
-                    }
-                </td>
-                <td>
-                    @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |*@
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @using (Html.BeginForm("Delete", "Room", FormMethod.Post, new { enctype = "multipart/form-data", @id = "formID2", onsubmit = "return confirm('Bạn thật sự muốn xóa lớp học này?');" }))
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Datetime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrainerName)
+            </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.VenueName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VenueAddress)
+        </td>*@
+            <td>
+                @{
+                    var sts = item.Status;
+                    if (sts)
                     {
-                        @Html.AntiForgeryToken()
-                        <input type="hidden" name="id" value="@item.Id" />
-                        <button type="submit" class="btn btn-warning">Delete</button>
+                        <button type="button" id="btn@(item.Id)" class="btn btn-primary" data-toggle="modal" onclick="getModal(@item.Id)">
+                            QRCode
+                        </button>
+                        <button type="button" id="btnn@(item.Id)" class="btn btn-primary" data-toggle="modal" data-RoomUrl="@item.RoomUrl" onclick="copyRoomUrl(this)">
+                            Copy link
+                        </button>
                     }
-                    <a class="btn btn-primary" href="@Url.Action("Index","QuizManager",new {RoomId = item.RoomGuid})" role="button">Test</a>
+                    else
+                    {
+                        <button type="button" id="btn@(item.Id)" class="btn btn-secondary" data-toggle="modal" onclick="getModal(@item.Id)" disabled="">
+                            QRCode
+                        </button>
+                        <button type="button" id="btnn@(item.Id)" class="btn btn-secondary" data-toggle="modal" onclick="copyRoomUrl('@item.RoomUrl')" disabled="">
+                            Copy link
+                        </button>
+                    }
+                }
+                <input type="hidden" id="name@(item.Id)" value="@item.Name" />
+                <input type="hidden" id="qr@(item.Id)" value="@item.QRCode" />
+            </td>
 
-                </td>
-            </tr>
+            <td>
+                @{
+
+                    if (sts)
+                    {
+                        <input type="checkbox" class="statusClass" name="my-checkbox" checked data-bootstrap-switch data-off-color="danger" contentid="@item.Id" data-on-color="success">
+                    }
+                    else
+                    {
+                        <input type="checkbox" class="statusClass"  name="my-checkbox" data-bootstrap-switch data-off-color="danger" data-on-color="success" contentid="@item.Id">
+                    }
+                }
+            </td>
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |*@
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @using (Html.BeginForm("Delete", "Room", FormMethod.Post, new { enctype = "multipart/form-data", @id = "formID2", onsubmit = "return confirm('Bạn thật sự muốn xóa lớp học này?');" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@item.Id" />
+                    <button type="submit" class="btn btn-warning">Delete</button>
+                }
+                <a class="btn btn-primary" href="@Url.Action("Index","QuizManager",new {RoomId = item.RoomGuid})" role="button">Test</a>
+
+            </td>
+            <td>
+                @{
+                    var isDisable = item.IsDisable;
+                    if (isDisable)
+                    {
+                        <input type="checkbox" class="disableClass" name="my-checkbox" checked data-bootstrap-switch data-off-color="danger" contentid="@item.Id" data-on-color="success">
+                    }
+                    else
+                    {
+                        <input type="checkbox" class="disableClass"  name="my-checkbox" data-bootstrap-switch data-off-color="danger" data-on-color="success" contentid="@item.Id">
+                    }
+                }
+            </td>
+        </tr>
         }
     </tbody>
 </table>
@@ -212,14 +226,13 @@
                 "responsive": true,
             });
             if ($("table").hasClass("collapsed")) {
-                console.log(1);
                 $('.table').on('click',
                     'tbody td:not(.child)',
                     function (e) {
                         $("input[data-bootstrap-switch]").each(function () {
                             $(this).bootstrapSwitch('state', $(this).prop('checked'));
                         });
-                        $('input[data-bootstrap-switch]').on('switchChange.bootstrapSwitch',
+                        $('.statusClass').on('switchChange.bootstrapSwitch',
                             function (e, data) {
                                 if (confirm('Bạn có muốn thay đổi trạng thái Venue không?')) {
                                     var id = $(this).attr("contentid");
@@ -267,14 +280,62 @@
                                 }
 
                             });
+
+                        $('.disableClass').on('switchChange.bootstrapSwitch',
+                            function (e, data) {
+                                if (confirm('Bạn có muốn ẩn lớp này không?')) {
+                                    var id = $(this).attr("contentid");
+                                    $(this).bootstrapSwitch('state', !data, true);
+                                    var $obj = $(this);
+                                    $.ajax({
+                                        type: "POST",
+                                        cache: false,
+                                        dataType: "json",
+                                        context: this,
+                                        contentType: "application/json; charset=utf-8",
+                                        data: JSON.stringify({ "id": id, "sts": data }),
+                                        url: "/api/courseinfor/RoomDisable",
+                                        success: function (response) {
+                                            if (response) {
+                                                bootoast.toast({
+                                                    message: 'Cập nhật thành công',
+                                                    type: 'success'
+                                                });
+                                                $obj.bootstrapSwitch('state', data, true);
+
+                                            } else {
+                                                bootoast.toast({
+                                                    message: 'Cập nhật thất bại',
+                                                    type: 'danger'
+                                                });
+                                            }
+                                        },
+                                        error: function (response) {
+                                            bootoast.toast({
+                                                message: response,
+                                                type: 'danger'
+                                            });
+                                        }
+                                    });
+                                    if (data) {
+                                        onModal(id);
+                                        onModall(id);
+                                    } else {
+                                        offModal(id);
+                                        offModall(id);
+                                    }
+                                } else {
+                                    $(this).bootstrapSwitch('state', !data, true);
+                                }
+
+                            });
                     });
 
             } else {
-                console.log(2)
                 $("input[data-bootstrap-switch]").each(function () {
                     $(this).bootstrapSwitch('state', $(this).prop('checked'));
                 });
-                $('input[data-bootstrap-switch]').on('switchChange.bootstrapSwitch',
+                $('.statusClass').on('switchChange.bootstrapSwitch',
                     function (e, data) {
                         if (confirm('Bạn có muốn thay đổi trạng thái Venue không?')) {
                             var id = $(this).attr("contentid");
@@ -288,6 +349,55 @@
                                 contentType: "application/json; charset=utf-8",
                                 data: JSON.stringify({ "id": id, "sts": data }),
                                 url: "/api/courseinfor/RoomStatus",
+                                success: function (response) {
+                                    if (response) {
+                                        bootoast.toast({
+                                            message: 'Cập nhật thành công',
+                                            type: 'success'
+                                        });
+                                        $obj.bootstrapSwitch('state', data, true);
+
+                                    } else {
+                                        bootoast.toast({
+                                            message: 'Cập nhật thất bại',
+                                            type: 'danger'
+                                        });
+                                    }
+                                },
+                                error: function (response) {
+                                    bootoast.toast({
+                                        message: response,
+                                        type: 'danger'
+                                    });
+                                }
+                            });
+                            if (data) {
+                                onModal(id);
+                                onModall(id);
+                            } else {
+                                offModal(id);
+                                offModall(id);
+                            }
+                        } else {
+                            $(this).bootstrapSwitch('state', !data, true);
+                        }
+
+                    });
+
+                $('.disableClass').on('switchChange.bootstrapSwitch',
+                    function (e, data) {
+                        if (confirm('Bạn có muốn ẩn lớp này không?')) {
+                            var id = $(this).attr("contentid");
+                            $(this).bootstrapSwitch('state', !data, true);
+                            var $obj = $(this);
+                            $.ajax({
+                                type: "POST",
+                                cache: false,
+                                dataType: "json",
+                                context: this,
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({ "id": id, "sts": data }),
+                                url: "/api/courseinfor/RoomDisable",
                                 success: function (response) {
                                     if (response) {
                                         bootoast.toast({

@@ -270,6 +270,7 @@
     <Property Name="Choose4" Type="nvarchar(max)" />
     <Property Name="Datetime" Type="datetime" />
     <Property Name="Status" Type="bit" />
+    <Property Name="QuestionCode" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="RegionInfor">
     <Key>

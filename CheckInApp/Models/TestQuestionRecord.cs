@@ -20,7 +20,7 @@ namespace CheckInApp.Models
         public Nullable<bool> Status { get; set; }
         public Nullable<int> OrderNumber { get; set; }
     
-        public virtual QuestionInfor QuestionInfor { get; set; }
         public virtual TestInfor TestInfor { get; set; }
+        public virtual QuestionInfor QuestionInfor { get; set; }
     }
 }

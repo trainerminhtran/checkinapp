@@ -67,6 +67,7 @@ namespace CheckInApp.Controllers
                                 Choose4 = item.Choose4,
                                 Datetime = DateTime.Today,
                                 Status = true,
+                                QuestionCode = item.QuestionCode
                             });
                         }
                         db.QuestionInfors.AddRange(QuestionList);

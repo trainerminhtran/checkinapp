@@ -107,6 +107,7 @@ namespace CheckInApp.Helpers
                 itemObject.Choose3 = item[3].ToString();
                 itemObject.Choose4 = item[4].ToString();
                 itemObject.TrueChoose = item[5].ToString();
+                itemObject.QuestionCode = item[6].ToString();
                 listData.Add(itemObject);
             }
             return listData;

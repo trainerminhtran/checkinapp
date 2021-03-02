@@ -4,7 +4,7 @@
 @section Styles{
     <link href="~/Content/Quiz.css" rel="stylesheet" />
 }
-@model Checkinapp.ViewModels.QuizView
+@model CheckInApp.ViewModels.QuizView
 @if (Model != null)
 {
     <div class="container-fluid quiz-manager">
@@ -100,7 +100,6 @@
                     if (data.length > 1) {
                         $(".quiz-manager .modal-content").html(data);
                         counter_init("#counters_1");
-                        //makeProgress();
                     }
                 });
         }
@@ -116,11 +115,16 @@
                 });
         }
 
+        @if (Model.Process == (int) CheckInApp.Services.ProcessIDEnum.NextQuestion)
+        {
+            @Html.Raw("LoadTop();")
+
+        }
     </script>
     <script>
         let pageId = 1;
     </script>
     <script src="~/Scripts/Quiz.js"></script>
-    <script src="~/Scripts/counter.js"></script>
+    <script src="~/Scripts/counter.js"></script>    
 }
 }

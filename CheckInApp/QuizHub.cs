@@ -29,15 +29,22 @@ namespace CheckInApp
             {
                 var objeStart = JsonConvert.DeserializeObject<StartRoom>(message);
                 var ro = _db.RoomInfors.FirstOrDefault(x => x.Guid == objeStart.RoomId);
-                var process = _db.CourseQuestionProcesses
-                    .Where(x => x.RoomID == ro.ID && x.ProcessID == (int) ProcessIDEnum.Create)
+
+                var check = _db.CourseQuestionProcesses
+                    .Where(x => x.RoomID == ro.ID && x.ProcessID == (int)ProcessIDEnum.Process)
                     .OrderBy(x => x.QuestionOrder).FirstOrDefault();
-                if (process != null)
+                if (check == null)
                 {
-                    process.ProcessID = (int) ProcessIDEnum.Process;
-                    process.TimeEnd = ds.ConvertToUnixTimestamp(DateTime.Now) + 20;
-                    _db.Entry(process).State = EntityState.Modified;
-                    _db.SaveChanges();
+                    var process = _db.CourseQuestionProcesses
+                        .Where(x => x.RoomID == ro.ID && x.ProcessID == (int)ProcessIDEnum.Create)
+                        .OrderBy(x => x.QuestionOrder).FirstOrDefault();
+                    if (process != null)
+                    {
+                        process.ProcessID = (int)ProcessIDEnum.Process;
+                        process.TimeEnd = ds.ConvertToUnixTimestamp(DateTime.Now) + 20;
+                        _db.Entry(process).State = EntityState.Modified;
+                        _db.SaveChanges();
+                    }
                 }
             }
 

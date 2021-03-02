@@ -17,6 +17,7 @@ namespace CheckInApp.ViewModels
         public string Choose2 { get; set; }
         public string Choose3 { get; set; }
         public string Choose4 { get; set; }
+        public string QuestionCode { get; set; }
     }
 
     public class QuestionViewModel

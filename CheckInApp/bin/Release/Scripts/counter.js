@@ -63,6 +63,7 @@ function doCount(num, index, speed, groupClass, direction, easing) {
                     $(".progress-time").addClass("bg-danger");
                 }
                 $(".update-point").html(parseInt((num - Math.floor(now)) * 5) + " Point");
+                console.log("math :" + (num - Math.floor(now)));
                 $("#AnsTime").val(num - Math.floor(now));
             if (direction == 'reverse') {
                 if (num - Math.floor(now) < 10) {
