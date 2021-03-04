@@ -45,7 +45,16 @@ namespace CheckInApp.Controllers
             CourseQuestionProcess process = _db.CourseQuestionProcesses.Where(x => x.RoomID == ro.ID && x.ProcessID != (int)ProcessIDEnum.Finish).OrderBy(x => x.QuestionOrder).FirstOrDefault();
             if (process == null)
             {
-                model.Process = (int)ProcessIDEnum.Finish;
+                var dataTestInfo = _db.CourseQuestionProcesses.Where(x => x.RoomID == ro.ID).ToList();
+                if (dataTestInfo.Any())
+                {
+                    FinishTest(model.TestId,model.RoomId);
+                    model.Process = (int)ProcessIDEnum.Create;
+                }
+                else
+                {
+                    model.Process = (int)ProcessIDEnum.Finish;
+                }
             }
             else
             {
