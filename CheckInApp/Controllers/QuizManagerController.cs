@@ -1,10 +1,10 @@
-﻿using Checkinapp.ViewModels;
-using CheckInApp.Models;
+﻿using CheckInApp.Models;
 using CheckInApp.Services;
 using CheckInApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -51,19 +51,18 @@ namespace CheckInApp.Controllers
             {
                 if (process.ProcessID == (int)ProcessIDEnum.Create)
                 {
-                    model.Process = (int)ProcessIDEnum.Create;
-                }
-                else
-                {
-                    long timenew = process.TimeEnd.GetValueOrDefault() - ds.ConvertToUnixTimestamp(DateTime.Now);
-                    if (timenew > 0)
+                    if (process.QuestionOrder != 1)
                     {
-                        model.Process = (int)ProcessIDEnum.Process;
+                        model.Process = (int)ProcessIDEnum.NextQuestion;
                     }
                     else
                     {
-                        model.Process = (int)ProcessIDEnum.Finish;
+                        model.Process = (int)ProcessIDEnum.Create;
                     }
+                }
+                else
+                {
+                    model.Process = (int)ProcessIDEnum.Process;
                 }
             }
 
@@ -106,6 +105,7 @@ namespace CheckInApp.Controllers
                         model.Choose3 = curentquestion.Choose3;
                         model.Choose4 = curentquestion.Choose4;
                         model.ChooseTrue = curentquestion.TrueChoose;
+                        model.OrderNumber = process.QuestionOrder;
                     }
                     return PartialView(model);
                 }
@@ -125,6 +125,7 @@ namespace CheckInApp.Controllers
                         model.Choose3 = curentquestion.Choose3;
                         model.Choose4 = curentquestion.Choose4;
                         model.ChooseTrue = curentquestion.TrueChoose;
+                        model.OrderNumber = process.QuestionOrder;
                     }
                     return PartialView(model);
                 }
@@ -160,22 +161,62 @@ namespace CheckInApp.Controllers
         }
         public ActionResult _ListAns(int TestId, Guid RoomId)
         {
-            List<TopResultView> model = new List<TopResultView>();
+            var model = new ListAnsManager
+            {
+                Data = new List<TopResultView>(),
+                EndProcess = 0,
+            };
+            RoomInfor ro = _db.RoomInfors.FirstOrDefault(x => x.Guid == RoomId);
+            if (ro == null)
+            {
+                return null;
+            }
+            var listData = _db.CheckinInfors.Where(x => x.RoomID == ro.ID).OrderByDescending(x => x.CountingScore).ToList();
+            var tqp = _db.TestQuestionRecords.Where(x => x.TestID == TestId).ToList();
+            var totalCount = tqp.Count;
+            var lastsans = _db.CourseQuestionProcesses.FirstOrDefault(x => x.ProcessID != (int) ProcessIDEnum.Finish && x.RoomID == ro.ID);
+            if (lastsans == null)
+            {
+                model.EndProcess = 1;
+            }
+            model.Data= listData.Select(x => new TopResultView
+            {
+                Total = totalCount,
+                TrueAns = x.AnswerRecords.Count(a => a.TimeScore > 0),
+                FullName = x.UserInfor.EmployeeInfor.Fullname,
+                Score = x.CountingScore.GetValueOrDefault()
+            }).OrderByDescending(u=>u.Score).ToList();
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public JsonResult FinishTest(int TestId, Guid RoomId)
+        {
+            if (!(Session["UserViewModel"] is UserViewModel u))
+            {
+                return null;
+            }
             RoomInfor ro = _db.RoomInfors.FirstOrDefault(x => x.Guid == RoomId);
             if (ro == null)
             {
                 return null;
             }
 
-            List<CheckinInfor> listData = _db.CheckinInfors.Where(x => x.RoomID == ro.ID).OrderBy(x => x.CountingScore).ToList();
-            List<TopResultView> data = listData.Select(x => new TopResultView
+            var update = _db.CourseQuestionProcesses.Where(x => x.RoomID == ro.ID).ToList().Select(x=>new CourseQuestionProcess
             {
-                FalseAns = x.AnswerRecords.Count(a => a.TimeScore == 0),
-                TrueAns = x.AnswerRecords.Count(a => a.TimeScore > 0),
-                FullName = x.UserInfor.EmployeeInfor.Fullname,
-                Score = x.CountingScore.GetValueOrDefault()
-            }).OrderByDescending(u=>u.Score).ToList();
-            return PartialView(data);
+                ID = x.ID,
+                QuestionOrder = x.QuestionOrder,
+                ProcessID = (int)ProcessIDEnum.Create,
+                RoomID = x.RoomID,
+                QuestionID = x.QuestionID,
+                TimeEnd = 0,
+            }).ToList();
+            foreach (var item in update)
+            {
+                _db.CourseQuestionProcesses.AddOrUpdate(item);
+            }
+            _db.SaveChanges();
+            return new JsonResult() { Data = RoomId, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
     }
 }

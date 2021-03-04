@@ -71,18 +71,18 @@
         <AssociationConnector Association="CheckinAppModel.FK_RoomTrainerRecord_UserInfor" ManuallyRouted="false" />
         <EntityTypeShape EntityType="CheckinAppModel.PermissionInfor" Width="1.5" PointX="10.375" PointY="0.875" />
         <AssociationConnector Association="CheckinAppModel.FK_UserInfor_PermissionInfor" />
-        <EntityTypeShape EntityType="CheckinAppModel.TestQuestionRecord" Width="1.5" PointX="15.25" PointY="16.375" />
-        <AssociationConnector Association="CheckinAppModel.FK_TestQuestionRecord_QuestionInfor" />
-        <AssociationConnector Association="CheckinAppModel.FK_TestQuestionRecord_TestInfor" />
         <EntityTypeShape EntityType="CheckinAppModel.CourseQuestionProcess" Width="1.5" PointX="12.375" PointY="0.75" />
-        <EntityTypeShape EntityType="CheckinAppModel.CheckinInfor" Width="1.5" PointX="10.75" PointY="10.5" />
+        <EntityTypeShape EntityType="CheckinAppModel.CheckinInfor" Width="1.5" PointX="15.375" PointY="11" />
         <AssociationConnector Association="CheckinAppModel.FK_AnswerInfor_CheckinInfor" />
         <AssociationConnector Association="CheckinAppModel.FK_CheckinImageRecord_CheckinInfor" />
         <AssociationConnector Association="CheckinAppModel.FK_CheckinInfor_RoomInfor" />
         <AssociationConnector Association="CheckinAppModel.FK_CheckinInfor_UserInfor" />
-        <EntityTypeShape EntityType="CheckinAppModel.AnswerRecord" Width="1.5" PointX="15.25" PointY="12.625" />
+        <EntityTypeShape EntityType="CheckinAppModel.AnswerRecord" Width="1.5" PointX="17.875" PointY="11.75" />
         <AssociationConnector Association="CheckinAppModel.FK_AnswerRecord_CheckinInfor" />
         <AssociationConnector Association="CheckinAppModel.FK_AnswerRecord_QuestionInfor" />
+        <EntityTypeShape EntityType="CheckinAppModel.TestQuestionRecord" Width="1.5" PointX="15.25" PointY="16.25" />
+        <AssociationConnector Association="CheckinAppModel.FK_TestQuestionRecord_QuestionInfor" />
+        <AssociationConnector Association="CheckinAppModel.FK_TestQuestionRecord_TestInfor" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

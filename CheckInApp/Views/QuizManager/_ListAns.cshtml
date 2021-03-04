@@ -1,4 +1,4 @@
-﻿@model List<Checkinapp.ViewModels.TopResultView>
+﻿@model  CheckInApp.ViewModels.ListAnsManager
 <div class="modal-body">
     <header>
         <h4 class="text-center">Bảng điểm hiện tại</h4>
@@ -13,15 +13,15 @@
             </tr>
         </thead>
         <tbody>
-        @if (Model.Any())
+        @if (Model.Data.Any())
         {
             var indexRank = 1;
-            foreach (var item in Model)
+            foreach (var item in Model.Data)
             {
                 <tr>
                     <td class="rank">@indexRank</td>
                     <td class="team">@item.FullName</td>
-                    <td class="points">@item.FalseAns/@item.TrueAns</td>
+                    <td class="points">@item.TrueAns/@item.Total</td>
                     <td class="points">@item.Score</td>
                 </tr>
                {
@@ -35,5 +35,13 @@
     </table>
 </div>
 <div class="modal-footer text-muted">
-    <button type="button" class="btn btn-default" onclick="NextQuiz()">Câu hỏi tiếp theo</button>
+    @if (Model.EndProcess == 1)
+    {
+        <button type="button" class="btn btn-default" onclick="FinishTest()">Kết thúc bài test</button>
+    }
+    else
+    {
+        <button type="button" class="btn btn-default" onclick="NextQuiz()">Câu hỏi tiếp theo</button>
+    }
+
 </div>

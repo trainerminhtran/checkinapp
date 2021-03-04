@@ -1,4 +1,4 @@
-﻿@model Checkinapp.ViewModels.TopResultUseView
+﻿@model CheckInApp.ViewModels.TopResultUseView
 @if (Model != null)
 {
     <div class="modal-header" style="display: block">
@@ -24,23 +24,30 @@
                 </tr>
             </thead>
             <tbody>
-            @if (Model.Data.Any())
-            {
-                var indexRank = 1;
-                foreach (var item in Model.Data)
+                @if (Model.Data.Any())
                 {
-                    <tr>
-                        <td class="rank">@indexRank</td>
-                        <td class="team">@item.FullName</td>
-                        <td class="points">@item.Score</td>
-                    </tr>
+                    var indexRank = 1;
+                    foreach (var item in Model.Data)
                     {
-                        indexRank++;
+                        <tr>
+                            <td class="rank">@indexRank</td>
+                            <td class="team">@item.FullName</td>
+                            <td class="points">@item.Score</td>
+                        </tr>
+                        {
+                            indexRank++;
 
+                        }
                     }
                 }
-            }
             </tbody>
         </table>
     </div>
+    if (Model.FinishTest)
+    {
+        <div class="modal-footer text-muted">
+            <a href="@Model.CheckinUrl" class="btn btn-default">Bài test kết thúc</a>
+        </div>
+    }
+
 }

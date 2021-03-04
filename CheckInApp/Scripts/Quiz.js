@@ -12,27 +12,22 @@
 
     showload();
 });	
-var i = 0;
-function makeProgress() {
-    var timerProgress = 0;
-    if (i < 100) {
-        i = i + 1;
-        $(".progress-time").css("width", i + "%");
-        if (i <= 20) {
-            $(".progress-time").addClass("bg-info");
-        } else if (i <= 40) {
-            $(".progress-time").addClass("bg-success");
-        } else if (i <= 80) {
-            $(".progress-time").addClass("bg-warning");
-        } else {
-            $(".progress-time").addClass("bg-danger");
-        }
-    }
-    if (i == 100) {
-        clearTimeout(timerProgress);
-    }
-    timerProgress = setTimeout("makeProgress()", parseInt((parseInt($(".counter").attr("data-TargetNum")) * 10)));
-};
+
+//function makeProgress(i) {
+//    if (i < 100) {
+//        i = i + 1;
+//        $(".progress-time").css("width", i + "%");
+//        if (i <= 20) {
+//            $(".progress-time").addClass("bg-info");
+//        } else if (i <= 40) {
+//            $(".progress-time").addClass("bg-success");
+//        } else if (i <= 80) {
+//            $(".progress-time").addClass("bg-warning");
+//        } else {
+//            $(".progress-time").addClass("bg-danger");
+//        }
+//    }
+//};
 
 var textready;
 var showtext = function() {

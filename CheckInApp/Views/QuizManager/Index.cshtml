@@ -4,7 +4,7 @@
 @section Styles{
     <link href="~/Content/Quiz.css" rel="stylesheet" />
 }
-@model Checkinapp.ViewModels.QuizManagerView
+@model CheckInApp.ViewModels.QuizManagerView
 @if (Model != null)
 {
     if (Model.Process == (int)CheckInApp.Services.ProcessIDEnum.Finish)
@@ -100,10 +100,10 @@
             $.connection.hub.start(function() {
                 chat.server.group("RoomA");
             });
-            $.connection.hub.start().done(function () {
+            $.connection.hub.start().done(function() {
                 @if (Model.Process == (int) CheckInApp.Services.ProcessIDEnum.Process)
                 {
-                   @Html.Raw("StartQuiz();")
+                    @Html.Raw("StartQuiz();")
                 }
             });
 
@@ -170,5 +170,33 @@
                 }
             });
         }
+        var FinishTest = function() {
+            $.ajax({
+                url: '@Url.Action("FinishTest")',
+                cache: false,
+                type: "POST",
+                data: {
+                    "RoomId": '@Model.RoomId',
+                    "TestId": @Model.TestId,
+                },
+                success: function(data) {
+                    document.location.href = "/";
+                },
+                error: function(response) {
+                    bootoast.toast({
+                        message: response,
+                        type: 'danger'
+                    });
+                }
+            });
+        }
+        @if (Model.Process == (int) CheckInApp.Services.ProcessIDEnum.Process)
+        {
+            @Html.Raw("StartQuiz();")
+        }else if (Model.Process == (int)CheckInApp.Services.ProcessIDEnum.NextQuestion)
+        {
+            @Html.Raw("LoadTop();")
+        }
     </script>
+
 }

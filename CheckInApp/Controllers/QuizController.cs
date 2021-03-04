@@ -13,12 +13,12 @@ using Newtonsoft.Json;
 namespace CheckInApp.Controllers
 {
     [CustomAuthenticationFilter]
-
     public class QuizController : BaseController
     {
         private readonly dbEntities _db = new dbEntities();
         private readonly UserService _us = new UserService();
         private DatetimeService ds = new DatetimeService();
+        private readonly QRCodeService _qr = new QRCodeService();
         // GET: User
         public ActionResult Index(Guid RoomId)
         {
@@ -42,12 +42,18 @@ namespace CheckInApp.Controllers
             {
                 return null;
             }
+            var ci = _db.CheckinInfors.FirstOrDefault(x => x.RoomID == ro.ID && x.UserID == u.Id);
+            if (ci == null)
+            {
+                return null;
+            }
+
             var model = new QuizView
             {
                 TestName = ti.Name,
                 RoomId = ro.Guid,
                 TestId = ct.TestID,
-                Process = false
+                Process = (int)ProcessIDEnum.Create,
             };
             var process = _db.CourseQuestionProcesses.Where(x => x.RoomID == ro.ID && x.ProcessID != (int)ProcessIDEnum.Finish).OrderBy(x=>x.QuestionOrder).FirstOrDefault();
             if (process != null)
@@ -64,17 +70,22 @@ namespace CheckInApp.Controllers
                     context.Clients.All.addNewMessageToGroup("JoinRoom", JsonConvert.SerializeObject(JoinRoom));
                     return View(model);
                 }
+                else if(process.ProcessID == (int)ProcessIDEnum.Create)
+                {
+                    model.Process = (int)ProcessIDEnum.NextQuestion;
+                    return View(model);
+                }
                 else
                 {
-                    model.Process = true;
-                    return View(model);
+                    model.Process = (int)ProcessIDEnum.Process;
                 }
             }
             else
             {
-                model.Process = true;
+                model.Process = (int)ProcessIDEnum.Finish;
                 return View(model);
             }
+            return View(model);
         }
 
         public ActionResult _ListQuiz(int TestId, Guid RoomId)
@@ -113,6 +124,7 @@ namespace CheckInApp.Controllers
                         model.Choose2 = curentquestion.Choose2;
                         model.Choose3 = curentquestion.Choose3;
                         model.Choose4 = curentquestion.Choose4;
+                        model.OrderNumber = process.QuestionOrder;
                     }
                     return PartialView(model);
                 }
@@ -142,6 +154,12 @@ namespace CheckInApp.Controllers
             {
                 return null;
             }
+
+            var checkinfo = _db.CheckinInfors.FirstOrDefault(x => x.UserID == u.Id);
+            if(checkinfo == null)
+            {
+                return null;
+            }
             var curentquestion = _db.QuestionInfors.FirstOrDefault(x => x.ID == model.QuestionId);
             if (curentquestion == null)
             {
@@ -152,24 +170,35 @@ namespace CheckInApp.Controllers
             {
                 model.TimeAns = 0;
             }
-            var ar = new AnswerRecord()
+            else
             {
-                QuesionID = model.QuestionId,
-                CheckinInforID = u.Id,
-                AnswerOption = model.Choose.ToString(),
-                TimeScore = model.TimeAns,
-                RoomID = ro.ID,
-            };
-            _db.AnswerRecords.Add(ar);
-            _db.SaveChanges();
-            if (model.TimeAns > 0)
+                model.TimeAns = model.TimeAns * 5;
+            }
+
+            var asr = _db.AnswerRecords.FirstOrDefault(x =>
+                x.QuesionID == model.QuestionId && x.CheckinInforID == checkinfo.ID && x.RoomID == ro.ID);
+            if (asr == null)
             {
-                var ci = _db.CheckinInfors.FirstOrDefault(x => x.RoomID == ro.ID && x.UserID == u.Id);
-                if (ci != null)
+                var ar = new AnswerRecord()
                 {
-                    ci.CountingScore = ci.CountingScore + model.TimeAns;
-                    _db.Entry(ci).State = EntityState.Modified;
-                    _db.SaveChanges();
+                    QuesionID = model.QuestionId,
+                    CheckinInforID = checkinfo.ID,
+                    AnswerOption = model.Choose.ToString(),
+                    TimeScore = model.TimeAns,
+                    RoomID = ro.ID,
+                    Datetime = DateTime.Today
+                };
+                _db.AnswerRecords.Add(ar);
+                _db.SaveChanges();
+                if (model.TimeAns > 0)
+                {
+                    var ci = _db.CheckinInfors.FirstOrDefault(x => x.RoomID == ro.ID && x.UserID == u.Id);
+                    if (ci != null)
+                    {
+                        ci.CountingScore = ci.CountingScore.GetValueOrDefault() + model.TimeAns;
+                        _db.Entry(ci).State = EntityState.Modified;
+                        _db.SaveChanges();
+                    }
                 }
             }
             return new JsonResult() { Data = model, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
@@ -179,7 +208,8 @@ namespace CheckInApp.Controllers
         {
             var model = new TopResultUseView
             {
-                Data = new List<TopResultView>()
+                Data = new List<TopResultView>(),
+                FinishTest = false,
             };
             if (!(Session["UserViewModel"] is UserViewModel u))
             {
@@ -190,23 +220,48 @@ namespace CheckInApp.Controllers
             {
                 return null;
             }
+            var checkin = _db.CheckinInfors.FirstOrDefault(x => x.UserID == u.Id);
+            if (checkin == null)
+            {
+                return null;
+            }
             var ti = _db.TestInfors.FirstOrDefault(x => x.ID == TestId);
             if (ti == null)
             {
                 return null;
             }
-
             model.TestName = ti.Name;
             model.FullName = u.FullName;
-
-            List<CheckinInfor> listData = _db.CheckinInfors.Where(x => x.RoomID == ro.ID).OrderBy(x => x.CountingScore).ToList();
+            var ordernum = 0;
+             var listData = _db.CheckinInfors.Where(x => x.RoomID == ro.ID).OrderByDescending(x => x.CountingScore).ToList();
+            foreach (var item in listData)
+            {
+                if (item.UserID == u.Id)
+                {
+                    break;
+                }
+                ordernum++;
+            }
+            model.OrderNumber = ordernum + 1;
+            var tqp = _db.TestQuestionRecords.Where(x => x.TestID == TestId).ToList();
+            var totalCount = tqp.Count;
+            var at = _db.AnswerRecords.Where(x => x.CheckinInforID == checkin.ID).ToList();
+            model.AnsTime = at.OrderByDescending(x => x.ID).FirstOrDefault().TimeScore;
             model.Data = listData.Select(x => new TopResultView
             {
-                FalseAns = x.AnswerRecords.Count(a => a.TimeScore == 0),
+                Total = totalCount,
                 TrueAns = x.AnswerRecords.Count(a => a.TimeScore > 0),
                 FullName = x.UserInfor.EmployeeInfor.Fullname,
                 Score = x.CountingScore.GetValueOrDefault()
-            }).OrderByDescending(e => e.Score).ToList();
+            }).OrderByDescending(e => e.Score).Take(10).ToList();
+
+            var lP = _db.CourseQuestionProcesses
+                .Where(x => x.RoomID == ro.ID && x.ProcessID != (int) ProcessIDEnum.Finish).ToList();
+            if (!lP.Any())
+            {
+                model.FinishTest = true;
+                model.CheckinUrl = _qr.GetRoomPath(RoomId);
+            }
             return PartialView(model);
         }
     }
