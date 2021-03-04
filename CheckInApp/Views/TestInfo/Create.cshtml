@@ -126,9 +126,9 @@
             -webkit-user-drag: element;
         }
 
-        #columns, #columns li {
-            list-style-type: decimal;
-        }
+            #columns, #columns li {
+                list-style-type: decimal;
+            }
 
         .column {
             padding-bottom: 5px;
@@ -156,6 +156,26 @@
                 //border: 2px dashed #000;
                 border-top: 2px solid blue;
             }
+
+        #columns {
+            counter-reset: item;
+            margin-left: 0;
+            padding-left: 0;
+        }
+
+            #columns li {
+                display: block;
+                margin-bottom: .5em;
+                margin-left: 2em;
+            }
+
+                #columns li::before {
+                    display: inline-block;
+                    content: counter(item) ". ";
+                    counter-increment: item;
+                    width: 2em;
+                    margin-left: -2em;
+                }
     </style>
 
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -171,7 +191,7 @@
         {
             @Html.AntiForgeryToken()
             <div class="card-body">
-               
+
                 <div class="container-fluid">
                     <div class="row">
                         @if (TempData["Success"] != null)
@@ -188,14 +208,14 @@
                     <div class="row">
                         <div class="form-group">
                             <label>Tên Bài Test:</label>
-                            <input type="text" name="Name" class="form-control " required/>
+                            <input type="text" name="Name" class="form-control " required />
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group">
                             <label>Nội dung câu hỏi:</label>
                             <div class="container">
-                                <br/>
+                                <br />
                                 <div class="row">
                                     <div class="dual-list list-left col-md-5">
                                         <div class="well text-right">
@@ -203,7 +223,7 @@
                                                 <div class="col-md-12">
                                                     <div class="input-group">
                                                         <span class="input-group-addon fa fa-search"></span>
-                                                        <input type="text" name="SearchDualList" class="form-control" placeholder="search"/>
+                                                        <input type="text" name="SearchDualList" class="form-control" placeholder="search" />
                                                         <div class="btn-group border-none-left">
                                                             <label for="check-left" class="btn btn-default border-none-left">
                                                                 <input type="checkbox" id="check-left" class="badgebox selector"><span class="badge">&check;</span>
@@ -239,7 +259,7 @@
                                                                 <input type="checkbox" id="check-right" class="badgebox selector"><span class="badge">&check;</span>
                                                             </label>
                                                         </div>
-                                                        <input type="text" name="SearchDualList" class="form-control" placeholder="search"/>
+                                                        <input type="text" name="SearchDualList" class="form-control" placeholder="search" />
                                                         <span class="input-group-addon fa fa-search"></span>
                                                     </div>
                                                 </div>
@@ -257,11 +277,11 @@
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
-            @Html.HiddenFor(m=>m.IdQuestion)
+            @Html.HiddenFor(m => m.IdQuestion)
         }
-        
+
     </div>
-    
+
     @section Scripts{
         <script>
             $(function () {
@@ -272,7 +292,7 @@
                 $('.list-arrows button').click(function () {
                     var $button = $(this), actives = '';
                     if ($button.hasClass('move-left')) {
-                        actives = $('.list-right ul li.active'); 
+                        actives = $('.list-right ul li.active');
                         actives.clone().appendTo('.list-left ul');
                         actives.remove();
                     } else if ($button.hasClass('move-right')) {
@@ -286,7 +306,7 @@
                     var cols = document.querySelectorAll('#columns .column');
                     [].forEach.call(cols, addDnDHandlers);
                     var idqs = "";
-                    $('#columns li').each(function() {
+                    $('#columns li').each(function () {
                         idqs += $(this).attr("data-questId") + ","
                     });
                     $("#IdQuestion").val(idqs);
