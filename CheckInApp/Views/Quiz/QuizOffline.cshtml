@@ -1,0 +1,125 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Styles{
+    <link href="~/Content/Quiz.css" rel="stylesheet" />
+}
+@model CheckInApp.ViewModels.QuizView
+@if (Model != null)
+{
+    <div class="container-fluid quiz-manager">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="display: block">
+                    <h4 class="text-center">@Model.TestName</h4>
+                    <h6 class="text-center">Bài tập này có @Model.Total câu hỏi</h6>
+                </div>
+                <div class="progress" style="height: 2px">
+                    <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 100%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="modal-body">
+                    <p>Bấm bắt đầu để thự hiện bài test.</p>
+                </div>
+                @if (Model.Process == (int)CheckInApp.Services.ProcessIDEnum.Finish)
+                {
+                    <div class="modal-footer text-muted">
+                        <button type="button" class="btn btn-default" onclick="DoAgain()">Làm lại</button>
+                    </div>
+                }
+                else
+                {
+                    <div class="modal-footer text-muted">
+                        <button type="button" class="btn btn-default" onclick="LoadQuestion()">Bắt đầu</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    @section Scripts{
+        <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+        <script src="~/signalr/hubs"></script>
+        <script>
+            var ChooseAns = function(el) {
+                $('#loadbar').show();
+                $(".quiz .ans").each(function() {
+                    if (parseInt($(this).attr("data-choose")) == el) {
+                        $(this).addClass("btn-dark");
+                    } else {
+                        $(this).removeClass("btn-primary btn-danger btn-warning btn-success").addClass("btn-secondary");
+                    }
+                });
+                $('#answer').fadeIn();
+                $.ajax({
+                    url: '@Url.Action("AnsewrNon")',
+                    cache: false,
+                    type: "POST",
+                    data: {
+                        "RoomId": '@Model.RoomId',
+                        "TestId": @Model.TestId,
+                        "QuestionId": $("#QuestionId").val(),
+                        "Choose": el,
+                        "TimeAns": $("#AnsTime").val()
+                    },
+                    success: function(data) {
+                        LoadTop();
+                    },
+                    error: function(response) {
+                        bootoast.toast({
+                            message: response,
+                            type: 'danger'
+                        });
+                    }
+                });
+            }
+            var LoadQuestion = function() {
+                var url = "@Url.Action("_ListQuizNon", new {TestId = Model.TestId, RoomId = Model.RoomId})";
+                url = url.replace("amp;", '')
+                $.get(url,
+                    function(data) {
+                        if (data.length > 1) {
+                            $(".quiz-manager .modal-content").html(data);
+                            counter_init("#counters_1");
+                        }
+                    });
+            };
+            var DoAgain = function() {
+                $.ajax({
+                    url: '@Url.Action("DoAgain")',
+                    cache: false,
+                    type: "POST",
+                    data: {
+                        "RoomId": '@Model.RoomId',
+                        "TestId": @Model.TestId,
+                        "QuestionId": $("#QuestionId").val(),
+                        "TimeAns": $("#AnsTime").val()
+                    },
+                    success: function(data) {
+                        LoadQuestion();
+                    },
+                    error: function(response) {
+                        bootoast.toast({
+                            message: response,
+                            type: 'danger'
+                        });
+                    }
+                });
+            };
+            var LoadTop = function() {
+                var url = "@Url.Action("_ListAnsNon", new {TestId = Model.TestId, RoomId = Model.RoomId})";
+                url = url.replace("amp;", '')
+                $.get(url,
+                    function(data) {
+                        if (data.length > 1) {
+                            $(".quiz-manager .modal-content").html(data);
+                        }
+                    });
+            }
+        </script>
+        <script>
+            let pageId = 1;
+        </script>
+        <script src="~/Scripts/Quiz.js"></script>
+        <script src="~/Scripts/counter.js"></script>
+    }
+}

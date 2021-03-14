@@ -30,6 +30,7 @@ namespace CheckInApp.ViewModels
         public Guid RoomId { get; set; }
         public int TestId { get; set; }
         public int Process { get; set; }
+        public int Total { get; set; }
     }
 
     public class QuizManagerListView

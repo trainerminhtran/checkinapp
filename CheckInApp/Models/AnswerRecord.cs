@@ -21,6 +21,8 @@ namespace CheckInApp.Models
         public int TimeScore { get; set; }
         public Nullable<System.DateTime> Datetime { get; set; }
         public Nullable<int> RoomID { get; set; }
+        public Nullable<int> CourseId { get; set; }
+        public Nullable<int> CountAnswer { get; set; }
     
         public virtual CheckinInfor CheckinInfor { get; set; }
         public virtual QuestionInfor QuestionInfor { get; set; }

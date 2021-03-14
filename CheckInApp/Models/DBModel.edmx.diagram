@@ -16,7 +16,6 @@
         <EntityTypeShape EntityType="CheckinAppModel.ContentInfor" Width="1.5" PointX="3" PointY="33.125" IsExpanded="true" />
         <EntityTypeShape EntityType="CheckinAppModel.ContentModelRecord" Width="1.5" PointX="15.25" PointY="26.875" IsExpanded="true" />
         <EntityTypeShape EntityType="CheckinAppModel.CourseInfor" Width="1.5" PointX="3" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CheckinAppModel.CourseTestRecord" Width="1.5" PointX="5.25" PointY="9.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CheckinAppModel.DistrictInfor" Width="1.5" PointX="0.75" PointY="16.875" IsExpanded="true" />
         <EntityTypeShape EntityType="CheckinAppModel.EmployeeInfor" Width="1.5" PointX="5.25" PointY="6.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CheckinAppModel.GiftCourseRecord" Width="1.5" PointX="8.25" PointY="12" IsExpanded="true" />
@@ -47,11 +46,9 @@
         <AssociationConnector Association="CheckinAppModel.FK_ContentModelRecord_ContentInfor" ManuallyRouted="false" />
         <AssociationConnector Association="CheckinAppModel.FK_ContentModelRecord_ModelInfor" ManuallyRouted="false" />
         <AssociationConnector Association="CheckinAppModel.FK_CourseInfor_PlatformInfor" ManuallyRouted="false" />
-        <AssociationConnector Association="CheckinAppModel.FK_CourseTestRecord_CourseInfor" ManuallyRouted="false" />
         <AssociationConnector Association="CheckinAppModel.FK_GiftCourseRecord_CourseInfor" ManuallyRouted="false" />
         <AssociationConnector Association="CheckinAppModel.FK_RoomInfor_CourseInfor" ManuallyRouted="false" />
         <AssociationConnector Association="CheckinAppModel.FK_RoomInfor_CourseInfor1" ManuallyRouted="false" />
-        <AssociationConnector Association="CheckinAppModel.FK_CourseTestRecord_TestInfor" ManuallyRouted="false" />
         <AssociationConnector Association="CheckinAppModel.FK_DistrictInfor_ProvinceInfor" ManuallyRouted="false" />
         <AssociationConnector Association="CheckinAppModel.FK_StoreInfor_DistrictInfor" ManuallyRouted="false" />
         <AssociationConnector Association="CheckinAppModel.FK_EmployeeInfor_StoreInfor" ManuallyRouted="false" />
@@ -74,16 +71,20 @@
         <AssociationConnector Association="CheckinAppModel.FK_CheckinImageRecord_CheckinInfor" />
         <AssociationConnector Association="CheckinAppModel.FK_CheckinInfor_RoomInfor" />
         <AssociationConnector Association="CheckinAppModel.FK_CheckinInfor_UserInfor" />
-        <EntityTypeShape EntityType="CheckinAppModel.AnswerRecord" Width="1.5" PointX="17.875" PointY="11.75" />
-        <AssociationConnector Association="CheckinAppModel.FK_AnswerRecord_CheckinInfor" />
         <EntityTypeShape EntityType="CheckinAppModel.TestQuestionRecord" Width="1.5" PointX="15.25" PointY="16.25" />
         <AssociationConnector Association="CheckinAppModel.FK_TestQuestionRecord_TestInfor" />
         <EntityTypeShape EntityType="CheckinAppModel.QuestionInfor" Width="1.5" PointX="13" PointY="14.375" />
-        <AssociationConnector Association="CheckinAppModel.FK_AnswerRecord_QuestionInfor" />
         <AssociationConnector Association="CheckinAppModel.FK_QuestionInfor_CatInfor" />
         <AssociationConnector Association="CheckinAppModel.FK_QuestionInfor_LevelInfor" />
         <AssociationConnector Association="CheckinAppModel.FK_TestQuestionRecord_QuestionInfor" />
-      </Diagram>
+        <EntityTypeShape EntityType="CheckinAppModel.CourseTestRecord" Width="1.5" PointX="8.25" PointY="15.875" />
+        <AssociationConnector Association="CheckinAppModel.FK_CourseTestRecord_CourseInfor" />
+        <AssociationConnector Association="CheckinAppModel.FK_CourseTestRecord_TestInfor" />
+        <EntityTypeShape EntityType="CheckinAppModel.CourseQuestionUserProcess" Width="1.5" PointX="12.375" PointY="3.75" />
+        <EntityTypeShape EntityType="CheckinAppModel.AnswerRecord" Width="1.5" PointX="17.625" PointY="13.125" />
+        <AssociationConnector Association="CheckinAppModel.FK_AnswerRecord_CheckinInfor" />
+        <AssociationConnector Association="CheckinAppModel.FK_AnswerRecord_QuestionInfor" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

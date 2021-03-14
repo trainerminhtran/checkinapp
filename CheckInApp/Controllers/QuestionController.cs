@@ -99,6 +99,12 @@ namespace CheckInApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            var itemQ = db.CourseQuestionProcesses.FirstOrDefault(x => x.QuestionID == id);
+            if (itemQ != null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             var t = db.QuestionInfors.Find(id);
             if (t == null)
             {

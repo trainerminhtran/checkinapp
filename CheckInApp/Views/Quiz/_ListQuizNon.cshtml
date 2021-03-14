@@ -1,0 +1,55 @@
+﻿
+@model CheckInApp.ViewModels.QuizManagerListView
+@if (Model != null)
+{
+    <div class="modal-header" style="display: block">
+        <h4 class="text-center">@Model.TestName</h4>
+        <h6 class="text-center">Bài tập này có @Model.Total câu hỏi</h6>
+    </div>
+    <div class="progress" style="height: 2px">
+        <div class="progress-bar progress-bar-striped" role="progressbar" style="width: @(Model.OrderNumber * 100 / Model.Total)%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <div class="modal-header">
+        <h5>@Model.OrderNumber. @Model.QuestionContent</h5>
+    </div>
+    <div class="modal-body">
+        <div id="loadbar" style="display: none;">
+            <div id="circle">
+                <div class="loader">
+                    <div class="loader">
+                        <div class="loader">
+                            <div class="loader">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-dack">
+                <div class="animate one" style="left: 19%">
+                    <span>Đ</span><span>a</span><span>n</span><span>g</span>&nbsp;<span>g</span><span>h</span><span>i</span>&nbsp;<span>n</span><span>h</span><span>ậ</span><span>n</span>&nbsp;<span>c</span><span>â</span><span>u</span>&nbsp;<span>t</span><span>r</span><span>ả</span>&nbsp;<span>l</span><span>ờ</span><span>i</span>
+                </div>
+            </div>
+        </div>
+        <div id="counters_1">
+            <span style="float: left">
+                0:<span class="counter" data-TargetNum="@Model.Time" data-Speed="@(Model.Time * 1000)"
+                        data-Direction="reverse" data-Easing="linear"></span>
+            </span><span class="text-center update-point" style="display: block">80 Point</span>
+        </div>
+        <div class="progress" style="margin-bottom: 1rem;">
+            <div class="progress-bar progress-bar-striped progress-time" style="min-width: 20px;">
+            </div>
+        </div>
+        <div class="quiz" id="quiz" data-toggle="buttons">
+            <label class="element-animation1 btn btn-lg btn-primary btn-block ans" onclick="ChooseAns(1)" data-choose="1">@Model.Choose1</label>
+            <label class="element-animation2 btn btn-lg btn-danger btn-block ans" onclick="ChooseAns(2)" data-choose="2">@Model.Choose2</label>
+            <label class="element-animation3 btn btn-lg btn-warning btn-block ans" onclick="ChooseAns(3)" data-choose="3">@Model.Choose3</label>
+            <label class="element-animation4 btn btn-lg btn-success btn-block ans" onclick="ChooseAns(4)" data-choose="4">@Model.Choose4</label>
+        </div>
+    </div>
+    @Html.HiddenFor(m=>m.AnsTime)
+    @*<div class="modal-footer text-muted">
+        <span id="answer" style="display: none">Hệ thống đã ghi nhận câu trả lời của bạn, vui lòng đợi câu hỏi tiếp theo.</span>
+    </div>*@
+    @Html.HiddenFor(m=>m.QuestionId)
+}

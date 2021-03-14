@@ -51,7 +51,6 @@ function doCount(num, index, speed, groupClass, direction, easing) {
         easing: easing,
             step: function (now) {
                 var i = (20 - (num - Math.floor(now))) * 5
-                console.log("Progress: " +i)
                 $(".progress-time").css("width", i + "%");
                 if (i <= 20) {
                     $(".progress-time").addClass("bg-info");
@@ -63,7 +62,6 @@ function doCount(num, index, speed, groupClass, direction, easing) {
                     $(".progress-time").addClass("bg-danger");
                 }
                 $(".update-point").html(parseInt((num - Math.floor(now)) * 5) + " Point");
-                console.log("math :" + (num - Math.floor(now)));
                 $("#AnsTime").val(num - Math.floor(now));
             if (direction == 'reverse') {
                 if (num - Math.floor(now) < 10) {
@@ -75,30 +73,33 @@ function doCount(num, index, speed, groupClass, direction, easing) {
                 $(this).text(Math.floor(now));
             }
         },
-        complete: completeTime
+        done: completeTime
     });
 }
 
 function completeTime() {
     if (pageId == 1) {
-        setTimeout(function () {
-            $('#loadbar').show();
-            var i = 0;
-            $(".quiz .ans").each(function (index) {
-                if ($(this).attr("data-chose") == "1") {
-                    i = 1;
-                }
-            });
-            if (i == 0) {
-                $("#answer")
-                    .html("Thời gian đã hết bạn chưa chọn câu trả lời nào, vui lòng đợi câu hỏi tiếp theo.");
-                $('#answer').fadeIn();
-                $(".quiz .ans").removeClass("btn-primary btn-danger btn-warning btn-success")
-                    .addClass("btn-secondary");
-            }
-        },
-            1000);
-        ChooseAns();
+        if (parseInt($(".counter").html()) == 0) {
+            setTimeout(function () {
+                    $('#loadbar').show();
+                    var i = 0;
+                    $(".quiz .ans").each(function (index) {
+                        if ($(this).attr("data-chose") == "1") {
+                            i = 1;
+                        }
+                    });
+                    if (i == 0) {
+                        $("#answer")
+                            .html("Thời gian đã hết bạn chưa chọn câu trả lời nào, vui lòng đợi câu hỏi tiếp theo.");
+                        $('#answer').fadeIn();
+                        $(".quiz .ans").removeClass("btn-primary btn-danger btn-warning btn-success")
+                            .addClass("btn-secondary");
+                    }
+                },
+                1000);
+
+            ChooseAns();
+        }
     } else {
         setTimeout(function () {
             $(".quiz .ans").removeClass("btn-primary btn-danger btn-warning btn-warning btn-success")

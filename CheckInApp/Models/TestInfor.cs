@@ -17,8 +17,8 @@ namespace CheckInApp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TestInfor()
         {
-            this.CourseTestRecords = new HashSet<CourseTestRecord>();
             this.TestQuestionRecords = new HashSet<TestQuestionRecord>();
+            this.CourseTestRecords = new HashSet<CourseTestRecord>();
         }
     
         public int ID { get; set; }
@@ -27,8 +27,8 @@ namespace CheckInApp.Models
         public Nullable<System.DateTime> datetime { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CourseTestRecord> CourseTestRecords { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TestQuestionRecord> TestQuestionRecords { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CourseTestRecord> CourseTestRecords { get; set; }
     }
 }

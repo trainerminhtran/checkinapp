@@ -1,4 +1,14 @@
 ﻿@model  CheckInApp.ViewModels.ListAnsManager
+<div class="modal-header">
+    @if (Model.EndProcess == 1)
+    {
+        <button type="button" class="btn btn-default" onclick="FinishTest()">Kết thúc bài test</button>
+    }
+    else
+    {
+        <button type="button" class="btn btn-default" onclick="NextQuiz()">Câu hỏi tiếp theo</button>
+    }
+</div>
 <div class="modal-body">
     <header>
         <h4 class="text-center">Bảng điểm hiện tại</h4>
@@ -35,13 +45,4 @@
     </table>
 </div>
 <div class="modal-footer text-muted">
-    @if (Model.EndProcess == 1)
-    {
-        <button type="button" class="btn btn-default" onclick="FinishTest()">Kết thúc bài test</button>
-    }
-    else
-    {
-        <button type="button" class="btn btn-default" onclick="NextQuiz()">Câu hỏi tiếp theo</button>
-    }
-
 </div>

@@ -52,6 +52,7 @@ namespace CheckInApp.Controllers
                 IsMotivationGift = false,
                 RoomGuid = ro.Guid,
                 DoTest = false,
+                TypeTest = (int)TestType.RealTime
             };
             
             var ischeckin = _db.CheckinInfors.FirstOrDefault(x => x.RoomInfor.Guid == id && x.UserInfor.ID == u.Id);
@@ -61,6 +62,14 @@ namespace CheckInApp.Controllers
                 uvm.checkinId = ischeckin.ID;
                 uvm.IsMotivationGift = ischeckin.IsMotivationGift.GetValueOrDefault();
                 var ans = _db.AnswerRecords.Where(x => x.CheckinInforID == ischeckin.ID).ToList();
+                var testInfo = _db.CourseTestRecords.FirstOrDefault(x => x.CourseID == ro.CourseID);
+                if (testInfo != null)
+                {
+                    if (testInfo.TestTypeID == (int) TestType.NonRealTime)
+                    {
+                        uvm.TypeTest = (int) TestType.NonRealTime;
+                    }
+                }
                 if (ans.Any())
                 {
                     uvm.DoTest = true;

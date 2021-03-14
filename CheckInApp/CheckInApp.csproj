@@ -247,6 +247,9 @@
     <Compile Include="Models\CourseQuestionProcess.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CourseQuestionUserProcess.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CourseTestRecord.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
@@ -2527,6 +2530,9 @@
     <Content Include="Views\TestInfo\Index.cshtml" />
     <Content Include="Views\TestInfo\Create.cshtml" />
     <Content Include="Views\TestInfo\Delete.cshtml" />
+    <Content Include="Views\Quiz\QuizOffline.cshtml" />
+    <Content Include="Views\Quiz\_ListQuizNon.cshtml" />
+    <Content Include="Views\Quiz\_ListAnsNon.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\FileUploads\" />

@@ -36,7 +36,6 @@ namespace CheckInApp.Models
         public virtual DbSet<ContentInfor> ContentInfors { get; set; }
         public virtual DbSet<ContentModelRecord> ContentModelRecords { get; set; }
         public virtual DbSet<CourseInfor> CourseInfors { get; set; }
-        public virtual DbSet<CourseTestRecord> CourseTestRecords { get; set; }
         public virtual DbSet<DistrictInfor> DistrictInfors { get; set; }
         public virtual DbSet<EmployeeInfor> EmployeeInfors { get; set; }
         public virtual DbSet<GiftCourseRecord> GiftCourseRecords { get; set; }
@@ -59,8 +58,10 @@ namespace CheckInApp.Models
         public virtual DbSet<PermissionInfor> PermissionInfors { get; set; }
         public virtual DbSet<CourseQuestionProcess> CourseQuestionProcesses { get; set; }
         public virtual DbSet<CheckinInfor> CheckinInfors { get; set; }
-        public virtual DbSet<AnswerRecord> AnswerRecords { get; set; }
         public virtual DbSet<TestQuestionRecord> TestQuestionRecords { get; set; }
         public virtual DbSet<QuestionInfor> QuestionInfors { get; set; }
+        public virtual DbSet<CourseTestRecord> CourseTestRecords { get; set; }
+        public virtual DbSet<CourseQuestionUserProcess> CourseQuestionUserProcesses { get; set; }
+        public virtual DbSet<AnswerRecord> AnswerRecords { get; set; }
     }
 }

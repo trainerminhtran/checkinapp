@@ -51,6 +51,8 @@ namespace CheckInApp.Controllers
                 rv.Status = r.Status.GetValueOrDefault();
                 rvm.Add(rv);
             }
+
+            rvm = rvm.OrderByDescending(x => x.Id).ToList();
             return View(rvm);
         }
 
@@ -95,19 +97,22 @@ namespace CheckInApp.Controllers
                 _db.SaveChanges();
 
                 #region gen sắn bộ test
-                var ct = _db.CourseTestRecords.FirstOrDefault(x => x.CourseID == cour.ID);
-                var tqr = _db.TestQuestionRecords.Where(x => x.TestID == ct.TestID).ToList();
-                var listQP = tqr.Select(x => new CourseQuestionProcess
+                var ct = _db.CourseTestRecords.FirstOrDefault(x => x.CourseID == cour.ID && x.TestTypeID ==  (int)TestType.RealTime);
+                if (ct != null)
                 {
-                    ProcessID = (int)ProcessIDEnum.Create,
-                    QuestionID = x.QuestionID,
-                    QuestionOrder = x.OrderNumber.GetValueOrDefault(),
-                    RoomID = ro.ID,
-                    TimeEnd = 0,
-                }).ToList();
+                    var tqr = _db.TestQuestionRecords.Where(x => x.TestID == ct.TestID).ToList();
+                    var listQP = tqr.Select(x => new CourseQuestionProcess
+                    {
+                        ProcessID = (int)ProcessIDEnum.Create,
+                        QuestionID = x.QuestionID,
+                        QuestionOrder = x.OrderNumber.GetValueOrDefault(),
+                        RoomID = ro.ID,
+                        TimeEnd = 0,
+                    }).ToList();
 
-                _db.CourseQuestionProcesses.AddRange(listQP);
-                _db.SaveChanges();
+                    _db.CourseQuestionProcesses.AddRange(listQP);
+                    _db.SaveChanges();
+                }
                 #endregion
             }
             catch (Exception ex)

@@ -30,6 +30,8 @@
     <Property Name="TimeScore" Type="int" Nullable="false" />
     <Property Name="Datetime" Type="datetime" />
     <Property Name="RoomID" Type="int" />
+    <Property Name="CourseId" Type="int" />
+    <Property Name="CountAnswer" Type="int" />
   </EntityType>
   <EntityType Name="AreaInfor">
     <Key>
@@ -133,6 +135,18 @@
     <Property Name="QuestionOrder" Type="int" Nullable="false" />
     <Property Name="TimeEnd" Type="bigint" />
   </EntityType>
+  <EntityType Name="CourseQuestionUserProcess">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="QuestionID" Type="int" Nullable="false" />
+    <Property Name="ProcessID" Type="int" Nullable="false" />
+    <Property Name="RoomID" Type="int" Nullable="false" />
+    <Property Name="QuestionOrder" Type="int" Nullable="false" />
+    <Property Name="TimeEnd" Type="bigint" />
+    <Property Name="CheckinInforId" Type="bigint" />
+  </EntityType>
   <EntityType Name="CourseTestRecord">
     <Key>
       <PropertyRef Name="ID" />
@@ -141,6 +155,7 @@
     <Property Name="TestID" Type="int" Nullable="false" />
     <Property Name="CourseID" Type="int" Nullable="false" />
     <Property Name="Status" Type="bit" />
+    <Property Name="TestTypeID" Type="int" />
   </EntityType>
   <EntityType Name="DistrictInfor">
     <Key>
@@ -873,6 +888,7 @@
     <EntitySet Name="ContentModelRecord" EntityType="Self.ContentModelRecord" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CourseInfor" EntityType="Self.CourseInfor" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CourseQuestionProcess" EntityType="Self.CourseQuestionProcess" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CourseQuestionUserProcess" EntityType="Self.CourseQuestionUserProcess" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CourseTestRecord" EntityType="Self.CourseTestRecord" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DistrictInfor" EntityType="Self.DistrictInfor" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EmployeeInfor" EntityType="Self.EmployeeInfor" Schema="dbo" store:Type="Tables" />

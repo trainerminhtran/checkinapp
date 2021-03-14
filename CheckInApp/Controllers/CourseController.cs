@@ -82,6 +82,7 @@ namespace CheckInApp.Controllers
                     {
                         TestID = courseInfor.TestId,
                         CourseID = cou.ID,
+                        TestTypeID = courseInfor.TestTypeID,
                         Status = true,
                     });
                     db.SaveChanges();

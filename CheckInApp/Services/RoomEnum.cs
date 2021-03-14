@@ -26,4 +26,10 @@ namespace CheckInApp.Services
         Finish = 3,
         NextQuestion = 4,
     }
+
+    public enum TestType
+    {
+        RealTime =1,
+        NonRealTime = 2,
+    }
 }

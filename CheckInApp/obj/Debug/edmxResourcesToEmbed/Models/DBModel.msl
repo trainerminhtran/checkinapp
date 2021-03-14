@@ -107,16 +107,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="CourseTestRecords">
-      <EntityTypeMapping TypeName="CheckinAppModel.CourseTestRecord">
-        <MappingFragment StoreEntitySet="CourseTestRecord">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="TestID" ColumnName="TestID" />
-          <ScalarProperty Name="CourseID" ColumnName="CourseID" />
-          <ScalarProperty Name="Status" ColumnName="Status" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="DistrictInfors">
       <EntityTypeMapping TypeName="CheckinAppModel.DistrictInfor">
         <MappingFragment StoreEntitySet="DistrictInfor">
@@ -362,19 +352,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="AnswerRecords">
-      <EntityTypeMapping TypeName="CheckinAppModel.AnswerRecord">
-        <MappingFragment StoreEntitySet="AnswerRecord">
-          <ScalarProperty Name="RoomID" ColumnName="RoomID" />
-          <ScalarProperty Name="Datetime" ColumnName="Datetime" />
-          <ScalarProperty Name="TimeScore" ColumnName="TimeScore" />
-          <ScalarProperty Name="AnswerOption" ColumnName="AnswerOption" />
-          <ScalarProperty Name="CheckinInforID" ColumnName="CheckinInforID" />
-          <ScalarProperty Name="QuesionID" ColumnName="QuesionID" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="TestQuestionRecords">
       <EntityTypeMapping TypeName="CheckinAppModel.TestQuestionRecord">
         <MappingFragment StoreEntitySet="TestQuestionRecord">
@@ -400,6 +377,45 @@
           <ScalarProperty Name="QuestionContent" ColumnName="QuestionContent" />
           <ScalarProperty Name="LevelID" ColumnName="LevelID" />
           <ScalarProperty Name="CatID" ColumnName="CatID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CourseTestRecords">
+      <EntityTypeMapping TypeName="CheckinAppModel.CourseTestRecord">
+        <MappingFragment StoreEntitySet="CourseTestRecord">
+          <ScalarProperty Name="TestTypeID" ColumnName="TestTypeID" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+          <ScalarProperty Name="TestID" ColumnName="TestID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CourseQuestionUserProcesses">
+      <EntityTypeMapping TypeName="CheckinAppModel.CourseQuestionUserProcess">
+        <MappingFragment StoreEntitySet="CourseQuestionUserProcess">
+          <ScalarProperty Name="CheckinInforId" ColumnName="CheckinInforId" />
+          <ScalarProperty Name="TimeEnd" ColumnName="TimeEnd" />
+          <ScalarProperty Name="QuestionOrder" ColumnName="QuestionOrder" />
+          <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+          <ScalarProperty Name="ProcessID" ColumnName="ProcessID" />
+          <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AnswerRecords">
+      <EntityTypeMapping TypeName="CheckinAppModel.AnswerRecord">
+        <MappingFragment StoreEntitySet="AnswerRecord">
+          <ScalarProperty Name="CountAnswer" ColumnName="CountAnswer" />
+          <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+          <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+          <ScalarProperty Name="Datetime" ColumnName="Datetime" />
+          <ScalarProperty Name="TimeScore" ColumnName="TimeScore" />
+          <ScalarProperty Name="AnswerOption" ColumnName="AnswerOption" />
+          <ScalarProperty Name="CheckinInforID" ColumnName="CheckinInforID" />
+          <ScalarProperty Name="QuesionID" ColumnName="QuesionID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>

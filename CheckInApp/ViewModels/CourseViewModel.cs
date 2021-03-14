@@ -14,6 +14,7 @@ namespace Checkinapp.ViewModels
         public string Datetime { get; set; }
         public int platformID { get; set; }
         public int TestId { get; set; }
+        public int TestTypeID { get; set; }
         public List<int> contentIDs { get; set; }
     }
 
