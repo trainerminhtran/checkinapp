@@ -15,7 +15,7 @@ namespace CheckInApp.Services
 
         public DateTime GetDateTimeNow()
         {
-            return DateTime.Parse(DateTime.Today.Day + "/" + DateTime.Today.Month + "/" + DateTime.Today.Year, new CultureInfo("vi-VN", false));
+            return DateTime.Now;
         }
 
         public string GetVNDateString(DateTime dt)

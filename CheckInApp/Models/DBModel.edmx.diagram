@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ce4246ff3cbd4fcd9930852b82f8b0f6" Name="Diagram1">
+      <Diagram DiagramId="ce4246ff3cbd4fcd9930852b82f8b0f6" Name="Diagram1" ZoomLevel="71">
         <EntityTypeShape EntityType="CheckinAppModel.AccountInfor" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CheckinAppModel.AnswerInfor" Width="1.5" PointX="13" PointY="11.375" IsExpanded="true" />
         <EntityTypeShape EntityType="CheckinAppModel.AreaInfor" Width="1.5" PointX="1.5" PointY="30.125" IsExpanded="true" />
