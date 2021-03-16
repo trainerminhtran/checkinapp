@@ -1,12 +1,16 @@
-﻿@model  CheckInApp.ViewModels.ListAnsManager
+﻿@using CheckInApp.Services
+@model  CheckInApp.ViewModels.ListAnsManager
 <div class="modal-header">
-    @if (Model.EndProcess == 1)
+    @if (Model.TypeTest == (int) TestType.RealTime)
     {
-        <button type="button" class="btn btn-default" onclick="FinishTest()">Kết thúc bài test</button>
-    }
-    else
-    {
-        <button type="button" class="btn btn-default" onclick="NextQuiz()">Câu hỏi tiếp theo</button>
+        if (Model.EndProcess == 1)
+         {
+             <button type="button" class="btn btn-default" onclick="FinishTest()">Kết thúc bài test</button>
+         }
+         else
+         {
+             <button type="button" class="btn btn-default" onclick="NextQuiz()">Câu hỏi tiếp theo</button>
+         }
     }
 </div>
 <div class="modal-body">

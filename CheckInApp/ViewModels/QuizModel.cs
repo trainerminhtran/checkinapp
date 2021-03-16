@@ -23,6 +23,7 @@ namespace CheckInApp.ViewModels
         public Guid RoomId { get; set; }
         public int TestId { get; set; }
         public int Process { get; set; }
+        public int TypeTest { get; set; }
     }
     public class QuizView
     {
@@ -77,6 +78,7 @@ namespace CheckInApp.ViewModels
     {
         public List<TopResultView> Data { get; set;}
         public int EndProcess { get; set; }
+        public int TypeTest { get; set; }
     }
 
     public class TopResultUseView

@@ -1,4 +1,5 @@
-﻿@model IEnumerable<CheckInApp.ViewModels.RoomViewModel>
+﻿@using CheckInApp.Services
+@model IEnumerable<CheckInApp.ViewModels.RoomViewModel>
 
 @{
     ViewBag.Title = "Danh sách Lớp học";
@@ -113,7 +114,15 @@
                     <input type="hidden" name="id" value="@item.Id" />
                     <button type="submit" class="btn btn-warning">Delete</button>
                 }
-                <a class="btn btn-primary" href="@Url.Action("Index","QuizManager",new {RoomId = item.RoomGuid})" role="button">Test</a>
+                @if (item.TypeTest == (int)TestType.RealTime)
+                {
+                    <a class="btn btn-primary" href="@Url.Action("Index","QuizManager",new {RoomId = item.RoomGuid,TypeTest = (int)TestType.RealTime})" role="button">Test</a>
+                }
+                else
+                {
+                    <a class="btn btn-primary" href="@Url.Action("Index","QuizManager",new {RoomId = item.RoomGuid,TypeTest = (int)TestType.NonRealTime})" role="button">Xem kết quả</a>
+                }
+
 
             </td>
             <td>

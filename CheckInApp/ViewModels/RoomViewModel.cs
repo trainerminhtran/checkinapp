@@ -19,6 +19,7 @@ namespace CheckInApp.ViewModels
         public string RoomUrl{ get; set; }
         public Guid RoomGuid { get; set; }
         public bool IsDisable { get; set; }
+        public int TypeTest { get; set; }
     }
 
 

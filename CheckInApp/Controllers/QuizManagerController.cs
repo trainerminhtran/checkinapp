@@ -18,7 +18,7 @@ namespace CheckInApp.Controllers
         private readonly UserService _us = new UserService();
         private DatetimeService ds = new DatetimeService();
         // GET: User
-        public ActionResult Index(Guid RoomId)
+        public ActionResult Index(Guid RoomId,int TypeTest)
         {
             RoomInfor ro = _db.RoomInfors.FirstOrDefault(x => x.Guid == RoomId);
             if (ro == null)
@@ -41,6 +41,7 @@ namespace CheckInApp.Controllers
                 RoomId = ro.Guid,
                 TestId = ct.TestID,
                 Process = (int)ProcessIDEnum.Create,
+                TypeTest = TypeTest,
             };
             CourseQuestionProcess process = _db.CourseQuestionProcesses.Where(x => x.RoomID == ro.ID && x.ProcessID != (int)ProcessIDEnum.Finish).OrderBy(x => x.QuestionOrder).FirstOrDefault();
             if (process == null)
@@ -168,12 +169,13 @@ namespace CheckInApp.Controllers
             }
             return new JsonResult() { Data = model, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
-        public ActionResult _ListAns(int TestId, Guid RoomId)
+        public ActionResult _ListAns(int TestId, Guid RoomId,int TypeTest)
         {
             var model = new ListAnsManager
             {
                 Data = new List<TopResultView>(),
                 EndProcess = 0,
+                TypeTest = TypeTest
             };
             RoomInfor ro = _db.RoomInfors.FirstOrDefault(x => x.Guid == RoomId);
             if (ro == null)
@@ -197,7 +199,6 @@ namespace CheckInApp.Controllers
             }).OrderByDescending(u=>u.Score).ToList();
             return PartialView(model);
         }
-
         [HttpPost]
         public JsonResult FinishTest(int TestId, Guid RoomId)
         {

@@ -4,6 +4,7 @@
 @section Styles{
     <link href="~/Content/Quiz.css" rel="stylesheet" />
 }
+@using CheckInApp.Services
 @model CheckInApp.ViewModels.QuizManagerView
 @if (Model != null)
 {
@@ -100,10 +101,13 @@
             $.connection.hub.start(function() {
                 chat.server.group("RoomA");
             });
-            $.connection.hub.start().done(function() {
-                @if (Model.Process == (int) CheckInApp.Services.ProcessIDEnum.Process)
+            $.connection.hub.start().done(function () {
+                @if (Model.TypeTest != (int)TestType.NonRealTime)
                 {
-                    @Html.Raw("StartQuiz();")
+                     if (Model.Process == (int) CheckInApp.Services.ProcessIDEnum.Process)
+                     {
+                         @Html.Raw("StartQuiz();")
+                     }
                 }
             });
 
@@ -135,8 +139,8 @@
             StartQuiz();
         }
         var LoadTop = function() {
-            var url = "@Url.Action("_ListAns", new {TestId = Model.TestId, RoomId = Model.RoomId})";
-            url = url.replace("amp;", '')
+            var url = "@Url.Action("_ListAns", new {TestId = Model.TestId, RoomId = Model.RoomId, TypeTest = Model.TypeTest})";
+            url = url.replace("amp;", '').replace("amp;", '')
             $.get(url,
                 function(data) {
                     if (data.length > 1) {
@@ -190,13 +194,22 @@
                 }
             });
         }
-        @if (Model.Process == (int) CheckInApp.Services.ProcessIDEnum.Process)
-        {
-            @Html.Raw("StartQuiz();")
-        }else if (Model.Process == (int)CheckInApp.Services.ProcessIDEnum.NextQuestion)
+        @if (Model.TypeTest == (int)TestType.NonRealTime)
         {
             @Html.Raw("LoadTop();")
         }
+        else
+        {
+             if (Model.Process == (int) CheckInApp.Services.ProcessIDEnum.Process)
+             {
+                @Html.Raw("StartQuiz();")
+
+            }else if (Model.Process == (int)CheckInApp.Services.ProcessIDEnum.NextQuestion)
+            {
+                @Html.Raw("LoadTop();")
+            }
+        }
+
     </script>
 
 }

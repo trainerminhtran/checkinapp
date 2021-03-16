@@ -76,6 +76,7 @@ namespace CheckInApp.Controllers
                     uvm.DoTest = true;
                     uvm.TrueAns = ans.Count(x => x.TimeScore > 0);
                     uvm.TotalAns = ans.Count;
+                    uvm.Score = ischeckin.CountingScore.GetValueOrDefault();
                     uvm.DoTestAgain = ans.FirstOrDefault()?.CountAnswer.GetValueOrDefault() < 3;
                 }
             }

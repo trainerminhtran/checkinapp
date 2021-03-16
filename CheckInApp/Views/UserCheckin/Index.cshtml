@@ -34,7 +34,7 @@
             {
                 if (!Model.DoTest)
                 {
-                    if (Model.TypeTest == (int) TestType.RealTime)
+                    if (Model.TypeTest == (int)TestType.RealTime)
                     {
                         <li class="list-group-item">
                             <b>Làm bài tập: </b> <div class="float-right" style="width: 70%; text-align: right;"><a href="@Url.Action("Index","Quiz",new {RoomId = Model.RoomGuid})" class="float-right" style="background-color: aqua;cursor: pointer;padding: 5px 8px;color: white;border-radius: 5px;">Vào làm</a></div>
@@ -49,24 +49,23 @@
                 }
                 else
                 {
-                    if (Model.TypeTest == (int) TestType.NonRealTime && Model.DoTestAgain)
+                    if (Model.TypeTest == (int)TestType.NonRealTime && Model.DoTestAgain)
                     {
                         <li class="list-group-item">
                             <b>Làm bài tập: </b> <div class="float-right" style="width: 70%; text-align: right;">
-    <a class="float-right" style="background-color: #007bff;cursor: pointer;padding: 5px 8px;color: white;border-radius: 5px;">@Model.TrueAns/@Model.TotalAns</a>
-    <a href="@Url.Action("QuizOffline", "Quiz", new {RoomId = Model.RoomGuid})" class="float-right" style="margin-right: 10px; background-color: #007bff;cursor: pointer;padding: 5px 8px;color: white;border-radius: 5px;">Làm lại</a>
-
-</div>
+                                <a class="float-right" style="background-color: #007bff;cursor: pointer;padding: 5px 8px;color: white;border-radius: 5px;">@Model.TrueAns/@Model.TotalAns</a>
+                                <a href="@Url.Action("QuizOffline", "Quiz", new {RoomId = Model.RoomGuid})" class="float-right" style="margin-right: 10px; background-color: #007bff;cursor: pointer;padding: 5px 8px;color: white;border-radius: 5px;">Làm lại</a>
+                            </div>
                         </li>
                     }
                     else
                     {
                         <li class="list-group-item">
-                            <b>Làm bài tập: </b> <div class="float-right" style="width: 70%; text-align: right;"><a class="float-right" style="background-color: #007bff;cursor: pointer;padding: 5px 8px;color: white;border-radius: 5px;">@Model.TrueAns/@Model.TotalAns</a></div>
+                            <b>Làm bài tập: </b> <div class="float-right" style="width: 70%; text-align: right;"><a class="float-right" style="background-color: #007bff;cursor: pointer;padding: 5px 8px;color: white;border-radius: 5px;">@Model.TrueAns/@Model.TotalAns - @Model.Score điểm</a></div>
                         </li>
                     }
 
-                 }
+                }
             }
             <li class="list-group-item">
                 <b>Nhận quà tặng xuất sắc:</b>
@@ -121,7 +120,7 @@
 <!-- /.login-box -->
 @section Scripts{
     <script>
-        $(function() {
+        $(function () {
             const api = $('#smoothed').signaturePad({
                 drawOnly: true,
                 drawBezierCurves: true,
@@ -129,7 +128,7 @@
                 variableStrokeWidth: true,
                 penWidth: 4
             });
-            $("#submit_button").click(function() {
+            $("#submit_button").click(function () {
                 if (api.validateForm()) {
 
                     let image = document.getElementById("canvas").toDataURL("image/png");
@@ -159,7 +158,7 @@
                 }
             }
 
-            $("input[data-bootstrap-switch]").each(function() {
+            $("input[data-bootstrap-switch]").each(function () {
                 $(this).bootstrapSwitch('state', $(this).prop('checked'));
             });
 
@@ -167,7 +166,7 @@
         });
 
         $('input[data-bootstrap-switch]').on('switchChange.bootstrapSwitch',
-            function(e, data) {
+            function (e, data) {
                 if (confirm('Bạn xác nhận có nhận quà này?')) {
                     var id = $(this).attr("checkinId");
                     $(this).bootstrapSwitch('state', !data, true);
@@ -180,7 +179,7 @@
                         contentType: "application/json; charset=utf-8",
                         data: JSON.stringify({ "id": id, "sts": data }),
                         url: "/api/UserInfor/UpdateMotivationGiftStatus",
-                        success: function(response) {
+                        success: function (response) {
                             if (response) {
                                 bootoast.toast({
                                     message: 'Cập nhật thành công',
@@ -194,7 +193,7 @@
                                 });
                             }
                         },
-                        error: function(response) {
+                        error: function (response) {
                             bootoast.toast({
                                 message: response,
                                 type: 'danger'
@@ -205,7 +204,7 @@
                     $(this).bootstrapSwitch('state', !data, true);
                 }
             });
-        (function() {
+        (function () {
             var canvas = document.getElementById('canvas'),
                 context = canvas.getContext('2d');
 

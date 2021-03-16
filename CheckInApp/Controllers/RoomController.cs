@@ -38,7 +38,7 @@ namespace CheckInApp.Controllers
                     QRCode = _qr.QRCodeView(_qr.GetQRCode(_qr.GetUrlByRoomurl(r.RoomUrl))),
                     TrainerName = _userService.GetTrainerString(r.TrainerRoomRecords.Select(x => x.UserInfor.EmployeeInfor.Fullname)),
                     RoomUrl = _qr.GetUrlByRoomurl(r.RoomUrl),
-                    RoomGuid = r.Guid
+                    RoomGuid = r.Guid,
                 };
 
                 var sto = _db.StoreInfors.FirstOrDefault(x => x.ID == r.VenueID);
@@ -46,6 +46,12 @@ namespace CheckInApp.Controllers
                 {
                     rv.VenueName = sto.Name;
                     rv.VenueAddress = sto.Address;
+                }
+
+                var ctr = _db.CourseTestRecords.FirstOrDefault(x => x.CourseID == r.CourseID);
+                if (ctr != null)
+                {
+                    rv.TypeTest = ctr.TestTypeID.GetValueOrDefault();
                 }
 
                 rv.Status = r.Status.GetValueOrDefault();
