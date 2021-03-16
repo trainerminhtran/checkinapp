@@ -193,6 +193,7 @@ namespace CheckInApp.Controllers
                     RoomID = ro.ID,
                     Datetime = DateTime.Today,
                     CourseId = ct.CourseID,
+                    CountAnswer = 1,
                 };
                 _db.AnswerRecords.Add(ar);
                 _db.SaveChanges();
@@ -251,7 +252,8 @@ namespace CheckInApp.Controllers
             var tqp = _db.TestQuestionRecords.Where(x => x.TestID == TestId).ToList();
             var totalCount = tqp.Count;
             var at = _db.AnswerRecords.Where(x => x.CheckinInforID == checkin.ID).ToList();
-            model.AnsTime = at.OrderByDescending(x => x.ID).FirstOrDefault().TimeScore;
+            var timeansdata = at.OrderByDescending(x => x.ID).FirstOrDefault();
+            model.AnsTime = timeansdata == null ? 0 : timeansdata.TimeScore;
             model.Data = listData.Select(x => new TopResultView
             {
                 Total = totalCount,
