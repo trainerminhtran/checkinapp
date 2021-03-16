@@ -305,11 +305,12 @@ namespace CheckInApp.Controllers
             if (checkTest == null)
             {
                 var tqr = _db.TestQuestionRecords.Where(x => x.TestID == ct.TestID).ToList();
-                var listQP = tqr.Select(x => new CourseQuestionUserProcess
+                tqr = tqr.OrderBy(x => Guid.NewGuid()).ToList();
+                var listQP = tqr.Select((x, NumberRow) => new CourseQuestionUserProcess
                 {
                     ProcessID = (int)ProcessIDEnum.Create,
                     QuestionID = x.QuestionID,
-                    QuestionOrder = x.OrderNumber.GetValueOrDefault(),
+                    QuestionOrder = NumberRow + 1,
                     RoomID = ro.ID,
                     TimeEnd = 0,
                     CheckinInforId = ci.ID,
