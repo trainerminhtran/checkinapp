@@ -27,5 +27,6 @@ namespace CheckInApp.ViewModels
         public int TotalAns { get; set; }
         public bool DoTest { get; set; }
         public int TypeTest { get; set; }
+        public bool DoTestAgain { get; set; }
     } 
 }

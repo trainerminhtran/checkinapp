@@ -52,7 +52,8 @@ namespace CheckInApp.Controllers
                 IsMotivationGift = false,
                 RoomGuid = ro.Guid,
                 DoTest = false,
-                TypeTest = (int)TestType.RealTime
+                TypeTest = (int)TestType.RealTime,
+                DoTestAgain = false
             };
             
             var ischeckin = _db.CheckinInfors.FirstOrDefault(x => x.RoomInfor.Guid == id && x.UserInfor.ID == u.Id);
@@ -75,6 +76,7 @@ namespace CheckInApp.Controllers
                     uvm.DoTest = true;
                     uvm.TrueAns = ans.Count(x => x.TimeScore > 0);
                     uvm.TotalAns = ans.Count;
+                    uvm.DoTestAgain = ans.FirstOrDefault()?.CountAnswer.GetValueOrDefault() < 3;
                 }
             }
             else
