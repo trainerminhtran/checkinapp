@@ -155,5 +155,15 @@ namespace CheckInApp.Controllers
             }
             return View();
         }
+
+        public ActionResult DownloadFile(Guid RoomId)
+        {
+            var courseID = _db.RoomInfors.FirstOrDefault(x => x.Guid == RoomId).CourseID;
+            var cc = _db.ContentCourseRecords.FirstOrDefault(x => x.CourseID == courseID);
+            
+                byte[] fileBytes = System.IO.File.ReadAllBytes(AppDomain.CurrentDomain.BaseDirectory + cc.ContentInfor.FileUrl);
+            string fileName = cc.ContentInfor.FileUrl.Split('/')[2];
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
     }
 }
