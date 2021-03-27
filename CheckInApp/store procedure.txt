@@ -1,0 +1,26 @@
+﻿/* Số store học theo platform theo channel theo tháng
+
+1. Count checkin infor FSM by month by platform
+
+
+*/
+select tl.Platform,tl.Account,sum(tl.#FSM) TotalFSM,count(tl.ID) #Store from
+(
+select tbl.Name Platform,tbl.Shortname Account,count(tbl.UserID) #FSM,tbl.ID
+from
+(select ch.UserID,a.Shortname,p.Name,ch.[datetime],s.ID,u.PositionID from checkinappnew.dbo.CheckinInfor as ch 
+inner join checkinappnew.dbo.UserInfor as u on ch.UserID = u.ID
+inner join checkinappnew.dbo.EmployeeInfor as e on ch.UserID = e.ID
+inner join checkinappnew.dbo.StoreInfor as s on e.StoreID = s.ID
+inner join checkinappnew.dbo.AccountInfor as a on a.ID = s.AccountID
+inner join checkinappnew.dbo.RoomInfor as r on ch.RoomID = r.ID
+inner join checkinappnew.dbo.CourseInfor as c on r.CourseID = c.ID
+inner join checkinappnew.dbo.PlatformInfor as p on c.PlatformID = p.ID) as tbl
+where month(tbl.Datetime) = 3 and (tbl.PositionID = 2  or tbl.PositionID = 5)
+group by tbl.Name,tbl.Shortname, tbl.ID
+)as tl
+group by tl.Platform,tl.Account
+	order by tl.Platform,tl.Account
+		   
+
+/* Số FSM học theo platform theo channel theo tháng*/
