@@ -420,5 +420,20 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="SeachPointByRoomGuide" FunctionName="CheckinAppModel.Store.SeachPointByRoomGuide">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="CheckinAppModel.SeachPointByRoomGuide_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="Datetime" ColumnName="Datetime" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+          <ScalarProperty Name="Store" ColumnName="Store" />
+          <ScalarProperty Name="Tel" ColumnName="Tel" />
+          <ScalarProperty Name="CountingScore" ColumnName="CountingScore" />
+          <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

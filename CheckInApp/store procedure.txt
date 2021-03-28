@@ -24,3 +24,54 @@ group by tl.Platform,tl.Account
 		   
 
 /* Số FSM học theo platform theo channel theo tháng*/
+USE [checkinappnew]
+GO
+/****** Object:  StoredProcedure [dbo].[SeachPointByRoomGuide]    Script Date: 3/28/2021 5:09:06 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+ALTER PROCEDURE [dbo].[SeachPointByRoomGuide]
+    @guidId uniqueidentifier
+AS
+
+/* check for the NULL / default value (indicating nothing was passed */
+if (@guidId IS NOT NULL)
+BEGIN
+	
+	select 
+	c.id,
+	c.Datetime,
+	c.UserID,
+	e.Fullname,
+	s.Name as Store,
+	u.Tel,
+	c.CountingScore,
+	r.CourseID,
+	r.Name
+	From checkinappnew.dbo.CheckinInfor as c
+	Inner join checkinappnew.dbo.RoomInfor as r
+		ON c.RoomID = r.ID and r.Guid = @guidId
+		INNER join checkinappnew.dbo.UserInfor as u
+		ON c.UserID = u.ID
+		INNER join checkinappnew.dbo.EmployeeInfor as e
+		ON e.ID = u.EmployeeID
+		INNER join checkinappnew.dbo.StoreInfor as s
+			ON e.StoreID = s.ID
+END
+
+
+/* CP https://ketnoiss.com/QuizManager?RoomId=fce3e688-be18-4817-a000-97de53336bcd&TypeTest=2
+ EXEC MyProcName 'fce3e688-be18-4817-a000-97de53336bcd'
+ 
+*/
+
+/* MM
+ EXEC MyProcName '30bb402f-895f-49b6-9ed3-2f98a00136b1'
+*/
+
+/* NK
+ EXEC MyProcName '8766257d-3149-424c-89b4-95008785d09c'
+*/

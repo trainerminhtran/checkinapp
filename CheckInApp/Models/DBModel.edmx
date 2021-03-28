@@ -878,6 +878,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="SeachPointByRoomGuide" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="guidId" Type="uniqueidentifier" Mode="In" />
+        </Function>
         <EntityContainer Name="CheckinAppModelStoreContainer">
           <EntitySet Name="AccountInfor" EntityType="Self.AccountInfor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AnswerInfor" EntityType="Self.AnswerInfor" Schema="dbo" store:Type="Tables" />
@@ -1973,6 +1976,9 @@
             <End Role="QuestionInfor" EntitySet="QuestionInfors" />
             <End Role="AnswerRecord" EntitySet="AnswerRecords" />
           </AssociationSet>
+          <FunctionImport Name="SeachPointByRoomGuide" ReturnType="Collection(CheckinAppModel.SeachPointByRoomGuide_Result)">
+            <Parameter Name="guidId" Mode="In" Type="Guid" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="PermissionInfor">
           <Key>
@@ -2243,6 +2249,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="SeachPointByRoomGuide_Result">
+          <Property Type="Int64" Name="id" Nullable="false" />
+          <Property Type="DateTime" Name="Datetime" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="Fullname" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Store" Nullable="true" />
+          <Property Type="String" Name="Tel" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="CountingScore" Nullable="true" />
+          <Property Type="Int32" Name="CourseID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2668,6 +2685,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SeachPointByRoomGuide" FunctionName="CheckinAppModel.Store.SeachPointByRoomGuide">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CheckinAppModel.SeachPointByRoomGuide_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Datetime" ColumnName="Datetime" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+                <ScalarProperty Name="Store" ColumnName="Store" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+                <ScalarProperty Name="CountingScore" ColumnName="CountingScore" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
