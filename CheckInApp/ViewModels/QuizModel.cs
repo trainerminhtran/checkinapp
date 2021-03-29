@@ -57,7 +57,7 @@ namespace CheckInApp.ViewModels
         public int TestId { get; set; }
         public int QuestionId { get; set; }
         public int Choose { get; set; }
-        public int TimeAns { get; set; }
+        public decimal TimeAns { get; set; }
     }
     public class TopResult
     {

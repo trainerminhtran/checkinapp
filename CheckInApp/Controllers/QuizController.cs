@@ -189,7 +189,7 @@ namespace CheckInApp.Controllers
                     QuesionID = model.QuestionId,
                     CheckinInforID = checkinfo.ID,
                     AnswerOption = model.Choose.ToString(),
-                    TimeScore = model.TimeAns,
+                    TimeScore = (int)model.TimeAns,
                     RoomID = ro.ID,
                     Datetime = DateTime.Today,
                     CourseId = ct.CourseID,
@@ -202,7 +202,7 @@ namespace CheckInApp.Controllers
                     var ci = _db.CheckinInfors.FirstOrDefault(x => x.RoomID == ro.ID && x.UserID == u.Id);
                     if (ci != null)
                     {
-                        ci.CountingScore = ci.CountingScore.GetValueOrDefault() + model.TimeAns;
+                        ci.CountingScore = ci.CountingScore.GetValueOrDefault() + (int)model.TimeAns;
                         _db.Entry(ci).State = EntityState.Modified;
                         _db.SaveChanges();
                     }
@@ -469,7 +469,7 @@ namespace CheckInApp.Controllers
             }
             else
             {
-                model.TimeAns = model.TimeAns * 5;
+                model.TimeAns = Math.Ceiling(model.TimeAns * 5);
             }
             var process = _db.CourseQuestionUserProcesses.Where(x => x.RoomID == ro.ID && x.QuestionID == model.QuestionId && x.CheckinInforId == checkinfo.ID).FirstOrDefault();
             if (process != null)
@@ -487,7 +487,7 @@ namespace CheckInApp.Controllers
                     QuesionID = model.QuestionId,
                     CheckinInforID = checkinfo.ID,
                     AnswerOption = model.Choose.ToString(),
-                    TimeScore = model.TimeAns,
+                    TimeScore = (int)model.TimeAns,
                     RoomID = ro.ID,
                     Datetime = DateTime.Today,
                     CourseId = ct.CourseID,
@@ -500,7 +500,7 @@ namespace CheckInApp.Controllers
                     var ci = _db.CheckinInfors.FirstOrDefault(x => x.RoomID == ro.ID && x.UserID == u.Id);
                     if (ci != null)
                     {
-                        ci.CountingScore = ci.CountingScore.GetValueOrDefault() + model.TimeAns;
+                        ci.CountingScore = ci.CountingScore.GetValueOrDefault() + (int)model.TimeAns;
                         _db.Entry(ci).State = EntityState.Modified;
                         _db.SaveChanges();
                     }
@@ -508,10 +508,10 @@ namespace CheckInApp.Controllers
             }
             else
             {
-                var hightAns = model.TimeAns - asr.TimeScore;
+                var hightAns = (int)model.TimeAns - asr.TimeScore;
                 if (hightAns > 0)
                 {
-                    asr.TimeScore = model.TimeAns;
+                    asr.TimeScore = (int)model.TimeAns;
                     _db.Entry(asr).State = EntityState.Modified;
                     _db.SaveChanges();
                     var ci = _db.CheckinInfors.FirstOrDefault(x => x.RoomID == ro.ID && x.UserID == u.Id);

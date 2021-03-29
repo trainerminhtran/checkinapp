@@ -30,6 +30,37 @@
             <li class="list-group-item">
                 <b>Tại: </b> <a class="float-right" style="width: 70%; text-align: right;">@Model.Venue</a>
             </li>
+            <li class="list-group-item">
+                @if (!ViewBag.isCheckin)
+                {
+                    using (Html.BeginForm(actionName: "Index", controllerName: "UserCheckin", method: FormMethod.Post, htmlAttributes: new { enctype = "multipart/form-data", @id = "formID" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="UserId" value="@Model.Id" class="output">
+                        <input type="hidden" name="RoomId" value="@Model.RoomId" class="output">
+                        <div class="form-group" id="smoothed">
+
+                            <ul class="sigNav">
+                                <li class="drawIt"><a style="background-color: #58a9ff;" href="#draw-it">Điểm danh:</a></li>
+                                <li class="clearButton"><a href="#clear">Clear</a></li>
+                            </ul>
+                            <div class="sig sigWrapper" style="height: auto; display: block;">
+                                <div class="typed"></div>
+                                <canvas id="canvas" class="pad" width="100" height="150px"></canvas>
+                                <input type="hidden" name="Signature" id="canvassign" class="">
+                                <img src="" id="tempImg" />
+                            </div>
+                            <!-- /.input group -->
+                        </div>
+
+                        <div class="social-auth-links text-center mb-3">
+
+                            <input id="submit_button" class="btn btn-block btn-primary" type="button" value="Xác nhận chữ ký" />
+                        </div>
+                        <!-- /.social-auth-links -->
+                    }
+                }
+            </li>
             @if (ViewBag.isCheckin)
             {
                 if (!Model.DoTest)
@@ -80,37 +111,6 @@
 
                     }
                 </a>
-            </li>
-            <li class="list-group-item">
-                @if (!ViewBag.isCheckin)
-                {
-                    using (Html.BeginForm(actionName: "Index", controllerName: "UserCheckin", method: FormMethod.Post, htmlAttributes: new { enctype = "multipart/form-data", @id = "formID" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <input type="hidden" name="UserId" value="@Model.Id" class="output">
-                        <input type="hidden" name="RoomId" value="@Model.RoomId" class="output">
-                        <div class="form-group" id="smoothed">
-
-                            <ul class="sigNav">
-                                <li class="drawIt"><a style="background-color: #58a9ff;" href="#draw-it">Điểm danh:</a></li>
-                                <li class="clearButton"><a href="#clear">Clear</a></li>
-                            </ul>
-                            <div class="sig sigWrapper" style="height: auto; display: block;">
-                                <div class="typed"></div>
-                                <canvas id="canvas" class="pad" width="100" height="150px"></canvas>
-                                <input type="hidden" name="Signature" id="canvassign" class="">
-                                <img src="" id="tempImg" />
-                            </div>
-                            <!-- /.input group -->
-                        </div>
-
-                        <div class="social-auth-links text-center mb-3">
-
-                            <input id="submit_button" class="btn btn-block btn-primary" type="button" value="Xác nhận chữ ký" />
-                        </div>
-                        <!-- /.social-auth-links -->
-                    }
-                }
             </li>
         </ul>
     </div>
