@@ -873,6 +873,9 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="SeachPointByRoomGuide" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="guidId" Type="uniqueidentifier" Mode="In" />
+  </Function>
   <EntityContainer Name="CheckinAppModelStoreContainer">
     <EntitySet Name="AccountInfor" EntityType="Self.AccountInfor" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AnswerInfor" EntityType="Self.AnswerInfor" Schema="dbo" store:Type="Tables" />

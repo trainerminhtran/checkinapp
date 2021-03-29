@@ -12,6 +12,8 @@ namespace CheckInApp.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class dbEntities : DbContext
     {
@@ -63,5 +65,14 @@ namespace CheckInApp.Models
         public virtual DbSet<CourseTestRecord> CourseTestRecords { get; set; }
         public virtual DbSet<CourseQuestionUserProcess> CourseQuestionUserProcesses { get; set; }
         public virtual DbSet<AnswerRecord> AnswerRecords { get; set; }
+    
+        public virtual ObjectResult<SeachPointByRoomGuide_Result> SeachPointByRoomGuide(Nullable<System.Guid> guidId)
+        {
+            var guidIdParameter = guidId.HasValue ?
+                new ObjectParameter("guidId", guidId) :
+                new ObjectParameter("guidId", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SeachPointByRoomGuide_Result>("SeachPointByRoomGuide", guidIdParameter);
+        }
     }
 }
