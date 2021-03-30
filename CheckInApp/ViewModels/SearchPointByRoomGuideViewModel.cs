@@ -20,6 +20,15 @@ namespace CheckInApp.ViewModels
         [Display(Name = "Điểm số")]
         public int CountingScore { get; set; }
         public List<SearchPointByRoomGuideViewModel> ListPoint { get; set; }
+        public List<ShowSearchPointGroup> Group { get; set; }
+    }
+
+    public class ShowSearchPointGroup {
+        public string Store { get; set; }
+        public int TotalMemberTested { get; set; }
+        public int TotalPoint { get; set; }
+        public double AvePoint { get; set; }
+        public int win { get; set; }
     }
     public class SearchPointByRoomGuideViewModel
     {
