@@ -29,7 +29,7 @@
                 else
                 {
                     <div class="modal-footer text-muted">
-                        <button type="button" class="btn btn-default" onclick="LoadQuestion()">Bắt đầu</button>
+                        <button type="button" class="btn btn-primary" onclick="LoadQuestion()">Bắt đầu</button>
                     </div>
                 }
             </div>
@@ -50,6 +50,7 @@
                     }
                 });
                 $('#answer').fadeIn();
+                console.log($("#AnsTime").val());
                 $.ajax({
                     url: '@Url.Action("AnsewrNon")',
                     cache: false,
@@ -119,7 +120,7 @@
         <script>
             let pageId = 1;
         </script>
-        <script src="~/Scripts/Quiz.js"></script>
-        <script src="~/Scripts/counter.js"></script>
+        <script src="~/Scripts/Quiz.js?t=1"></script>
+        <script src="~/Scripts/counter.js?t=1"></script>
     }
 }
