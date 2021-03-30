@@ -25,7 +25,7 @@
                                 <a href="#" style="background: #808080;"><b>Samsung</b>DA Training</a>
                             </div>
 
-                            <h2 class="login-box-msg ">@Model.CourseName</h2>
+                            <h2 class="login-box-msg">@Model.CourseName</h2>
                         </div>
                         <!-- /.col -->
                     </div>
@@ -40,9 +40,72 @@
                         </div>
                     </div>
                     <!-- /.row -->
+                    <!-- Table Group store row -->
+                    <div class="row">
+                        <div class="col-12 table-responsive">
+                            <h3 class="login-box-msg">Thứ tự siêu thị theo điểm trung bình test</h3>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>
+                                            Cửa hàng
+                                        </th>
+
+                                        <th>
+                                            Vị thứ
+                                        </th>
+                                        <th>
+                                            Tổng NV làm bài
+                                        </th>
+                                        <th>
+                                            Điểm trung bình
+                                        </th>
+                                        <th>
+                                            Tổng điểm
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        int stt = 0;
+                                    }
+                                    @foreach (var item in Model.Group)
+                                    {
+                                        stt++;
+                                        <tr>
+                                            <td class="text-center">
+                                                @stt
+                                            </td>
+                                            <td>
+                                                @item.Store
+                                            </td>
+                                            <td>
+                                                @item.win
+                                            </td>
+                                            <td>
+                                                @item.TotalMemberTested
+                                            </td>
+                                            <td>
+                                                @item.AvePoint
+                                            </td>
+                                            <td>
+                                                @item.TotalPoint
+                                            </td>
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
                     <!-- Table row -->
                     <div class="row">
                         <div class="col-12 table-responsive">
+                            <h3 class="login-box-msg">Tra cứu điểm từng nhân viên</h3>
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -66,14 +129,14 @@
                                 </thead>
                                 <tbody>
                                     @{
-                                        int stt = 0;
+                                        int st = 0;
                                     }
                                     @foreach (var item in Model.ListPoint)
                                     {
-                                        stt++;
+                                        st++;
                                         <tr>
                                             <td class="text-center">
-                                                @stt
+                                                @st
                                             </td>
                                             <td>
                                                 @item.UserFullname
@@ -120,7 +183,11 @@
                 "info": true,
                 "autoWidth": false,
                 "responsive": true,
-                "pageLength": 50,
+                "pageLength": 10,
+                "dom": 'Bfrtip',
+                "buttons": [
+                    'excel'
+                ]
             });
         });
     </script>
