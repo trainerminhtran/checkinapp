@@ -110,6 +110,7 @@
                                 <thead>
                                     <tr>
                                         <th>STT</th>
+                                        <th>MNV</th>
                                         <th>
 
                                             @Html.DisplayNameFor(model => model.UserFullname)
@@ -134,24 +135,27 @@
                                     @foreach (var item in Model.ListPoint)
                                     {
                                         st++;
-                                        <tr>
-                                            <td class="text-center">
-                                                @st
-                                            </td>
-                                            <td>
-                                                @item.UserFullname
-                                            </td>
-                                            <td>
-                                                @item.CountingScore
-                                            </td>
-                                            <td>
-                                                @item.CheckinTime
-                                            </td>
-                                            <td>
-                                                @item.Store
-                                            </td>
+                                    <tr>
+                                        <td class="text-center">
+                                            @st
+                                        </td>
+                                        <td>
+                                            @item.MNV
+                                        </td>
+                                        <td>
+                                            @item.UserFullname
+                                        </td>
+                                        <td>
+                                            @item.CountingScore
+                                        </td>
+                                        <td>
+                                            @item.CheckinTime
+                                        </td>
+                                        <td>
+                                            @item.Store
+                                        </td>
 
-                                        </tr>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>

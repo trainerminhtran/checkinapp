@@ -16,6 +16,7 @@ namespace CheckInApp.Models
         public long id { get; set; }
         public System.DateTime Datetime { get; set; }
         public int UserID { get; set; }
+        public string MNV { get; set; }
         public string Fullname { get; set; }
         public string Store { get; set; }
         public string Tel { get; set; }

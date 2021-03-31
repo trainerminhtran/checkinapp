@@ -426,6 +426,7 @@
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="Datetime" ColumnName="Datetime" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="MNV" ColumnName="MNV" />
           <ScalarProperty Name="Fullname" ColumnName="Fullname" />
           <ScalarProperty Name="Store" ColumnName="Store" />
           <ScalarProperty Name="Tel" ColumnName="Tel" />

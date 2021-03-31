@@ -287,6 +287,7 @@ namespace CheckInApp.Controllers
                 UserFullname = x.Fullname,
                 CountingScore = x.CountingScore.GetValueOrDefault(),
                 Store = x.Store,
+                MNV = x.MNV,
                 Tel = x.Tel,
                 UserId = x.UserID,
                 CourseId = x.CourseID
