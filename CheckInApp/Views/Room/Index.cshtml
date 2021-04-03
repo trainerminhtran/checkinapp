@@ -106,12 +106,9 @@
                 }
             </td>
             <td>
-                @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |*@
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @using (Html.BeginForm("Delete", "Room", FormMethod.Post, new { enctype = "multipart/form-data", @id = "formID2", onsubmit = "return confirm('Bạn thật sự muốn xóa lớp học này?');" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <input type="hidden" name="id" value="@item.Id" />
+                <a class="btn btn-primary" href="/room/SearchPointByGuide/@item.RoomGuid">xem điểm</a>
+                   @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                   @using (Html.BeginForm("Delete", "Room", FormMethod.Post, new { enctype = "multipart/form-data", @id = "formID2", onsubmit = "return confirm('Bạn thật sự muốn xóa lớp học này?');" })) { @Html.AntiForgeryToken()   <input type="hidden" name="id" value="@item.Id" />
                     <button type="submit" class="btn btn-warning">Delete</button>
                 }
                 @if (item.TypeTest == (int)TestType.RealTime)

@@ -184,6 +184,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\api\CourseInforController.cs" />
     <Compile Include="Controllers\api\PlatformInforController.cs" />
+    <Compile Include="Controllers\api\ReportController.cs" />
     <Compile Include="Controllers\api\StoreInforController.cs" />
     <Compile Include="Controllers\api\UserInforController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -316,6 +317,9 @@
     <Compile Include="Models\RoomInfor.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SeachPointByRoomGuide_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\StoreInfor.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
@@ -342,6 +346,7 @@
     <Compile Include="Services\RoomEnum.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\SearchPointByRoomGuideViewModel.cs" />
     <Compile Include="ViewModels\TestInfoModel.cs" />
     <Compile Include="ViewModels\QuestionModel.cs" />
     <Compile Include="ViewModels\QuizModel.cs" />
@@ -2533,6 +2538,7 @@
     <Content Include="Views\Quiz\QuizOffline.cshtml" />
     <Content Include="Views\Quiz\_ListQuizNon.cshtml" />
     <Content Include="Views\Quiz\_ListAnsNon.cshtml" />
+    <Content Include="Views\Room\SearchPointByGuide.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\FileUploads\" />

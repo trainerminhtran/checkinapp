@@ -275,6 +275,47 @@ namespace CheckInApp.Controllers
             return View(printvm);
         }
 
+        [AllowAnonymous]
+        public ActionResult SearchPointByGuide(Guid id)
+        {
+            var ListPoint = new ShowSearchPoint();
+            var ro = _db.SeachPointByRoomGuide(id).Select(x=> new SearchPointByRoomGuideViewModel
+            {
+                CheckinId = x.id,
+                CheckinTime = x.Datetime,
+                CourseName = x.Name,
+                UserFullname = x.Fullname,
+                CountingScore = x.CountingScore.GetValueOrDefault(),
+                Store = x.Store,
+                MNV = x.MNV,
+                Tel = x.Tel,
+                UserId = x.UserID,
+                CourseId = x.CourseID
+            }).OrderByDescending(x => x.CountingScore).ToList();
+            if (ro == null)
+            {
+                return null;
+            }
+
+            var gr = ro.GroupBy(x => x.Store).Select(x => new ShowSearchPointGroup
+            {
+                Store = x.Key,
+                TotalMemberTested =  x.Count(),
+                AvePoint = Math.Round(x.Average(i=>i.CountingScore),2,MidpointRounding.AwayFromZero),
+                TotalPoint = x.Sum(i => i.CountingScore)
+            }).OrderByDescending(x => x.TotalMemberTested).ThenByDescending(x=>x.AvePoint).ThenByDescending(x=>x.TotalPoint).ToList();
+            for (int i = 0; i < gr.Count(); i++)
+            {
+                gr[i].win = i+1;
+            }
+
+            ListPoint.CourseName = ro.First().CourseName;
+            ListPoint.ListPoint = ro;
+            ListPoint.Group = gr;
+
+            return View(ListPoint);
+        }
+
         public ActionResult Detailprint(int id)
         {
             var printvm = new RoomToPrintViewModel();

@@ -40,6 +40,22 @@ function counter_init(groupId) {
         index++;
     });
 }
+function decimalAdjust(type, value, exp) {
+    if (typeof exp === 'undefined' || +exp === 0) {
+        return Math[type](value);
+    }
+    value = +value;
+    exp = +exp;
+    if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
+        return NaN;
+    }
+    value = value.toString().split('e');
+    value = Math[type](+(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp)));
+    value = value.toString().split('e');
+    return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp));
+}
+const floor10 = (value, exp) => decimalAdjust('floor', value, exp);
+
 
 function doCount(num, index, speed, groupClass, direction, easing) {
     let className = groupClass + ' ' + counterClass + '.' + 'c_' + index;
@@ -62,7 +78,7 @@ function doCount(num, index, speed, groupClass, direction, easing) {
                     $(".progress-time").addClass("bg-danger");
                 }
                 $(".update-point").html(parseInt((num - Math.floor(now)) * 5) + " Point");
-                $("#AnsTime").val(num - Math.floor(now));
+                $("#AnsTime").val(floor10(num - now, -1));
             if (direction == 'reverse') {
                 if (num - Math.floor(now) < 10) {
                     $(this).html("0" + (num - Math.floor(now)));
