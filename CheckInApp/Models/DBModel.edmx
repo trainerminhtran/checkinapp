@@ -162,6 +162,17 @@
           <Property Name="Status" Type="bit" />
           <Property Name="TestTypeID" Type="int" />
         </EntityType>
+        <EntityType Name="DearlerFSMUploads">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MNV" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Fullname" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="SPlusCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Store" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Region" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="DistrictInfor">
           <Key>
             <PropertyRef Name="ID" />
@@ -881,6 +892,9 @@
         <Function Name="SeachPointByRoomGuide" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="guidId" Type="uniqueidentifier" Mode="In" />
         </Function>
+        <Function Name="SeachPointByRoomGuideOTher" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="guidId" Type="uniqueidentifier" Mode="In" />
+        </Function>
         <EntityContainer Name="CheckinAppModelStoreContainer">
           <EntitySet Name="AccountInfor" EntityType="Self.AccountInfor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AnswerInfor" EntityType="Self.AnswerInfor" Schema="dbo" store:Type="Tables" />
@@ -898,6 +912,7 @@
           <EntitySet Name="CourseQuestionProcess" EntityType="Self.CourseQuestionProcess" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CourseQuestionUserProcess" EntityType="Self.CourseQuestionUserProcess" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CourseTestRecord" EntityType="Self.CourseTestRecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DearlerFSMUploads" EntityType="Self.DearlerFSMUploads" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DistrictInfor" EntityType="Self.DistrictInfor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeInfor" EntityType="Self.EmployeeInfor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GiftCourseRecord" EntityType="Self.GiftCourseRecord" Schema="dbo" store:Type="Tables" />
@@ -1977,8 +1992,12 @@
             <End Role="AnswerRecord" EntitySet="AnswerRecords" />
           </AssociationSet>
           <FunctionImport Name="SeachPointByRoomGuide" ReturnType="Collection(CheckinAppModel.SeachPointByRoomGuide_Result)">
-            <Parameter Name="guidId" Mode="In" Type="Guid" />
+          <Parameter Name="guidId" Mode="In" Type="Guid" />
           </FunctionImport>
+          <FunctionImport Name="SeachPointByRoomGuideOTher" ReturnType="Collection(CheckinAppModel.SeachPointByRoomGuideOTher_Result)">
+          <Parameter Name="guidId" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <EntitySet Name="DearlerFSMUploads" EntityType="CheckinAppModel.DearlerFSMUpload" />
           </EntityContainer>
         <EntityType Name="PermissionInfor">
           <Key>
@@ -2250,17 +2269,33 @@
           </ReferentialConstraint>
         </Association>
         <ComplexType Name="SeachPointByRoomGuide_Result">
-          <Property Type="Int64" Name="id" Nullable="false" />
-          <Property Type="DateTime" Name="Datetime" Nullable="false" Precision="23" />
-          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="MNV" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Name" Nullable="true" />
+          <Property Type="String" Name="Store" Nullable="false" />
+          <Property Type="String" Name="Region" Nullable="false" />
+          <Property Type="String" Name="Fullname" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="CountingScore" Nullable="true" />
+          <Property Type="String" Name="Tel" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="SeachPointByRoomGuideOTher_Result">
           <Property Type="String" Name="MNV" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Fullname" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Store" Nullable="true" />
           <Property Type="String" Name="Tel" Nullable="false" MaxLength="20" />
           <Property Type="Int32" Name="CountingScore" Nullable="true" />
-          <Property Type="Int32" Name="CourseID" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="false" />
         </ComplexType>
+        <EntityType Name="DearlerFSMUpload">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MNV" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Fullname" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="SPlusCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Store" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Region" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2689,19 +2724,40 @@
           <FunctionImportMapping FunctionImportName="SeachPointByRoomGuide" FunctionName="CheckinAppModel.Store.SeachPointByRoomGuide">
             <ResultMapping>
               <ComplexTypeMapping TypeName="CheckinAppModel.SeachPointByRoomGuide_Result">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="Datetime" ColumnName="Datetime" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="MNV" ColumnName="MNV" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Store" ColumnName="Store" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+                <ScalarProperty Name="CountingScore" ColumnName="CountingScore" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SeachPointByRoomGuideOTher" FunctionName="CheckinAppModel.Store.SeachPointByRoomGuideOTher">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CheckinAppModel.SeachPointByRoomGuideOTher_Result">
                 <ScalarProperty Name="MNV" ColumnName="MNV" />
                 <ScalarProperty Name="Fullname" ColumnName="Fullname" />
                 <ScalarProperty Name="Store" ColumnName="Store" />
                 <ScalarProperty Name="Tel" ColumnName="Tel" />
                 <ScalarProperty Name="CountingScore" ColumnName="CountingScore" />
-                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="DearlerFSMUploads">
+            <EntityTypeMapping TypeName="CheckinAppModel.DearlerFSMUpload">
+              <MappingFragment StoreEntitySet="DearlerFSMUploads">
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="Store" ColumnName="Store" />
+                <ScalarProperty Name="SPlusCode" ColumnName="SPlusCode" />
+                <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+                <ScalarProperty Name="MNV" ColumnName="MNV" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

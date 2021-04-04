@@ -11,14 +11,13 @@ namespace CheckInApp.Models
 {
     using System;
     
-    public partial class SeachPointByRoomGuide_Result
+    public partial class SeachPointByRoomGuideOTher_Result
     {
         public string MNV { get; set; }
-        public string Name { get; set; }
-        public string Store { get; set; }
-        public string Region { get; set; }
         public string Fullname { get; set; }
-        public Nullable<int> CountingScore { get; set; }
+        public string Store { get; set; }
         public string Tel { get; set; }
+        public Nullable<int> CountingScore { get; set; }
+        public string Name { get; set; }
     }
 }

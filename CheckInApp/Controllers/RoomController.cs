@@ -279,19 +279,33 @@ namespace CheckInApp.Controllers
         public ActionResult SearchPointByGuide(Guid id)
         {
             var ListPoint = new ShowSearchPoint();
-            var ro = _db.SeachPointByRoomGuide(id).Select(x=> new SearchPointByRoomGuideViewModel
+            var gui = new Guid("8cb25801-496c-4e79-a9b7-eae37fb20d82");
+            var ro = new List<SearchPointByRoomGuideViewModel>();
+            if (id == gui)
             {
-                CheckinId = x.id,
-                CheckinTime = x.Datetime,
-                CourseName = x.Name,
-                UserFullname = x.Fullname,
-                CountingScore = x.CountingScore.GetValueOrDefault(),
-                Store = x.Store,
-                MNV = x.MNV,
-                Tel = x.Tel,
-                UserId = x.UserID,
-                CourseId = x.CourseID
-            }).OrderByDescending(x => x.CountingScore).ToList();
+                ro = _db.SeachPointByRoomGuide(id).Select(x => new SearchPointByRoomGuideViewModel
+                {
+                    CourseName = x.Name,
+                    UserFullname = x.Fullname,
+                    CountingScore = x.CountingScore.GetValueOrDefault(),
+                    Store = x.Store,
+                    MNV = x.MNV,
+                    Tel = x.Tel,
+                }).OrderByDescending(x => x.CountingScore).ToList();
+            }
+            else
+            {
+                ro = _db.SeachPointByRoomGuideOTher(id).Select(x => new SearchPointByRoomGuideViewModel
+                {
+                    CourseName = x.Name,
+                    UserFullname = x.Fullname,
+                    CountingScore = x.CountingScore.GetValueOrDefault(),
+                    Store = x.Store,
+                    MNV = x.MNV,
+                    Tel = x.Tel,
+                }).OrderByDescending(x => x.CountingScore).ToList();
+            }
+           
             if (ro == null)
             {
                 return null;
@@ -303,7 +317,7 @@ namespace CheckInApp.Controllers
                 TotalMemberTested =  x.Count(),
                 AvePoint = Math.Round(x.Average(i=>i.CountingScore),2,MidpointRounding.AwayFromZero),
                 TotalPoint = x.Sum(i => i.CountingScore)
-            }).OrderByDescending(x => x.TotalMemberTested).ThenByDescending(x=>x.AvePoint).ThenByDescending(x=>x.TotalPoint).ToList();
+            }).OrderByDescending(x => x.AvePoint).ThenByDescending(x=>x.TotalMemberTested).ThenByDescending(x=>x.TotalPoint).ToList();
             for (int i = 0; i < gr.Count(); i++)
             {
                 gr[i].win = i+1;

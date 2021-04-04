@@ -423,18 +423,39 @@
     <FunctionImportMapping FunctionImportName="SeachPointByRoomGuide" FunctionName="CheckinAppModel.Store.SeachPointByRoomGuide">
       <ResultMapping>
         <ComplexTypeMapping TypeName="CheckinAppModel.SeachPointByRoomGuide_Result">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="Datetime" ColumnName="Datetime" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="MNV" ColumnName="MNV" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Store" ColumnName="Store" />
+          <ScalarProperty Name="Region" ColumnName="Region" />
+          <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+          <ScalarProperty Name="CountingScore" ColumnName="CountingScore" />
+          <ScalarProperty Name="Tel" ColumnName="Tel" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SeachPointByRoomGuideOTher" FunctionName="CheckinAppModel.Store.SeachPointByRoomGuideOTher">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="CheckinAppModel.SeachPointByRoomGuideOTher_Result">
           <ScalarProperty Name="MNV" ColumnName="MNV" />
           <ScalarProperty Name="Fullname" ColumnName="Fullname" />
           <ScalarProperty Name="Store" ColumnName="Store" />
           <ScalarProperty Name="Tel" ColumnName="Tel" />
           <ScalarProperty Name="CountingScore" ColumnName="CountingScore" />
-          <ScalarProperty Name="CourseID" ColumnName="CourseID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="DearlerFSMUploads">
+      <EntityTypeMapping TypeName="CheckinAppModel.DearlerFSMUpload">
+        <MappingFragment StoreEntitySet="DearlerFSMUploads">
+          <ScalarProperty Name="Region" ColumnName="Region" />
+          <ScalarProperty Name="Store" ColumnName="Store" />
+          <ScalarProperty Name="SPlusCode" ColumnName="SPlusCode" />
+          <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+          <ScalarProperty Name="MNV" ColumnName="MNV" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

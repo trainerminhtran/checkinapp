@@ -434,3 +434,9 @@ C:\Users\DA Training Team\Documents\App\checkinapp\CheckInApp\obj\Debug\CheckInA
 C:\Users\DA Training Team\Documents\App\checkinapp\CheckInApp\obj\Debug\CheckInApp.csproj.CopyComplete
 C:\Users\DA Training Team\Documents\App\checkinapp\CheckInApp\obj\Debug\CheckInApp.dll
 C:\Users\DA Training Team\Documents\App\checkinapp\CheckInApp\obj\Debug\CheckInApp.pdb
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\ExcelDataReader.DataSet.dll
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\ExcelDataReader.dll
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\ExcelDataReader.pdb
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\ExcelDataReader.xml
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\ExcelDataReader.DataSet.pdb
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\ExcelDataReader.DataSet.xml

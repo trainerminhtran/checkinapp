@@ -65,6 +65,7 @@ namespace CheckInApp.Models
         public virtual DbSet<CourseTestRecord> CourseTestRecords { get; set; }
         public virtual DbSet<CourseQuestionUserProcess> CourseQuestionUserProcesses { get; set; }
         public virtual DbSet<AnswerRecord> AnswerRecords { get; set; }
+        public virtual DbSet<DearlerFSMUpload> DearlerFSMUploads { get; set; }
     
         public virtual ObjectResult<SeachPointByRoomGuide_Result> SeachPointByRoomGuide(Nullable<System.Guid> guidId)
         {
@@ -73,6 +74,15 @@ namespace CheckInApp.Models
                 new ObjectParameter("guidId", typeof(System.Guid));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SeachPointByRoomGuide_Result>("SeachPointByRoomGuide", guidIdParameter);
+        }
+    
+        public virtual ObjectResult<SeachPointByRoomGuideOTher_Result> SeachPointByRoomGuideOTher(Nullable<System.Guid> guidId)
+        {
+            var guidIdParameter = guidId.HasValue ?
+                new ObjectParameter("guidId", guidId) :
+                new ObjectParameter("guidId", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SeachPointByRoomGuideOTher_Result>("SeachPointByRoomGuideOTher", guidIdParameter);
         }
     }
 }

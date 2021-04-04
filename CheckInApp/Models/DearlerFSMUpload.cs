@@ -10,15 +10,15 @@
 namespace CheckInApp.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class SeachPointByRoomGuide_Result
+    public partial class DearlerFSMUpload
     {
+        public int ID { get; set; }
         public string MNV { get; set; }
-        public string Name { get; set; }
+        public string Fullname { get; set; }
+        public string SPlusCode { get; set; }
         public string Store { get; set; }
         public string Region { get; set; }
-        public string Fullname { get; set; }
-        public Nullable<int> CountingScore { get; set; }
-        public string Tel { get; set; }
     }
 }
