@@ -317,7 +317,7 @@ namespace CheckInApp.Controllers
                 TotalMemberTested =  x.Count(),
                 AvePoint = Math.Round(x.Average(i=>i.CountingScore),2,MidpointRounding.AwayFromZero),
                 TotalPoint = x.Sum(i => i.CountingScore)
-            }).OrderByDescending(x => x.AvePoint).ThenByDescending(x=>x.TotalMemberTested).ThenByDescending(x=>x.TotalPoint).ToList();
+            }).Where(x=>x.TotalMemberTested>=5).OrderByDescending(x => x.AvePoint).ThenByDescending(x=>x.TotalMemberTested).ThenByDescending(x=>x.TotalPoint).ToList();
             for (int i = 0; i < gr.Count(); i++)
             {
                 gr[i].win = i+1;
