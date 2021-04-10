@@ -305,13 +305,29 @@ namespace CheckInApp.Controllers
                     Tel = x.Tel,
                 }).OrderByDescending(x => x.CountingScore).ToList();
             }
-           
+            
+
             if (ro == null)
             {
                 return null;
             }
+            var roe = ro.GroupBy(x => new
+            {
+                x.MNV,
+                x.Store,
+                x.UserFullname,
+                x.UserId
+            }).Select(i => new SearchPointByRoomGuideViewModel
+            {
+                MNV = i.Key.MNV,
+                UserFullname = i.Key.UserFullname,
+                Store = i.Key.Store,
+                UserId = i.Key.UserId,
+                CountingScore = i.Min(m => m.CountingScore),
+                Tel = i.Min(m => m.Tel)
+            });
 
-            var gr = ro.GroupBy(x => x.Store).Select(x => new ShowSearchPointGroup
+            var gr = roe.GroupBy(x => x.Store).Select(x => new ShowSearchPointGroup
             {
                 Store = x.Key,
                 TotalMemberTested =  x.Count(),
@@ -323,8 +339,8 @@ namespace CheckInApp.Controllers
                 gr[i].win = i+1;
             }
 
-            ListPoint.CourseName = ro.First().CourseName;
-            ListPoint.ListPoint = ro;
+            ListPoint.CourseName = roe.First().CourseName;
+            ListPoint.ListPoint = roe.ToList();
             ListPoint.Group = gr;
 
             return View(ListPoint);
