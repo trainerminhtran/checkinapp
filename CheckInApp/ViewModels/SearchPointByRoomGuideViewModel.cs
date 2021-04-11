@@ -39,6 +39,7 @@ namespace CheckInApp.ViewModels
         public string	UserFullname { get; set; }
         public string	Store { get; set; }
         public string	Tel { get; set; }
+        public string	MNV { get; set; }
 
         public string CourseName	 { get; set; }
         public int CountingScore { get; set; }

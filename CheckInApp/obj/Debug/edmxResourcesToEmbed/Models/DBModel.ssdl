@@ -157,6 +157,17 @@
     <Property Name="Status" Type="bit" />
     <Property Name="TestTypeID" Type="int" />
   </EntityType>
+  <EntityType Name="DearlerFSMUploads">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MNV" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Fullname" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="SPlusCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Store" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Region" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
   <EntityType Name="DistrictInfor">
     <Key>
       <PropertyRef Name="ID" />
@@ -876,6 +887,9 @@
   <Function Name="SeachPointByRoomGuide" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="guidId" Type="uniqueidentifier" Mode="In" />
   </Function>
+  <Function Name="SeachPointByRoomGuideOTher" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="guidId" Type="uniqueidentifier" Mode="In" />
+  </Function>
   <EntityContainer Name="CheckinAppModelStoreContainer">
     <EntitySet Name="AccountInfor" EntityType="Self.AccountInfor" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AnswerInfor" EntityType="Self.AnswerInfor" Schema="dbo" store:Type="Tables" />
@@ -893,6 +907,7 @@
     <EntitySet Name="CourseQuestionProcess" EntityType="Self.CourseQuestionProcess" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CourseQuestionUserProcess" EntityType="Self.CourseQuestionUserProcess" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CourseTestRecord" EntityType="Self.CourseTestRecord" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DearlerFSMUploads" EntityType="Self.DearlerFSMUploads" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DistrictInfor" EntityType="Self.DistrictInfor" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EmployeeInfor" EntityType="Self.EmployeeInfor" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="GiftCourseRecord" EntityType="Self.GiftCourseRecord" Schema="dbo" store:Type="Tables" />

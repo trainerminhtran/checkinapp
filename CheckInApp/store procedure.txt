@@ -45,6 +45,7 @@ BEGIN
 	c.id,
 	c.Datetime,
 	c.UserID,
+	e.MNV,
 	e.Fullname,
 	s.Name as Store,
 	u.Tel,

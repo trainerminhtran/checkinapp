@@ -84,6 +84,7 @@
         <EntityTypeShape EntityType="CheckinAppModel.AnswerRecord" Width="1.5" PointX="17.625" PointY="13.125" />
         <AssociationConnector Association="CheckinAppModel.FK_AnswerRecord_CheckinInfor" />
         <AssociationConnector Association="CheckinAppModel.FK_AnswerRecord_QuestionInfor" />
+        <EntityTypeShape EntityType="CheckinAppModel.DearlerFSMUpload" Width="1.5" PointX="14.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
