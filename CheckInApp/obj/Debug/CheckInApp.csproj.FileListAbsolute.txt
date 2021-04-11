@@ -434,3 +434,9 @@ D:\Freelance\SamSung\QAA\checkinapp\CheckInApp\obj\Debug\CheckInApp.csproj.CopyC
 D:\Freelance\SamSung\QAA\checkinapp\CheckInApp\obj\Debug\CheckInApp.dll
 D:\Freelance\SamSung\QAA\checkinapp\CheckInApp\obj\Debug\CheckInApp.pdb
 D:\Freelance\SamSung\QAA\checkinapp\CheckInApp\obj\Debug\CheckInApp.csprojAssemblyReference.cache
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\ExcelDataReader.DataSet.dll
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\ExcelDataReader.dll
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\ExcelDataReader.pdb
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\ExcelDataReader.xml
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\ExcelDataReader.DataSet.pdb
+C:\Users\Admin\Documents\App\checkinapp\CheckInApp\bin\ExcelDataReader.DataSet.xml

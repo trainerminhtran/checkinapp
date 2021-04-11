@@ -325,7 +325,7 @@ namespace CheckInApp.Controllers
                 UserId = i.Key.UserId,
                 CountingScore = i.Min(m => m.CountingScore),
                 Tel = i.Min(m => m.Tel)
-            });
+            }).OrderByDescending(x => x.CountingScore);
 
             var gr = roe.GroupBy(x => x.Store).Select(x => new ShowSearchPointGroup
             {

@@ -420,6 +420,18 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="DearlerFSMUploads">
+      <EntityTypeMapping TypeName="CheckinAppModel.DearlerFSMUpload">
+        <MappingFragment StoreEntitySet="DearlerFSMUploads">
+          <ScalarProperty Name="Region" ColumnName="Region" />
+          <ScalarProperty Name="Store" ColumnName="Store" />
+          <ScalarProperty Name="SPlusCode" ColumnName="SPlusCode" />
+          <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+          <ScalarProperty Name="MNV" ColumnName="MNV" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="SeachPointByRoomGuide" FunctionName="CheckinAppModel.Store.SeachPointByRoomGuide">
       <ResultMapping>
         <ComplexTypeMapping TypeName="CheckinAppModel.SeachPointByRoomGuide_Result">
@@ -445,17 +457,5 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <EntitySetMapping Name="DearlerFSMUploads">
-      <EntityTypeMapping TypeName="CheckinAppModel.DearlerFSMUpload">
-        <MappingFragment StoreEntitySet="DearlerFSMUploads">
-          <ScalarProperty Name="Region" ColumnName="Region" />
-          <ScalarProperty Name="Store" ColumnName="Store" />
-          <ScalarProperty Name="SPlusCode" ColumnName="SPlusCode" />
-          <ScalarProperty Name="Fullname" ColumnName="Fullname" />
-          <ScalarProperty Name="MNV" ColumnName="MNV" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

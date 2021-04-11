@@ -1991,13 +1991,13 @@
             <End Role="QuestionInfor" EntitySet="QuestionInfors" />
             <End Role="AnswerRecord" EntitySet="AnswerRecords" />
           </AssociationSet>
+          <EntitySet Name="DearlerFSMUploads" EntityType="CheckinAppModel.DearlerFSMUpload" />
           <FunctionImport Name="SeachPointByRoomGuide" ReturnType="Collection(CheckinAppModel.SeachPointByRoomGuide_Result)">
-          <Parameter Name="guidId" Mode="In" Type="Guid" />
+            <Parameter Name="guidId" Mode="In" Type="Guid" />
           </FunctionImport>
           <FunctionImport Name="SeachPointByRoomGuideOTher" ReturnType="Collection(CheckinAppModel.SeachPointByRoomGuideOTher_Result)">
-          <Parameter Name="guidId" Mode="In" Type="Guid" />
+            <Parameter Name="guidId" Mode="In" Type="Guid" />
           </FunctionImport>
-          <EntitySet Name="DearlerFSMUploads" EntityType="CheckinAppModel.DearlerFSMUpload" />
           </EntityContainer>
         <EntityType Name="PermissionInfor">
           <Key>
@@ -2268,11 +2268,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="DearlerFSMUpload">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MNV" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Fullname" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="SPlusCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Store" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Region" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
         <ComplexType Name="SeachPointByRoomGuide_Result">
-          <Property Type="String" Name="MNV" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="MNV" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Name" Nullable="true" />
           <Property Type="String" Name="Store" Nullable="false" />
-          <Property Type="String" Name="Region" Nullable="false" />
+          <Property Type="String" Name="Region" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Fullname" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="CountingScore" Nullable="true" />
           <Property Type="String" Name="Tel" Nullable="true" MaxLength="20" />
@@ -2285,17 +2296,6 @@
           <Property Type="Int32" Name="CountingScore" Nullable="true" />
           <Property Type="String" Name="Name" Nullable="false" />
         </ComplexType>
-        <EntityType Name="DearlerFSMUpload">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MNV" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Fullname" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="SPlusCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Store" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Region" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2721,6 +2721,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="DearlerFSMUploads">
+            <EntityTypeMapping TypeName="CheckinAppModel.DearlerFSMUpload">
+              <MappingFragment StoreEntitySet="DearlerFSMUploads">
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="Store" ColumnName="Store" />
+                <ScalarProperty Name="SPlusCode" ColumnName="SPlusCode" />
+                <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+                <ScalarProperty Name="MNV" ColumnName="MNV" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SeachPointByRoomGuide" FunctionName="CheckinAppModel.Store.SeachPointByRoomGuide">
             <ResultMapping>
               <ComplexTypeMapping TypeName="CheckinAppModel.SeachPointByRoomGuide_Result">
@@ -2746,18 +2758,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="DearlerFSMUploads">
-            <EntityTypeMapping TypeName="CheckinAppModel.DearlerFSMUpload">
-              <MappingFragment StoreEntitySet="DearlerFSMUploads">
-                <ScalarProperty Name="Region" ColumnName="Region" />
-                <ScalarProperty Name="Store" ColumnName="Store" />
-                <ScalarProperty Name="SPlusCode" ColumnName="SPlusCode" />
-                <ScalarProperty Name="Fullname" ColumnName="Fullname" />
-                <ScalarProperty Name="MNV" ColumnName="MNV" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
