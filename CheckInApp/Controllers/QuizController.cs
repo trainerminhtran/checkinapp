@@ -305,7 +305,7 @@ namespace CheckInApp.Controllers
             if (checkTest == null)
             {
                 var tqr = _db.TestQuestionRecords.Where(x => x.TestID == ct.TestID).ToList();
-                tqr = tqr.OrderBy(x => Guid.NewGuid()).ToList();
+                tqr = tqr.OrderBy(x => Guid.NewGuid()).Take(10).ToList();
                 var listQP = tqr.Select((x, NumberRow) => new CourseQuestionUserProcess
                 {
                     ProcessID = (int)ProcessIDEnum.Create,
@@ -508,6 +508,9 @@ namespace CheckInApp.Controllers
             }
             else
             {
+                return new JsonResult() { Data = model, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                // che lại không cho làm lại bài
+                #region Do again
                 var hightAns = (int)model.TimeAns - asr.TimeScore;
                 if (hightAns > 0)
                 {
@@ -528,12 +531,14 @@ namespace CheckInApp.Controllers
                     _db.Entry(asr).State = EntityState.Modified;
                     _db.SaveChanges();
                 }
+                #endregion
             }
             return new JsonResult() { Data = model, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
         [HttpPost]
         public JsonResult DoAgain(Ansewr model)
         {
+            return null;
             if (!(Session["UserViewModel"] is UserViewModel u))
             {
                 return null;
