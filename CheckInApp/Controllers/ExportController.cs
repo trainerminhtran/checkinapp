@@ -29,20 +29,20 @@ namespace CheckInApp.Controllers
         [HttpPost]
         public ActionResult Index()
         {
-            var checkins = _db.CheckinInfors.Select(x => new ExportViewModel
+            var checkins = _db.ExportRawData().Select(x => new ExportViewModel
             {
-                Fullname = x.UserInfor.EmployeeInfor.Fullname,
-                AccountName = x.UserInfor.EmployeeInfor.StoreInfor.AccountInfor.Fullname,
-                VenueName = x.RoomInfor.StoreInfor.Name,
-                VenueProvince = x.RoomInfor.StoreInfor.DistrictInfor.ProvinceInfor.NameEN,
-                MSC = x.UserInfor.EmployeeInfor.StoreInfor.MCScode,
+                Fullname = x.Fullname,
+                AccountName = x.AccountName,
+                UserProvince = x.UserProvince,
+                MSC = x.MCScode,
                 Day = x.Datetime.Day,
                 Month = x.Datetime.Month,
                 Yeah = x.Datetime.Year,
-                ClassName = x.RoomInfor.Name,
-                CourseName = x.RoomInfor.CourseInfor.Name,
-                MNV = x.UserInfor.EmployeeInfor.MNV,
-                TrainerName = x.RoomInfor.TrainerRoomRecords.FirstOrDefault().UserInfor.EmployeeInfor.Fullname
+                ClassName = x.ClassName,
+                CourseName = x.CoureName,
+                MNV = x.MNV,
+                TrainerName = x.Trainer,
+                Tel = x.Tel
             }).ToList();
             //var _modelDK = (from dk in db.DangKies
             //    where ckb_ID.Contains(dk.Id)
@@ -75,8 +75,7 @@ namespace CheckInApp.Controllers
                 MSC = x.UserInfor.EmployeeInfor.StoreInfor.MCScode,
                 Fullname = x.UserInfor.EmployeeInfor.Fullname,
                 AccountName = x.UserInfor.EmployeeInfor.StoreInfor.AccountInfor.Fullname,
-                VenueName = x.RoomInfor.StoreInfor.Name,
-                VenueProvince = x.RoomInfor.StoreInfor.DistrictInfor.ProvinceInfor.NameEN,
+                UserProvince = x.RoomInfor.StoreInfor.DistrictInfor.ProvinceInfor.NameEN,
                 CourseName = x.RoomInfor.CourseInfor.Name,
                 MNV = x.UserInfor.EmployeeInfor.MNV,
                 TrainerName = x.RoomInfor.TrainerRoomRecords.FirstOrDefault().UserInfor.EmployeeInfor.Fullname

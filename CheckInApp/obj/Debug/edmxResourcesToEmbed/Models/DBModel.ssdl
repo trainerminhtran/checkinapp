@@ -884,7 +884,11 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="ExportRawData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="SeachPointByRoomGuide" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="guidId" Type="uniqueidentifier" Mode="In" />
+  </Function>
+  <Function Name="SeachPointByRoomGuideNK" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="guidId" Type="uniqueidentifier" Mode="In" />
   </Function>
   <Function Name="SeachPointByRoomGuideOTher" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">

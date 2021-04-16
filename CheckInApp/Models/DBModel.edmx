@@ -889,7 +889,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="ExportRawData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SeachPointByRoomGuide" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="guidId" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="SeachPointByRoomGuideNK" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="guidId" Type="uniqueidentifier" Mode="In" />
         </Function>
         <Function Name="SeachPointByRoomGuideOTher" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -1993,11 +1997,15 @@
           </AssociationSet>
           <EntitySet Name="DearlerFSMUploads" EntityType="CheckinAppModel.DearlerFSMUpload" />
           <FunctionImport Name="SeachPointByRoomGuide" ReturnType="Collection(CheckinAppModel.SeachPointByRoomGuide_Result)">
-            <Parameter Name="guidId" Mode="In" Type="Guid" />
+          <Parameter Name="guidId" Mode="In" Type="Guid" />
           </FunctionImport>
           <FunctionImport Name="SeachPointByRoomGuideOTher" ReturnType="Collection(CheckinAppModel.SeachPointByRoomGuideOTher_Result)">
-            <Parameter Name="guidId" Mode="In" Type="Guid" />
+          <Parameter Name="guidId" Mode="In" Type="Guid" />
           </FunctionImport>
+          <FunctionImport Name="SeachPointByRoomGuideNK" ReturnType="Collection(CheckinAppModel.SeachPointByRoomGuideNK_Result)">
+          <Parameter Name="guidId" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="ExportRawData" ReturnType="Collection(CheckinAppModel.ExportRawData_Result)" />
           </EntityContainer>
         <EntityType Name="PermissionInfor">
           <Key>
@@ -2295,6 +2303,28 @@
           <Property Type="String" Name="Tel" Nullable="false" MaxLength="20" />
           <Property Type="Int32" Name="CountingScore" Nullable="true" />
           <Property Type="String" Name="Name" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SeachPointByRoomGuideNK_Result">
+          <Property Type="String" Name="MNV" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Name" Nullable="true" />
+          <Property Type="String" Name="Store" Nullable="false" />
+          <Property Type="String" Name="Region" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Fullname" Nullable="false" MaxLength="250" />
+          <Property Type="Int32" Name="CountingScore" Nullable="true" />
+          <Property Type="String" Name="Tel" Nullable="true" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="ExportRawData_Result">
+          <Property Type="String" Name="Fullname" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Tel" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="MNV" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="StoreName" Nullable="true" />
+          <Property Type="String" Name="MCScode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="AccountName" Nullable="true" />
+          <Property Type="String" Name="UserProvince" Nullable="true" />
+          <Property Type="DateTime" Name="Datetime" Nullable="false" Precision="23" />
+          <Property Type="String" Name="ClassName" Nullable="false" />
+          <Property Type="String" Name="CoureName" Nullable="false" />
+          <Property Type="String" Name="Trainer" Nullable="false" MaxLength="50" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2755,6 +2785,36 @@
                 <ScalarProperty Name="Tel" ColumnName="Tel" />
                 <ScalarProperty Name="CountingScore" ColumnName="CountingScore" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SeachPointByRoomGuideNK" FunctionName="CheckinAppModel.Store.SeachPointByRoomGuideNK">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CheckinAppModel.SeachPointByRoomGuideNK_Result">
+                <ScalarProperty Name="MNV" ColumnName="MNV" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Store" ColumnName="Store" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+                <ScalarProperty Name="CountingScore" ColumnName="CountingScore" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ExportRawData" FunctionName="CheckinAppModel.Store.ExportRawData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CheckinAppModel.ExportRawData_Result">
+                <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+                <ScalarProperty Name="MNV" ColumnName="MNV" />
+                <ScalarProperty Name="StoreName" ColumnName="StoreName" />
+                <ScalarProperty Name="MCScode" ColumnName="MCScode" />
+                <ScalarProperty Name="AccountName" ColumnName="AccountName" />
+                <ScalarProperty Name="UserProvince" ColumnName="UserProvince" />
+                <ScalarProperty Name="Datetime" ColumnName="Datetime" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="CoureName" ColumnName="CoureName" />
+                <ScalarProperty Name="Trainer" ColumnName="Trainer" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

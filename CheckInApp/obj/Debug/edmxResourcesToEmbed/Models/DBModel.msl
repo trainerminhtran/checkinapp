@@ -457,5 +457,35 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SeachPointByRoomGuideNK" FunctionName="CheckinAppModel.Store.SeachPointByRoomGuideNK">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="CheckinAppModel.SeachPointByRoomGuideNK_Result">
+          <ScalarProperty Name="MNV" ColumnName="MNV" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Store" ColumnName="Store" />
+          <ScalarProperty Name="Region" ColumnName="Region" />
+          <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+          <ScalarProperty Name="CountingScore" ColumnName="CountingScore" />
+          <ScalarProperty Name="Tel" ColumnName="Tel" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ExportRawData" FunctionName="CheckinAppModel.Store.ExportRawData">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="CheckinAppModel.ExportRawData_Result">
+          <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+          <ScalarProperty Name="Tel" ColumnName="Tel" />
+          <ScalarProperty Name="MNV" ColumnName="MNV" />
+          <ScalarProperty Name="StoreName" ColumnName="StoreName" />
+          <ScalarProperty Name="MCScode" ColumnName="MCScode" />
+          <ScalarProperty Name="AccountName" ColumnName="AccountName" />
+          <ScalarProperty Name="UserProvince" ColumnName="UserProvince" />
+          <ScalarProperty Name="Datetime" ColumnName="Datetime" />
+          <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+          <ScalarProperty Name="CoureName" ColumnName="CoureName" />
+          <ScalarProperty Name="Trainer" ColumnName="Trainer" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

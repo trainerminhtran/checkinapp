@@ -286,6 +286,9 @@
     <Compile Include="Models\EmployeeInfor.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ExportRawData_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GiftCourseRecord.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
@@ -326,6 +329,9 @@
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RoomInfor.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SeachPointByRoomGuideNK_Result.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SeachPointByRoomGuideOTher_Result.cs">

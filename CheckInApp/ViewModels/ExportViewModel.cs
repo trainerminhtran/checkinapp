@@ -28,9 +28,9 @@ namespace CheckInApp.ViewModels
         public string CourseName { get; set; }
         [Display(Name = "Trainer Name")]
         public string TrainerName { get; set; }
-        [Display(Name = "Venue Name")]
-        public string VenueName { get; set; }     
-        [Display(Name = "Venue Province")]
-        public string VenueProvince { get; set; }
+        
+        [Display(Name = "User Province")]
+        public string UserProvince { get; set; }
+        public string Tel { get; set; }
     }
 }

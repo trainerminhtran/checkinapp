@@ -84,5 +84,19 @@ namespace CheckInApp.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SeachPointByRoomGuideOTher_Result>("SeachPointByRoomGuideOTher", guidIdParameter);
         }
+    
+        public virtual ObjectResult<SeachPointByRoomGuideNK_Result> SeachPointByRoomGuideNK(Nullable<System.Guid> guidId)
+        {
+            var guidIdParameter = guidId.HasValue ?
+                new ObjectParameter("guidId", guidId) :
+                new ObjectParameter("guidId", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SeachPointByRoomGuideNK_Result>("SeachPointByRoomGuideNK", guidIdParameter);
+        }
+    
+        public virtual ObjectResult<ExportRawData_Result> ExportRawData()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ExportRawData_Result>("ExportRawData");
+        }
     }
 }

@@ -894,6 +894,10 @@
     <FunctionImport Name="SeachPointByRoomGuideOTher" ReturnType="Collection(CheckinAppModel.SeachPointByRoomGuideOTher_Result)">
       <Parameter Name="guidId" Mode="In" Type="Guid" />
     </FunctionImport>
+    <FunctionImport Name="SeachPointByRoomGuideNK" ReturnType="Collection(CheckinAppModel.SeachPointByRoomGuideNK_Result)">
+      <Parameter Name="guidId" Mode="In" Type="Guid" />
+    </FunctionImport>
+    <FunctionImport Name="ExportRawData" ReturnType="Collection(CheckinAppModel.ExportRawData_Result)" />
   </EntityContainer>
   <EntityType Name="PermissionInfor">
     <Key>
@@ -1191,5 +1195,27 @@
     <Property Type="String" Name="Tel" Nullable="false" MaxLength="20" />
     <Property Type="Int32" Name="CountingScore" Nullable="true" />
     <Property Type="String" Name="Name" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="SeachPointByRoomGuideNK_Result">
+    <Property Type="String" Name="MNV" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Name" Nullable="true" />
+    <Property Type="String" Name="Store" Nullable="false" />
+    <Property Type="String" Name="Region" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Fullname" Nullable="false" MaxLength="250" />
+    <Property Type="Int32" Name="CountingScore" Nullable="true" />
+    <Property Type="String" Name="Tel" Nullable="true" MaxLength="20" />
+  </ComplexType>
+  <ComplexType Name="ExportRawData_Result">
+    <Property Type="String" Name="Fullname" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Tel" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="MNV" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="StoreName" Nullable="true" />
+    <Property Type="String" Name="MCScode" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="AccountName" Nullable="true" />
+    <Property Type="String" Name="UserProvince" Nullable="true" />
+    <Property Type="DateTime" Name="Datetime" Nullable="false" Precision="23" />
+    <Property Type="String" Name="ClassName" Nullable="false" />
+    <Property Type="String" Name="CoureName" Nullable="false" />
+    <Property Type="String" Name="Trainer" Nullable="false" MaxLength="50" />
   </ComplexType>
 </Schema>

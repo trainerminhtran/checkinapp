@@ -280,6 +280,7 @@ namespace CheckInApp.Controllers
         {
             var ListPoint = new ShowSearchPoint();
             var gui = new Guid("8cb25801-496c-4e79-a9b7-eae37fb20d82");
+            var guiNK = new Guid("8766257d-3149-424c-89b4-95008785d09c");
             var ro = new List<SearchPointByRoomGuideViewModel>();
             if (id == gui)
             {
@@ -293,7 +294,19 @@ namespace CheckInApp.Controllers
                     Tel = x.Tel,
                 }).OrderByDescending(x => x.CountingScore).ToList();
             }
-            else
+            else if(id == guiNK)
+            {
+                ro = _db.SeachPointByRoomGuideNK(id).Select(x => new SearchPointByRoomGuideViewModel
+                {
+                    CourseName = x.Name,
+                    UserFullname = x.Fullname,
+                    CountingScore = x.CountingScore.GetValueOrDefault(),
+                    Store = x.Store,
+                    MNV = x.MNV,
+                    Tel = x.Tel,
+                }).OrderByDescending(x => x.CountingScore).ToList();
+            }
+            else 
             {
                 ro = _db.SeachPointByRoomGuideOTher(id).Select(x => new SearchPointByRoomGuideViewModel
                 {
@@ -305,7 +318,7 @@ namespace CheckInApp.Controllers
                     Tel = x.Tel,
                 }).OrderByDescending(x => x.CountingScore).ToList();
             }
-            
+
 
             if (ro == null)
             {

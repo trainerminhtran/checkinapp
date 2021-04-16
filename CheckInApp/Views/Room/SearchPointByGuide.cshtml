@@ -53,16 +53,16 @@
                                         </th>
 
                                         <th>
-                                            Vị thứ
+                                            Tổng NV
                                         </th>
                                         <th>
-                                            Tổng NV làm bài
+                                            Tổng điểm
                                         </th>
                                         <th>
                                             Điểm trung bình
                                         </th>
                                         <th>
-                                            Tổng điểm
+                                            Vị thứ
                                         </th>
 
                                     </tr>
@@ -74,27 +74,28 @@
                                     @foreach (var item in Model.Group)
                                     {
                                         stt++;
-                                        <tr>
-                                            <td class="text-center">
-                                                @stt
-                                            </td>
-                                            <td>
-                                                @item.Store
-                                            </td>
-                                            <td>
-                                                @item.win
-                                            </td>
-                                            <td>
-                                                @item.TotalMemberTested
-                                            </td>
-                                            <td>
-                                                @item.AvePoint
-                                            </td>
-                                            <td>
-                                                @item.TotalPoint
-                                            </td>
+                                    <tr>
+                                        <td class="text-center">
+                                            @stt
+                                        </td>
+                                        <td>
+                                            @item.Store
+                                        </td>
 
-                                        </tr>
+                                        <td>
+                                            @item.TotalMemberTested
+                                        </td>
+
+                                        <td>
+                                            @item.TotalPoint
+                                        </td>
+                                        <td>
+                                            @item.AvePoint
+                                        </td>
+                                        <td>
+                                            @item.win
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>
