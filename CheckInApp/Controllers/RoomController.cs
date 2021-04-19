@@ -33,7 +33,7 @@ namespace CheckInApp.Controllers
                 var rv = new RoomViewModel
                 {
                     Id = r.ID,
-                    Datetime = _dt.GetVNDateString(r.Datetime),
+                    Datetime = r.Datetime.ToShortDateString(),
                     Name = r.Name,
                     QRCode = _qr.QRCodeView(_qr.GetQRCode(_qr.GetUrlByRoomurl(r.RoomUrl))),
                     TrainerName = _userService.GetTrainerString(r.TrainerRoomRecords.Select(x => x.UserInfor.EmployeeInfor.Fullname)),
@@ -89,7 +89,7 @@ namespace CheckInApp.Controllers
                     Name = cour.Name + "."+ tcvm.Name,
                     CourseID = tcvm.CourseID == 0 ? 0 : tcvm.CourseID,
                     VenueID = tcvm.VenueID == 0 ? 0 : tcvm.VenueID,
-                    Datetime = new DatetimeService().CreateEnDateTimeFromVNdate(tcvm.Datetime),
+                    Datetime = new DatetimeService().GetDateTimeNow(),
                     Status = false,
                     Guid = guid,
                     RoomUrl = _qr.GetRoomPath(guid),
@@ -256,17 +256,17 @@ namespace CheckInApp.Controllers
             var ve = _db.StoreInfors.FirstOrDefault(x => x.ID == ro.VenueID);
             printvm.VenueName = ve.Name;
 
-            printvm.DatetimeEnString = new DatetimeService().GetEnDateString(ro.Datetime);
+            printvm.DatetimeEnString = ro.Datetime.ToShortDateString();
             var ck = _db.CheckinInfors.Where(x => x.RoomID == id).ToList();
-            var atts = ck.Select(x => new Attendence
+            var atts = ck.GroupBy(x => new { x.UserInfor, x.Signature, x.RoomInfor }).Select(x => new Attendence
             {
-                Name = x.UserInfor.EmployeeInfor.Fullname,
-                Id = x.UserInfor.ID,
-                PositionName = x.UserInfor.PositionInfor.Name,
-                Signature = _qr.QRCodeView(x.Signature),
-                StoreName = x.UserInfor.EmployeeInfor.StoreInfor.Name,
-                MNV = x.UserInfor.EmployeeInfor.MNV,
-                Tel = x.UserInfor.Tel
+                Name = x.Key.UserInfor.EmployeeInfor.Fullname,
+                Id = x.Key.UserInfor.EmployeeID,
+                PositionName = x.Key.UserInfor.PositionInfor.Name,
+                Signature = _qr.QRCodeView(x.Key.Signature),
+                StoreName = x.Key.RoomInfor.StoreInfor.Name,
+                MNV = x.Key.UserInfor.EmployeeInfor.MNV,
+                Tel = x.Key.UserInfor.Tel
             })
                 .ToList();
 
@@ -378,17 +378,17 @@ namespace CheckInApp.Controllers
 
             printvm.VenueName = ro.StoreInfor.Name;
 
-            printvm.DatetimeEnString = new DatetimeService().GetEnDateString(ro.Datetime);
+            printvm.DatetimeEnString = ro.Datetime.ToShortDateString();
             var ck = _db.CheckinInfors.Where(x => x.RoomID == id).ToList();
-            var atts = ck.Select(x => new Attendence
+            var atts = ck.GroupBy(x=>new { x.UserInfor, x.Signature,x.RoomInfor }).Select(x => new Attendence
             {
-                Name = x.UserInfor.EmployeeInfor.Fullname,
-                Id = x.UserInfor.ID,
-                PositionName = x.UserInfor.PositionInfor.Name,
-                Signature = _qr.QRCodeView(x.Signature),
-                StoreName = x.RoomInfor.StoreInfor.Name,
-                MNV = x.UserInfor.EmployeeInfor.MNV,
-                Tel = x.UserInfor.Tel
+                Name = x.Key.UserInfor.EmployeeInfor.Fullname,
+                Id = x.Key.UserInfor.EmployeeID,
+                PositionName = x.Key.UserInfor.PositionInfor.Name,
+                Signature = _qr.QRCodeView(x.Key.Signature),
+                StoreName = x.Key.RoomInfor.StoreInfor.Name,
+                MNV = x.Key.UserInfor.EmployeeInfor.MNV,
+                Tel = x.Key.UserInfor.Tel
             })
                 .ToList();
 
