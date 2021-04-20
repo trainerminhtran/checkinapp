@@ -59,5 +59,7 @@ namespace CheckInApp.ViewModels
         public string Tel { get; set; }
         public string StoreName { get; set; }
         public string Signature { get; set; }
+        public int UserID { get; set; }
+        public int RoomID { get; set; }
     }
 }

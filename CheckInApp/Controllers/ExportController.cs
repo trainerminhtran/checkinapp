@@ -78,7 +78,8 @@ namespace CheckInApp.Controllers
                 UserProvince = x.RoomInfor.StoreInfor.DistrictInfor.ProvinceInfor.NameEN,
                 CourseName = x.RoomInfor.CourseInfor.Name,
                 MNV = x.UserInfor.EmployeeInfor.MNV,
-                TrainerName = x.RoomInfor.TrainerRoomRecords.FirstOrDefault().UserInfor.EmployeeInfor.Fullname
+                TrainerName = x.RoomInfor.TrainerRoomRecords.FirstOrDefault().UserInfor.EmployeeInfor.Fullname,
+                Tel  = x.UserInfor.Tel
             }).ToList();
             GridView gv = new GridView();
             gv.DataSource = checkins;

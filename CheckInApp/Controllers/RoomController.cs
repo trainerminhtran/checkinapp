@@ -266,7 +266,9 @@ namespace CheckInApp.Controllers
                 Signature = _qr.QRCodeView(x.Key.Signature),
                 StoreName = x.Key.RoomInfor.StoreInfor.Name,
                 MNV = x.Key.UserInfor.EmployeeInfor.MNV,
-                Tel = x.Key.UserInfor.Tel
+                Tel = x.Key.UserInfor.Tel,
+                UserID = x.Key.UserInfor.EmployeeID,
+                RoomID = x.Key.RoomInfor.ID
             })
                 .ToList();
 
